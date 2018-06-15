@@ -5,9 +5,18 @@
 		</div>
 		<div class="swipe-box">
 			<swiper :options="swiperOption"  ref="baseSwiper">
-				<swiper-slide v-for="(item,index) in sectionData.list" :key="index">
-					<img :src="item.set_img" alt="">
-				</swiper-slide>  
+				<swiper-slide class="goods-item" v-for="(item,index) in sectionData.list" :key="index">
+					<div class="img-box">
+						<img :src="item.set_img" alt="">
+					</div>
+					<div class="">
+						<div class="line2 goods-name">{{item.goods_name}}</div>
+						<div class="price">
+							<div>￥{{item.goods_price}}</div>
+							<div>{{item.goods_sale_price}}</div>
+						</div>
+					</div>
+				</swiper-slide>
 				<div class="swiper-pagination"  slot="pagination"></div>
 			</swiper>
 		</div>
@@ -26,15 +35,15 @@
 		},
 		data() {  
 	    return {  
-       	swiperOption: {  
-       		slidesPerView: 3,
-		      slidesPerColumn: 2,
-		      spaceBetween: 30,
-		      pagination: {
-		        el: '.swiper-pagination',
-		        clickable: true,
-		      }
-        }  
+	       	swiperOption: {  
+	       		slidesPerView: 3,
+			      slidesPerColumn: 2,
+			      spaceBetween: 10,
+			      pagination: {
+			        el: '.swiper-pagination',
+			        clickable: true,
+			      }
+	        }  
 	    };  
   	},
   	computed: {  
@@ -45,14 +54,32 @@
 	}
 </script>
 <style scoped>
+	.goods-item {
+		box-sizing: border-box;
+		border: 1px solid #dfdfdf;
+		border-radius: 4px;
+		overflow: hidden;
+	}
+	.goods-name {
+		min-height: 34px;
+		padding: 0 15px;
+	}
 	.img-box img {
 		width: 100%;
 		height: auto;
 	}
 	.swipe-box {
-		padding: 0 15px;
+		padding: 10px 15px 15px 15px;
 	}
 	.swipe-box img {
 		width: 100%;
+	}
+	.price {
+		display: flex;
+	}
+	.price > div {
+		flex: 1;
+		text-align: center;
+		padding-bottom: 8px;
 	}
 </style>

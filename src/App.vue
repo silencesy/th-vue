@@ -18,9 +18,12 @@ export default {
 </script>
 
 <style>
-  html,body {
+  * {
     margin: 0;
     padding: 0;
+  }
+  body {
+    background-color: #fff;
   }
   .fade-enter {
     opacity:0;
@@ -35,5 +38,26 @@ export default {
     opacity:0;
     transition:opacity 0;
   }
-
+  #app {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+  .line2 {
+    display:-webkit-box;
+    overflow:hidden;
+    white-space:normal!important;
+    text-overflow:ellipsis;
+    word-wrap:break-word;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+  }
+  .line3 {
+    display:-webkit-box;
+    overflow:hidden;
+    white-space:normal!important;
+    text-overflow:ellipsis;
+    word-wrap:break-word;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+  }
 </style>
