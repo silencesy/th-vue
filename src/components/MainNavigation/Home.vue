@@ -1,10 +1,15 @@
 <template>  
-  <div class="home">  
+  <div class="home" v-show="homeData">  
     <div class="nav-swiper">
       <BaseSwiper :swiperData="homeData.figure" />
     </div>
     <HomeSection :sectionData="homeData.deal"/>
     <BaseArticle :articleData="homeData.article"></BaseArticle>
+    <HomeSection :sectionData="homeData.deal"/>
+    <HomeSection :sectionData="homeData.deal"/>
+    <HomeSection :sectionData="homeData.deal"/>
+    <HomeSection :sectionData="homeData.deal"/>
+    <HomeSection :sectionData="homeData.deal"/>
   </div>
 
 </template>  
@@ -17,7 +22,7 @@ export default {
   name: 'home',  
   data() {  
     return {  
-       homeData: {}
+       homeData: null
     };  
   },
   components: {

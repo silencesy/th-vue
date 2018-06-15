@@ -25,6 +25,8 @@ import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 Vue.use(Mint);
 
+// rem
+import 'lib-flexible/flexible.js'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
