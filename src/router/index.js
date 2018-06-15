@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // 主页
 import BaseHome from '@/components/Home/BaseHome'
+import GoodsDetails from '@/components/Pages/GoodsDetails'
 
 // 主页tab栏
 // import Home from '@/components/MainNavigation/Home'
@@ -17,29 +18,12 @@ export default new Router({
     {
       path: '/',
       name: 'BaseHome',
-      component: BaseHome,
-  //     children: [
-		// 	{
-		// 		path: '/',
-		// 		component: Home
-		// 	},
-		// 	{
-		// 		path: 'Categories',
-		// 		component: Categories
-		// 	},
-		// 	{
-		// 		path: 'Guide',
-		// 		component: Guide
-		// 	},
-		// 	{
-		// 		path: 'Cart',
-		// 		component: Cart
-		// 	},
-		// 	{
-		// 		path: 'MyAccount',
-		// 		component: MyAccount
-		// 	}
-		// ]
+      component: BaseHome
+    },
+    {
+    	path: "/GoodsDetails",
+    	name: "GoodsDetails",
+    	component: GoodsDetails
     }
   ]
 })

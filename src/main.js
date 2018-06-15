@@ -15,6 +15,10 @@ if ('addEventListener' in document) {
 		FastClick.attach(document.body);
 	}, false);
 }
+// 轮播
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+Vue.use(VueAwesomeSwiper)
 
 // mint-ui框架
 import Mint from 'mint-ui';

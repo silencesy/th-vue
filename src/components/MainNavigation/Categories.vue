@@ -1,6 +1,7 @@
 <template>  
   <div class="Categories">  
     Categories
+    123123
   </div>  
 </template>  
   

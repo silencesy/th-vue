@@ -1,7 +1,7 @@
 <template>  
   <div class="MyAccount">  
-    MyAccount
-  </div>  
+    12312312
+  </div>
 </template>  
   
 <script>  

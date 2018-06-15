@@ -1,14 +1,18 @@
 <template>  
   <div class="home">  
-    <mt-swipe class="home-banner-swiper" :auto="4000">
-	  <mt-swipe-item v-for="item in homeData.figure">
-	  	<img class="banner-swiper-img" :src="item.set_img" alt="">
-	  </mt-swipe-item>
-	</mt-swipe>
-  </div>  
+    <div class="nav-swiper">
+      <BaseSwiper :swiperData="homeData.figure" />
+    </div>
+    <HomeSection :sectionData="homeData.deal"/>
+    <BaseArticle :articleData="homeData.article"></BaseArticle>
+  </div>
+
 </template>  
   
-<script>  
+<script>
+import HomeSection from "../BaseComponents/HomeSection";
+import BaseSwiper from "../BaseComponents/BaseSwiper";
+import BaseArticle from "../BaseComponents/BaseArticle";
 export default {  
   name: 'home',  
   data() {  
@@ -16,26 +20,32 @@ export default {
        homeData: {}
     };  
   },
+  components: {
+    HomeSection,
+    BaseSwiper,
+    BaseArticle
+  },
   mounted() {
   	var that = this;
   	that.$axios.post('http://api.mall.thatsmags.com/Api/Public/home')
-	.then(function (response) {
-		console.log(response);
-		that.homeData = response.data.data;
-	})
-	.catch(function (error) {
-		console.log(error);
-	});
+  	.then(function (response) {
+  		console.log(response);
+  		that.homeData = response.data.data;
+  	})
+  	.catch(function (error) {
+  		console.log(error);
+  	});
+  },
+  methods: {
+    go() {
+      this.$router.push('/GoodsDetails');
+    }
   }
 };  
 </script>  
   
 <style scoped>
-  .home-banner-swiper {
-  	height: 300px;
-  }
-  .banner-swiper-img {
-  	width: 100%;
-  	height: auto;
+  .home {
+    padding-bottom: 65px;
   }
 </style>  

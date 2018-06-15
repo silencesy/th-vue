@@ -60,11 +60,17 @@ export default {
     Guide: r => { require.ensure([], () => r(require('../MainNavigation/Guide')), 'Guide') },
     Cart: r => { require.ensure([], () => r(require('../MainNavigation/Cart')), 'Cart') },
     MyAccount: r => { require.ensure([], () => r(require('../MainNavigation/MyAccount')), 'MyAccount') },
+  },
+  watch: {
+    selected: function (nowVal, oldVal) {
+        // 这里就可以通过 val 的值变更来确定
+        console.log(nowVal)
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
   body {
     padding-bottom: 65px;
   }
