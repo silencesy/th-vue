@@ -21,7 +21,7 @@ export default {
   html,body {
     margin: 0;
     padding: 0;
-    background: #E8E8E8;
+    /*background: #E8E8E8;*/
     font-size: 14px;
     color: #222;
   }

@@ -60,6 +60,9 @@ export default {
 </script>  
   
 <style scoped>
+	body {
+		background: #E8E8E8;
+	}
 	.title {
 		background: #fff;
 		margin-bottom: 15px;
