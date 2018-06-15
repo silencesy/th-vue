@@ -54,6 +54,12 @@
 	}
 </script>
 <style scoped>
+	.HomeSection {
+		background-color: #fff;
+	}
+	.swiper-container {
+		padding-bottom: 35px;
+	}
 	.goods-item {
 		box-sizing: border-box;
 		border: 1px solid #dfdfdf;
@@ -61,7 +67,7 @@
 		overflow: hidden;
 	}
 	.goods-name {
-		min-height: 34px;
+		height: 40px;
 		padding: 0 15px;
 	}
 	.img-box img {
@@ -69,7 +75,7 @@
 		height: auto;
 	}
 	.swipe-box {
-		padding: 10px 15px 15px 15px;
+		padding: 10px 15px 0px 15px;
 	}
 	.swipe-box img {
 		width: 100%;

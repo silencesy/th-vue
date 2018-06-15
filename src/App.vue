@@ -21,7 +21,7 @@ export default {
   * {
     margin: 0;
     padding: 0;
-    background: #E8E8E8;
+    /*background: #E8E8E8;*/
     font-size: 14px;
     color: #222;
   }
@@ -54,7 +54,7 @@ export default {
     -webkit-box-orient:vertical;
   }
   body {
-    background-color: #fff;
+    background-color: #E8E8E8;
   }
   .fade-enter {
     opacity:0;
@@ -90,5 +90,19 @@ export default {
     word-wrap:break-word;
     -webkit-line-clamp:3;
     -webkit-box-orient:vertical;
+  }
+  /*重置轮播图焦点样式*/
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 2px;
+    display: inline-block;
+    border-radius: 0;
+    /*background: #000;*/
+    /*opacity: 0.2;*/
+  }
+  .swiper-pagination-bullet-active {
+    background-color: #f24827;
+    width: 18px;
+    /*height: 4px;*/
   }
 </style>

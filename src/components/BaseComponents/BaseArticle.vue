@@ -43,6 +43,9 @@
 	}
 </script>
 <style scoped>
+	.BaseArticle {
+		background-color: #fff;
+	}
 	.banner-img {
 		width: 100%;
 		height: auto;
@@ -65,7 +68,7 @@
 		float: left;
 	}
 	.article-item .article-info {
-		flex: 1.5;
+		flex: 2;
 		padding-left: 15px;
 		position: relative;
 
