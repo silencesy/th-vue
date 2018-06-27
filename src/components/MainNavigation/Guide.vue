@@ -1,18 +1,9 @@
 <template>  
   <div>  
     <div class="nav">  
-<<<<<<< HEAD
       <mt-button class="nav-item" size="small" @click.native.prevent="active = 'tab-container1'">tab 1</mt-button>  
       <mt-button class="nav-item" size="small" @click.native.prevent="active = 'tab-container2'">tab 2</mt-button>  
       <mt-button class="nav-item" size="small" @click.native.prevent="active = 'tab-container3'">tab 3</mt-button>  
-      <!-- <div @click.native.prevent="active = 'tab-container1'">1</div>
-      <div @click.native.prevent="active = 'tab-container2'">2</div>
-      <div @click.native.prevent="active = 'tab-container3'">3</div> -->
-=======
-      <mt-button size="small" @click.native.prevent="active = 'tab-container1'">tab 1</mt-button>  
-      <mt-button size="small" @click.native.prevent="active = 'tab-container2'">tab 2</mt-button>  
-      <mt-button size="small" @click.native.prevent="active = 'tab-container3'">tab 3</mt-button>  
->>>>>>> 87af1fb99ac60294a8ae6abba47242d0e23419f4
     </div>  
       
     <div class="page-tab-container">  
@@ -59,7 +50,6 @@
 </template>    
   
 <script>  
-<<<<<<< HEAD
 import BaseArticle from "../BaseComponents/BaseArticle";
 import BScroll from 'better-scroll';
 let articleData = {
@@ -139,7 +129,7 @@ export default {
   }
 };  
 </script>  
-=======
+
   export default {  
     name: 'page-tab-container',  
     data() {  
@@ -149,7 +139,7 @@ export default {
     }  
   };  
 </script>   
->>>>>>> 87af1fb99ac60294a8ae6abba47242d0e23419f4
+
   
 <style lang="css" scoped>  
   .nav {
@@ -172,9 +162,6 @@ export default {
   .active-bttom {
     border-bottom: 1px solid #f6442b;
   }
-<<<<<<< HEAD
-</style>  
-=======
 	.mint-button--default {
 		box-shadow: none;
 		flex: 1;
@@ -186,4 +173,3 @@ export default {
 		border-bottom: 2px solid #f6442b; 
 	}
 </style> 
->>>>>>> 87af1fb99ac60294a8ae6abba47242d0e23419f4
