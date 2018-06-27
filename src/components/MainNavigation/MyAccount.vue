@@ -49,14 +49,14 @@
 </template>  
   
 <script>  
-export default {  
-  name: 'MyAccount',  
-  data() {  
-    return {  
-       
-    };  
-  }  
-};  
+	export default {  
+	  name: 'MyAccount',  
+	  data() {  
+	    return {  
+	       
+	    };  
+	  }  
+	};  
 </script>  
   
 <style scoped>
