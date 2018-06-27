@@ -22,7 +22,6 @@
 		data() {  
 	    return {  
        	swiperOption: {  
-       		
 		      pagination: {
 		        el: '.swiper-pagination',
 		        clickable: true,

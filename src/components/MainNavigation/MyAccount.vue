@@ -28,15 +28,15 @@
 			</div>
 		</div>
 		<div class="myItem">
-			<router-link to="/">
+			<router-link :to="{name:'AddressBook',params:{GoodsId:'1'}}">
 				<span class="iconfont icon-shouhuodizhi"></span>
 				<p>Address Book</p>
 			</router-link>
-			<router-link to="/">
+			<router-link :to="{name: 'WishList',params: {GoodsId:'123123'}}">
 				<span class="iconfont icon-shoucang"></span>
 				<p>Wishlist</p>
 			</router-link>
-			<router-link to="/">
+			<router-link to="/CouponsList">
 				<span class="iconfont icon-youhuiquan"></span>
 				<p>thMart-Coupons</p>
 			</router-link>

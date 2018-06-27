@@ -1,8 +1,13 @@
 <template>
   <div id="app">
-    <transition name="fade" mode="out-in">
-      <router-view ></router-view>
+    <transition :name="transitionName" mode="out-in">
+      <keep-alive>  
+        <router-view class="Router" v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
     </transition>
+    <transition :name="transitionName" mode="out-in">
+      <router-view class="Router" v-if="!$route.meta.keepAlive"></router-view>
+　　 </transition>
   </div>
 </template>
 
@@ -11,9 +16,16 @@ export default {
   name: 'App',
   data() {  
     return {  
-      
+      transitionName: 'slide-left'
     };  
-  }
+  },
+  watch: {
+  '$route' (to, from) {
+      const toDepth = to.path.split('/').length
+      const fromDepth = from.path.split('/').length
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+    }
+  }　　　
 }
 </script>
 
@@ -21,7 +33,6 @@ export default {
   * {
     margin: 0;
     padding: 0;
-    /*background: #E8E8E8;*/
     font-size: 14px;
     color: #222;
   }
@@ -56,19 +67,6 @@ export default {
   body {
     background-color: #E8E8E8;
   }
-  .fade-enter {
-    opacity:0;
-  }
-  .fade-leave{
-    opacity:1;
-  }
-  .fade-enter-active{
-    transition:opacity .4s;
-  }
-  .fade-leave-active{
-    opacity:0;
-    transition:opacity 0;
-  }
   #app {
     max-width: 750px;
     margin: 0 auto;
@@ -91,18 +89,43 @@ export default {
     -webkit-line-clamp:3;
     -webkit-box-orient:vertical;
   }
-  /*重置轮播图焦点样式*/
   .swiper-pagination-bullet {
     width: 10px;
     height: 2px;
     display: inline-block;
     border-radius: 0;
-    /*background: #000;*/
-    /*opacity: 0.2;*/
+    transition: all 0.2s ease;
   }
   .swiper-pagination-bullet-active {
     background-color: #f24827;
     width: 18px;
-    /*height: 4px;*/
+  }
+  .clearfix:before,.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  .clearfix {
+    zoom: 1;
+  }
+  .Router {
+    position: absolute;
+    max-width: 750px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    margin: auto;
+    transition: all .4s cubic-bezier(.55,0,.1,1);
+  }
+  .slide-left-enter, .slide-right-leave-active {
+    opacity: 0;
+    -webkit-transform: translate(50px, 0);
+    transform: translate(50px, 0);
+  }
+  .slide-left-leave-active, .slide-right-enter {
+    opacity: 0;
+    -webkit-transform: translate(-50px, 0);
+    transform: translate(-50px, 0);
   }
 </style>

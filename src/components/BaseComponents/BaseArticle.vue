@@ -1,14 +1,12 @@
 <template>
 	<div class="BaseArticle">
-		<slot>
-			<div class="banner-img-box">
-				<img class="banner-img" :src="articleData.image" alt="">
-			</div>
-		</slot>
+		<div v-show="articleData.image">
+			<img :src="articleData.image" alt="">
+		</div>
 		<div class="article-content">
 			<div class="article-item" v-for="(item,index) in articleData.list" :key="index">
 				<div class="img-box">
-					<img :src="item.set_img" alt="">
+					<img v-lazy="item.set_img" alt="">
 				</div>
 				<div class="article-info">
 					<p>{{item.article_name}}</p>
@@ -46,9 +44,14 @@
 	.BaseArticle {
 		background-color: #fff;
 	}
+	.banner-img-box {
+		background-color: #e8e8e8;
+		padding-top: 10px;
+	}
 	.banner-img {
 		width: 100%;
 		height: auto;
+		display: block;
 	}
 	.article-item {
 		display: flex;
@@ -77,5 +80,8 @@
 		position: absolute;
 		right: 15px;
 		bottom: 0;
+	}
+	img {
+		width: 100%;
 	}
 </style>
