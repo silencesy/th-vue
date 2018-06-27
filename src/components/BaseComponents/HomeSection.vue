@@ -1,21 +1,23 @@
 <template>
 	<div class="HomeSection">
-		<div class="img-box">
+		<div class="banner-img-box">
 			<img :src="sectionData.image" alt="">
 		</div>
 		<div class="swipe-box">
 			<swiper :options="swiperOption"  ref="baseSwiper">
 				<swiper-slide class="goods-item" v-for="(item,index) in sectionData.list" :key="index">
-					<div class="img-box">
-						<img :src="item.set_img" alt="">
-					</div>
-					<div class="">
-						<div class="line2 goods-name">{{item.goods_name}}</div>
-						<div class="price">
-							<div>￥{{item.goods_price}}</div>
-							<div>{{item.goods_sale_price}}</div>
+					<router-link :to="{name: 'GoodsDetails', params: {GoodsId:item.id}}">
+						<div class="img-box">
+							<img v-lazy.container="item.set_img" alt="">
 						</div>
-					</div>
+						<div class="">
+							<div class="line2 goods-name">{{item.goods_name}}</div>
+							<div class="price">
+								<div class="theme_color">￥{{item.goods_price}}</div>
+								<div>{{item.goods_sale_price}}</div>
+							</div>
+						</div>
+					</router-link>
 				</swiper-slide>
 				<div class="swiper-pagination"  slot="pagination"></div>
 			</swiper>
@@ -23,6 +25,8 @@
 	</div>
 </template>
 <script>
+import store from '../../vuex/store'
+import { mapState } from 'vuex'
 	export default {
 		name: 'HomeSection',
 		props: {
@@ -46,10 +50,26 @@
 	        }  
 	    };  
   	},
-  	computed: {  
-	    swiper() {  
+  	store,
+	computed: {
+		trigger() {
+		  return this.$store.state.trigger;
+		},
+		swiper() {  
 	      return this.$refs.baseSwiper.swiper;  
-	    }  
+	    } 
+	},
+	watch: {
+		trigger() {
+		  var that = this;
+		  if (that.trigger=="Home") {
+		    console.log(1);
+		    
+		  }
+		}
+	},
+  	methods: {
+  		
   	}
 	}
 </script>
@@ -67,12 +87,17 @@
 		overflow: hidden;
 	}
 	.goods-name {
-		height: 40px;
+		height: 38px;
 		padding: 0 15px;
 	}
-	.img-box img {
+	.banner-img-box {
+		background-color: #e8e8e8;
+		padding-top: 10px;
+	}
+	.banner-img-box img {
 		width: 100%;
 		height: auto;
+		display: block;
 	}
 	.swipe-box {
 		padding: 10px 15px 0px 15px;

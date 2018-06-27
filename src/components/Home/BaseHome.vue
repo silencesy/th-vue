@@ -1,21 +1,10 @@
 <template>
   <div id="home">
-    <!-- <router-view/> -->
-    <mt-tab-container v-model="selected">
+    <mt-tab-container v-model="show">
       <mt-tab-container-item id="Home">
-        <Home />
-      </mt-tab-container-item>
-      <mt-tab-container-item id="Categories">
-        <Categories />
-      </mt-tab-container-item>
-      <mt-tab-container-item id="Guide">
-        <Guide />
-      </mt-tab-container-item>
-      <mt-tab-container-item id="Cart">
-        <Cart />
-      </mt-tab-container-item>
-      <mt-tab-container-item id="MyAccount">
-        <MyAccount />
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </mt-tab-container-item>
     </mt-tab-container>
     <mt-tabbar v-model="selected" fixed> 
@@ -49,23 +38,24 @@ export default {
   name: 'home',
   data() {  
     return {  
-      selected: 'Home'  
+      selected: 'Home',
+      show: "Home"
     };  
-  },
-  components: {
-    Home,
-    //懒加载其他页面
-    Home: r => { require.ensure([], () => r(require('../MainNavigation/Home')), 'Home') },
-    Categories: r => { require.ensure([], () => r(require('../MainNavigation/Categories')), 'Categories') },
-    Guide: r => { require.ensure([], () => r(require('../MainNavigation/Guide')), 'Guide') },
-    Cart: r => { require.ensure([], () => r(require('../MainNavigation/Cart')), 'Cart') },
-    MyAccount: r => { require.ensure([], () => r(require('../MainNavigation/MyAccount')), 'MyAccount') },
   },
   watch: {
     selected: function (nowVal, oldVal) {
-        // 这里就可以通过 val 的值变更来确定
-        console.log(nowVal)
+      if (nowVal == 'Home') {
+        nowVal = '/'
+      }
+      this.$router.push(nowVal);
+    },
+    '$route' (to, from) {
+      this.selected = to.name;
     }
+  },
+  mounted() {
+    var that = this;
+    that.selected = this.$route.name;
   }
 }
 </script>

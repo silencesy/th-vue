@@ -3,10 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Vuex from 'vuex';
+import http from "./utils/http"
+Vue.use(Vuex);
+Vue.use(http);
 
-// 异步请求
-import axios from 'axios'
-Vue.prototype.$axios = axios
 
 //fastClick (消除移动端300毫秒延迟)
 import FastClick from 'fastclick'
@@ -23,11 +24,48 @@ Vue.use(VueAwesomeSwiper)
 // mint-ui框架
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
-Vue.use(Mint);
+
+// 图片懒加载
+Vue.use(Mint, {
+  lazyload: {
+    preLoad: 200,
+    error: 'http://api.mall.thatsmags.com/Public/ckfinder/images/grey.jpg',
+    loading: '',
+    attempt: 1,
+    filter: {
+      webp(listener, options) {
+      	
+      },
+    },
+  },
+});
 
 // rem
 import 'lib-flexible/flexible.js'
 Vue.config.productionTip = false
+
+
+
+Vue.mixin({
+  data() {
+    return {
+      screenWidth: document.documentElement.clientWidth || 0,
+      screenHeight: document.documentElement.clientHeight,
+    }
+  },
+  methods: {
+    go(url) {
+      this.$router.push(url)
+    },
+    back(url) {
+      this.$router.back()
+    },
+    //返回首页
+    toHome() {
+      router.goBack("/")
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
