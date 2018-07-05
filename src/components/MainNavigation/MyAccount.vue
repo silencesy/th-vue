@@ -2,9 +2,9 @@
   <div class="MyAccount">  
   	<div class="title">
 	    <div class="touxiang"> 
-				<img src="static/images/common/home-cover.png" alt="">
-				<span>xiaoxiedai</span>
-	 		</div>
+			<img src="static/images/common/home-cover.png" alt="">
+			<span>xiaoxiedai</span>
+ 		</div>
 	  	<router-link to="/" class="edit">Edit</router-link>
 		</div>
 		<div class="state">
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div class="myItem">
-			<router-link :to="{name:'AddressBook',params:{GoodsId:'1'}}">
+			<router-link to="/">
 				<span class="iconfont icon-shouhuodizhi"></span>
 				<p>Address Book</p>
 			</router-link>
@@ -40,7 +40,7 @@
 				<span class="iconfont icon-youhuiquan"></span>
 				<p>thMart-Coupons</p>
 			</router-link>
-			<router-link to="/">
+			<router-link to="/Contact">
 				<span class="iconfont icon-shouhou"></span>
 				<p>Customer Service</p>
 			</router-link>

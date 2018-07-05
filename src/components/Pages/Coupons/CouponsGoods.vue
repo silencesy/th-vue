@@ -1,18 +1,26 @@
 <template>
-	<div class="CouponsList">
-		<p>123</p>
+	<div class="CouponsGoods">
+		<!-- <div class="">
+				
+		</div>	 -->	
 	</div>
 </template>
 <script>
 	export default {
-		name: 'CouponsList',
+		name: 'CouponsGoods',
 		data() {
 			return {
-
 			}
+		},
+		mounted() {
 		}
 	}
 </script>
 <style scoped>
-	
+
+
+
+
+
+
 </style>

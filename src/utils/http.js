@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Toast,Indicator } from 'mint-ui'
+// import { Toast,Indicator } from 'mint-ui'
 import qs from 'qs'
 import router from '../router/index'
 
@@ -17,17 +17,17 @@ const Axios = axios.create({
 });
 
 //当请求异常，网络异常,返回异常时候进行提示
-function showError() {
-  Toast({
-    message: 'err',
-    iconClass: 'icon icon-success'
-  });
-};
+// function showError() {
+//   Toast({
+//     message: 'err',
+//     iconClass: 'icon icon-success'
+//   });
+// };
 //POST传参序列化(添加请求拦截器)
 Axios.interceptors.request.use(
   config => {
     // 在发送请求之前做某件事
-    Indicator.open();
+    // Indicator.open();
     if (
       config.method === "post"
     ) {
@@ -38,9 +38,9 @@ Axios.interceptors.request.use(
 
     // 若是有做鉴权token , 就给头部带上token
     // 若是需要跨站点,存放到 cookie 会好一点,限制也没那么多,有些浏览环境限制了 localstorage 的使用
-    if (localStorage.token) {
-      config.headers.Authorization = localStorage.token;
-    }
+    // if (localStorage.getItem('token')) {
+      config.headers.TOKEN = 'abf7896ab115f2935676f1175518e399MTUzMTc5NjA5NzE1NDE1';
+    // }
     return config;
   },
   error => {
@@ -70,7 +70,7 @@ Axios.interceptors.response.use(
     //   });
     //   return Promise.reject(res.data.error.message);
     // }
-    Indicator.close();
+    // Indicator.close();
     return res;
   },
   error => {
