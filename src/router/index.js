@@ -73,10 +73,8 @@ export default new Router({
           //   keepAlive: false
           // },
           component: () => import('@/components/MainNavigation/MyAccount')
-        },
+        }
       ]
-<<<<<<< HEAD
-=======
     },
     {
     	path: "/GoodsDetails/:GoodsId",
@@ -93,7 +91,7 @@ export default new Router({
         keepAlive: true
       },
       component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/CouponsList')), 'CouponsList')
+        require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsList')), 'CouponsList')
       }
     },
     {
@@ -120,65 +118,64 @@ export default new Router({
       path: "/home/HomeSearch",
       name: "HomeSearch",
       component: () => import('@/components/Pages/Search/HomeSearch')
->>>>>>> 0f94366f9b96eb24d780bf0266eefa72cd0e9173
+    },
+    {
+    	path: "/GoodsDetails/:GoodsId",
+    	name: "GoodsDetails",
+      meta: {
+        keepAlive: false
+      },
+    	component: GoodsDetails
+    },
+    {
+      path: "/CouponsList",
+      name: "CouponsList",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsList')), 'CouponsList')
+      }
+    },
+    {
+      path: "/WishList/:GoodsId",
+      name: "WishList",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/WishList')), 'WishList')
+      }
+    },
+    {
+      path: "/AddressBook/:GoodsId",
+      name: "AddressBook",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/AddressBook')), 'AddressBook')
+      }
+    },
+    {
+      path: "/Contact",
+      name: "Contact",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Contact')), 'Contact')
+      }
+    },
+    {
+      path: "/CouponsGoods/:CouponsId",
+      name: "CouponsGoods",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsGoods')), 'CouponsGoods')
+      }
     }
-    // {
-    // 	path: "/GoodsDetails/:GoodsId",
-    // 	name: "GoodsDetails",
-    //   meta: {
-    //     keepAlive: false
-    //   },
-    // 	component: GoodsDetails
-    // },
-    // {
-    //   path: "/CouponsList",
-    //   name: "CouponsList",
-    //   meta: {
-    //     keepAlive: true
-    //   },
-    //   component(resolve) {
-    //     require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsList')), 'CouponsList')
-    //   }
-    // },
-    // {
-    //   path: "/WishList/:GoodsId",
-    //   name: "WishList",
-    //   meta: {
-    //     keepAlive: true
-    //   },
-    //   component(resolve) {
-    //     require.ensure([], () => resolve(require('@/components/Pages/WishList')), 'WishList')
-    //   }
-    // },
-    // {
-    //   path: "/AddressBook/:GoodsId",
-    //   name: "AddressBook",
-    //   meta: {
-    //     keepAlive: true
-    //   },
-    //   component(resolve) {
-    //     require.ensure([], () => resolve(require('@/components/Pages/AddressBook')), 'AddressBook')
-    //   }
-    // },
-    // {
-    //   path: "/Contact",
-    //   name: "Contact",
-    //   meta: {
-    //     keepAlive: true
-    //   },
-    //   component(resolve) {
-    //     require.ensure([], () => resolve(require('@/components/Pages/Contact')), 'Contact')
-    //   }
-    // },
-    // {
-    //   path: "/CouponsGoods/:CouponsId",
-    //   name: "CouponsGoods",
-    //   meta: {
-    //     keepAlive: true
-    //   },
-    //   component(resolve) {
-    //     require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsGoods')), 'CouponsGoods')
-    //   }
-    // }
   ]
 })
