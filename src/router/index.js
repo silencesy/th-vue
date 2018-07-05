@@ -37,26 +37,41 @@ export default new Router({
         { 
           path: '/',
           name: 'Home',
+          // meta: {
+          //   keepAlive: true
+          // },
           component: () => import('@/components/MainNavigation/Home')
         },
         {
           path: '/Categories',
           name: 'Categories',
+          // meta: {
+          //   keepAlive: false
+          // },
           component: () => import('@/components/MainNavigation/Categories')
         },
         {
           path: '/Guide',
           name: 'Guide',
+          // meta: {
+          //   keepAlive: true
+          // },
           component: () => import('@/components/MainNavigation/Guide')
         },
         {
           path: '/Cart',
           name: 'Cart',
+          // meta: {
+          //   keepAlive: false
+          // },
           component: () => import('@/components/MainNavigation/Cart')
         },
         {
           path: '/MyAccount',
           name: 'MyAccount',
+          // meta: {
+          //   keepAlive: false
+          // },
           component: () => import('@/components/MainNavigation/MyAccount')
         },
       ]
@@ -98,6 +113,11 @@ export default new Router({
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/AddressBook')), 'AddressBook')
       }
+    },
+    {
+      path: "/home/HomeSearch",
+      name: "HomeSearch",
+      component: () => import('@/components/Pages/Search/HomeSearch')
     }
   ]
 })

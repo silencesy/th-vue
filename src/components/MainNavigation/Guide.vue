@@ -11,36 +11,28 @@
         <mt-tab-container-item class="item-container wrapper" id="tab-container1">
           <div class="wrapper" ref='Wrapper1' :style="{height:height+'px'}">
             <div class="content">
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
+                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+                
             </div>
           </div>
         </mt-tab-container-item>  
         <mt-tab-container-item class="item-container" id="tab-container2">  
           <div class="wrapper" ref='Wrapper2' :style="{height:height+'px'}">
             <div class="content">
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
+                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/> 
+                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/> 
+                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/> 
             </div>
           </div>
         </mt-tab-container-item>  
         <mt-tab-container-item class="item-container" id="tab-container3">  
           <div class="wrapper" ref='Wrapper3' :style="{height:height+'px'}">
             <div class="content">
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
-                <BaseArticle :articleData="articleData"/>
+                 <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+                 <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+                 <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
             </div>
           </div>
         </mt-tab-container-item>  
@@ -94,7 +86,11 @@ export default {
     return {  
       active: 'tab-container1',
       height: 0,
-      articleData: articleData
+      articleData: articleData,
+      articleItemStyleObj: {
+        'border': '1px solid #dfdfdf',
+        'padding': '10px'
+      }
     };  
   },
   components: {
@@ -130,17 +126,6 @@ export default {
 };  
 </script>  
 
-  export default {  
-    name: 'page-tab-container',  
-    data() {  
-      return {  
-        active: 'tab-container1'  
-      };  
-    }  
-  };  
-</script>   
-
-  
 <style lang="css" scoped>  
   .nav {
     display: flex;

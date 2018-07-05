@@ -2,9 +2,7 @@
   <div id="home">
     <mt-tab-container v-model="show">
       <mt-tab-container-item id="Home">
-        <keep-alive>
           <router-view></router-view>
-        </keep-alive>
       </mt-tab-container-item>
     </mt-tab-container>
     <mt-tabbar v-model="selected" fixed> 
