@@ -37,29 +37,90 @@ export default new Router({
         { 
           path: '/',
           name: 'Home',
+          // meta: {
+          //   keepAlive: true
+          // },
           component: () => import('@/components/MainNavigation/Home')
         },
         {
           path: '/Categories',
           name: 'Categories',
+          // meta: {
+          //   keepAlive: false
+          // },
           component: () => import('@/components/MainNavigation/Categories')
         },
         {
           path: '/Guide',
           name: 'Guide',
+          // meta: {
+          //   keepAlive: true
+          // },
           component: () => import('@/components/MainNavigation/Guide')
         },
         {
           path: '/Cart',
           name: 'Cart',
+          // meta: {
+          //   keepAlive: false
+          // },
           component: () => import('@/components/MainNavigation/Cart')
         },
         {
           path: '/MyAccount',
           name: 'MyAccount',
+          // meta: {
+          //   keepAlive: false
+          // },
           component: () => import('@/components/MainNavigation/MyAccount')
         },
       ]
+<<<<<<< HEAD
+=======
+    },
+    {
+    	path: "/GoodsDetails/:GoodsId",
+    	name: "GoodsDetails",
+      meta: {
+        keepAlive: false
+      },
+    	component: GoodsDetails
+    },
+    {
+      path: "/CouponsList",
+      name: "CouponsList",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/CouponsList')), 'CouponsList')
+      }
+    },
+    {
+      path: "/WishList/:GoodsId",
+      name: "WishList",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/WishList')), 'WishList')
+      }
+    },
+    {
+      path: "/AddressBook/:GoodsId",
+      name: "AddressBook",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/AddressBook')), 'AddressBook')
+      }
+    },
+    {
+      path: "/home/HomeSearch",
+      name: "HomeSearch",
+      component: () => import('@/components/Pages/Search/HomeSearch')
+>>>>>>> 0f94366f9b96eb24d780bf0266eefa72cd0e9173
     }
     // {
     // 	path: "/GoodsDetails/:GoodsId",

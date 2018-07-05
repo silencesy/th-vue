@@ -1,10 +1,10 @@
 <template>
 	<div class="BaseArticle">
-		<div v-show="articleData.image">
-			<img :src="articleData.image" alt="">
+		<div class="banner-img-box" v-show="articleData.image">
+			<img class="banner-img" :src="articleData.image" alt="">
 		</div>
-		<div class="article-content">
-			<div class="article-item" v-for="(item,index) in articleData.list" :key="index">
+		<div class="article-content" :style="{backgroundColor:articleContentBg}">
+			<div class="article-item" v-for="(item,index) in articleData.list" :key="index" :style="articleItemStyleObj">
 				<div class="img-box">
 					<img v-lazy="item.set_img" alt="">
 				</div>
@@ -26,6 +26,18 @@
 			default: function () {  
 		      return {}
 		    }  
+		},
+		articleItemStyleObj: {
+			type: Object,
+			default: function () {  
+		      return {
+		      	'borderBottom': '1px solid #dfdfdf'
+		      }
+		    }  
+		},
+		articleContentBg: {
+			type: String,
+			default: '#fff'
 		}
 	},
 	data() {  
@@ -45,23 +57,30 @@
 		background-color: #fff;
 	}
 	.banner-img-box {
-		background-color: #e8e8e8;
+		background-color: #eee;
 		padding-top: 10px;
 	}
 	.banner-img {
 		width: 100%;
-		height: auto;
-		display: block;
+	    height: auto;
+	    display: block;
 	}
 	.article-item {
 		display: flex;
 	}
 	.article-content {
-		padding: 0 15px;
+		padding: 10px 15px;
 	}
 	.article-item {
-		border-bottom: 1px solid #dfdfdf;
+		box-sizing: border-box;
 		padding: 10px 0;
+		border-radius: 4px;
+		margin-bottom: 10px;
+		background-color: #fff;
+
+	}
+	.article-item:last-child {
+		margin-bottom: 0px;
 	}
 	.article-item .img-box {
 		flex: 1;

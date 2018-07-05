@@ -2,35 +2,15 @@
   <div class="Categories">  
     <div class="left wrapper" ref="leftWrapper" :style="{width:'100%',height:height+'px'}">
       <div class="content">
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
-        <mt-cell title="标题文字" is-link></mt-cell>
+        <mt-cell title="标题文字"  is-link v-for="(item,index) in 20" :key="index"></mt-cell>
       </div>
     </div>
     <div class="right wrapper" ref="rightWrapper" :style="{width:'100%',height:height+'px'}">
       <div class="content">
-        <GoodsRow  :goodsData="goodsData" :Columns="2"/>
+        <GoodsRow  :goodsData="goodsData" :Columns="2" backgroundColor="#eee"/>
+        <div class="more-icon" v-show="showMoreIcon">
+          <mt-spinner type="fading-circle" :size='18' color="#f24827"></mt-spinner>
+        </div>
       </div>
     </div>
   </div>  
@@ -324,16 +304,44 @@ export default {
   data() {  
     return {  
       height: 0,
-      goodsData: goodsData
+      goodsData: goodsData,
+      p: 0,
+      showMoreIcon: true,
     };
   },
   components: {
     GoodsRow
   },
   mounted() {
-  	var that = this;
-    that.height = document.documentElement.clientHeight - 55;
+    var that = this;
     that.$nextTick(() => {
+      setTimeout(function(){
+        that.height = document.documentElement.clientHeight - 55;
+        that._initScroll();
+      },20);
+      
+    });
+    
+  	// var that = this;
+   //  that.height = document.documentElement.clientHeight - 55;
+   //  that.$nextTick(() => {
+   //      that.scroll = new BScroll(that.$refs.leftWrapper, {
+   //          scrollY: true,
+   //          click: true,
+   //          pullUpLoad: {
+   //            threshold: 50
+   //          }
+   //      })
+   //      that.scroll2 = new BScroll(that.$refs.rightWrapper, {
+   //          scrollY: true,
+   //          click: true
+   //      })
+   //    })
+  },
+  methods: {
+    _initScroll () {
+      var that = this;
+      that.$nextTick(() => {
         that.scroll = new BScroll(that.$refs.leftWrapper, {
             scrollY: true,
             click: true,
@@ -343,12 +351,84 @@ export default {
         })
         that.scroll2 = new BScroll(that.$refs.rightWrapper, {
             scrollY: true,
-            click: true
+            click: true,
+            pullUpLoad:{
+              threshold: 20, // 当上拉到超过底部 70px 时，                    
+            }
         })
-      })
-  },
-  methods: {
+        that.scroll2.on("pullingUp",function(){    
+          console.log(goodsData);
+          that.p++;
+          if(that.p>3) {
+            that.showMoreIcon= false;
+          } else {
+            setTimeout(function(){
+            that.goodsData.push({
+            "id": "50",
+            "set_id": "50",
+            "goods_name": "BWT  Filter Cartridge (Mg+)",
+            "coverpic": "http://api.mall.thatsmags.com/Public/ckfinder/images/BWT/3+1.jpg",
+            "goods_price": "139",
+            "sale_count": "1",
+            "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/BWT/3+1.jpg"
+          },
+          {
+            "id": "38",
+            "set_id": "38",
+            "goods_name": "Velociraptor Puzzle Dig Kit",
+            "coverpic": "http://api.mall.thatsmags.com/Public/ckfinder/images/Dr.Cool/dino fossil 3d/6.png",
+            "goods_price": "168",
+            "sale_count": "0",
+            "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/Dr.Cool/dino fossil 3d/6.png"
+          },{
+            "id": "50",
+            "set_id": "50",
+            "goods_name": "BWT  Filter Cartridge (Mg+)",
+            "coverpic": "http://api.mall.thatsmags.com/Public/ckfinder/images/BWT/3+1.jpg",
+            "goods_price": "139",
+            "sale_count": "1",
+            "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/BWT/3+1.jpg"
+          },
+          {
+            "id": "38",
+            "set_id": "38",
+            "goods_name": "Velociraptor Puzzle Dig Kit",
+            "coverpic": "http://api.mall.thatsmags.com/Public/ckfinder/images/Dr.Cool/dino fossil 3d/6.png",
+            "goods_price": "168",
+            "sale_count": "0",
+            "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/Dr.Cool/dino fossil 3d/6.png"
+          },{
+            "id": "50",
+            "set_id": "50",
+            "goods_name": "BWT  Filter Cartridge (Mg+)",
+            "coverpic": "http://api.mall.thatsmags.com/Public/ckfinder/images/BWT/3+1.jpg",
+            "goods_price": "139",
+            "sale_count": "1",
+            "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/BWT/3+1.jpg"
+          },
+          {
+            "id": "38",
+            "set_id": "38",
+            "goods_name": "Velociraptor Puzzle Dig Kit",
+            "coverpic": "http://api.mall.thatsmags.com/Public/ckfinder/images/Dr.Cool/dino fossil 3d/6.png",
+            "goods_price": "168",
+            "sale_count": "0",
+            "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/Dr.Cool/dino fossil 3d/6.png"
+          })
+          if(that.p + 1>3) {
+            that.showMoreIcon= false;
+          }
+          that.scroll2.finishPullUp();
+          },200);
+            
+          }
+          
+          
+          that.scroll2.refresh();
+        });
 
+      })
+    }
   }
 };  
 </script>  
@@ -371,5 +451,8 @@ export default {
     box-sizing: border-box;
     padding-bottom: 55px;
     background-color: #E8E8E8;
+  }
+  .content {
+    background-color: #e8e8e8;
   }
 </style>  

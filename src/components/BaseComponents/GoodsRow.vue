@@ -1,11 +1,11 @@
 <template>
 	<div class="GoodRow">
 		<slot name="banner-img"></slot>
-		<ul class="goods-container">
+		<ul class="goods-container" :style="{backgroundColor:backgroundColor}">
 			<li class="goods-item" v-for="(item,index) in goodsData" :key="index" :style="{width: width}">
 				<router-link :to="{name: 'GoodsDetails', params: {GoodsId:item.id}}">
 					<div class="img-box">
-						<img v-lazy.container="item.coverpic" alt="">
+						<img v-lazy="item.coverpic" alt="">
 					</div>
 					<div class="good-info">
 						<div class="goods-name line2">
@@ -32,12 +32,16 @@ export default {
 		goodsData: {
 			type: Array,
 			default: function () {  
-	      return []  
-	    } 
+		      return []  
+		    } 
 		},
 		Columns: {
 			type: Number,
 			default: 3
+		},
+		backgroundColor: {
+			type: String,
+			default: '#fff'
 		}
 	},
 	data() {  
@@ -46,12 +50,21 @@ export default {
     }  
 	},
 	mounted() {
-		this.width = 100 / this.Columns + "%";
+		this.width = (100-this.Columns*2.6) / this.Columns + "%";
 		// console.log();
 	}
 }
 </script>
 <style scoped>
+	.banner-img-box {
+		background-color: #eee;
+		padding-top: 10px;
+	}
+	.banner-img {
+		width: 100%;
+	    height: auto;
+	    display: block;
+	}
 	img {
 		width: 100%;
 		height: auto;
@@ -63,28 +76,33 @@ export default {
 	.goods-container {
 		box-sizing: border-box;
 		font-size: 0;
-    display: block;
-    width: 100%;
-    white-space: normal;
-    position: relative;
-    margin-top: 0;
-    margin-bottom: 0;
-    background-color: #fff;
-    padding: 10px;
+	    display: block;
+	    width: 100%;
+	    white-space: normal;
+	    position: relative;
+	    margin-top: 0;
+	    margin-bottom: 0;
+	    background-color: #fff;
+	    padding: 10px;
 	}
 
 	.goods-item {
 		position: relative;
 		font-size: 17px;
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    background: 0 0;
-    box-sizing: border-box;
-    padding: 5px;
+	    display: inline-block;
+	    text-align: center;
+	    vertical-align: middle;
+	    background: 0 0;
+	    box-sizing: border-box;
+	    padding: 5px;
+	    border: 1px solid #dfdfdf;
+	    border-radius: 4px;
+	    margin: 1.3%;
+		background-color: #fff;
 	}
 	.goods-name {
 		height: 38px;
+		margin-bottom: 5px;
 	}
 	.goods-price {
 		display: flex;

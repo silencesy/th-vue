@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Vuex from 'vuex';
+import Vuex from 'vuex'
 import http from "./utils/http"
 Vue.use(Vuex);
 Vue.use(http);

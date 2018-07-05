@@ -65,7 +65,7 @@ export default {
     -webkit-box-orient:vertical;
   }
   body {
-    background-color: #E8E8E8;
+    background-color: #eee;
   }
   #app {
     max-width: 750px;
@@ -90,15 +90,15 @@ export default {
     -webkit-box-orient:vertical;
   }
   .swiper-pagination-bullet {
-    width: 10px;
-    height: 2px;
-    display: inline-block;
-    border-radius: 0;
-    transition: all 0.2s ease;
+    width: 10px !important;
+    height: 2px !important;
+    display: inline-block !important;
+    border-radius: 0 !important;
+    transition: all 0.2s ease !important;
   }
   .swiper-pagination-bullet-active {
-    background-color: #f24827;
-    width: 18px;
+    background-color: #f24827 !important;
+    width: 18px !important;
   }
   .clearfix:before,.clearfix:after {
     content: "";
@@ -127,5 +127,66 @@ export default {
     opacity: 0;
     -webkit-transform: translate(-50px, 0);
     transform: translate(-50px, 0);
+  }
+  .more-icon {
+    padding: 10px;
+    background-color: #fff;
+  }
+  .mint-spinner-fading-circle {
+    margin: 0 auto;
+  }
+  /*tab栏重置*/
+  .mint-navbar .mint-tab-item.is-selected {
+    border-bottom: 1px solid #f24827 !important;
+    color: #f24827 !important;
+    margin-bottom: -1px !important;
+  }
+  /*搜索重置*/
+  .mint-searchbar {
+    background-color: #fff !important;
+    padding: 8px 10px 0 10px !important;
+  }
+  .mint-searchbar-inner {
+    background-color: #eee !important;
+    border-radius: 40px !important;
+    height: 22px !important;
+  }
+  .mint-searchbar-core {
+    background-color: #eee !important;
+    padding-left: 8px !important;
+  }
+  .mint-search {
+    height: 52px !important;
+  }
+  .mint-searchbar-inner .mintui-search {
+    color: #8E8E93 !important;
+    font-size: 16px !important;
+    margin-left: 10px !important;
+  }
+  .mint-searchbar-cancel {
+    display: none !important;
+  }
+  #search-clear {
+    margin-right: 15px;
+  }
+  .search-container {
+    padding-right: 60px;
+    height: 38px;
+    position: relative;
+  }
+  .cancel-btn {
+    height: 38px;
+    line-height: 46px;
+    width: 55px;
+    background-color: #fff;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #007AFF;
+    text-align: right;
+    padding-right: 10px;
+    color: #999;
   }
 </style>

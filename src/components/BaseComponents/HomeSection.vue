@@ -8,7 +8,7 @@
 				<swiper-slide class="goods-item" v-for="(item,index) in sectionData.list" :key="index">
 					<router-link :to="{name: 'GoodsDetails', params: {GoodsId:item.id}}">
 						<div class="img-box">
-							<img v-lazy.container="item.set_img" alt="">
+							<img v-lazy="item.set_img" alt="">
 						</div>
 						<div class="">
 							<div class="line2 goods-name">{{item.goods_name}}</div>

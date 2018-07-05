@@ -22,12 +22,12 @@
 		data() {  
 	    return {  
        	swiperOption: {  
-		      pagination: {
-		        el: '.swiper-pagination',
-		        clickable: true,
-		      },
-		      loop: true,
-        }  
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+				loop: true
+	        }  
 	    };  
   	},
   	computed: {  
@@ -41,4 +41,5 @@
 .nav-swiper img {
 	width: 100%;
 }
+
 </style>
