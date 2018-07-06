@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div class="myItem">
-			<router-link to="/">
+			<router-link to="/AddressBook">
 				<span class="iconfont icon-shouhuodizhi"></span>
 				<p>Address Book</p>
 			</router-link>

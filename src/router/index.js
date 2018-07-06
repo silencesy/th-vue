@@ -105,7 +105,7 @@ export default new Router({
       }
     },
     {
-      path: "/AddressBook/:GoodsId",
+      path: "/AddressBook",
       name: "AddressBook",
       meta: {
         keepAlive: true
@@ -175,6 +175,16 @@ export default new Router({
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsGoods')), 'CouponsGoods')
+      }
+    },
+    {
+      path: "/Login",
+      name: "Login",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Login')), 'Login')
       }
     }
   ]
