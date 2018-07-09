@@ -15,27 +15,41 @@
 		<!-- tab-container -->
 		<mt-tab-container v-model="selected">
 		  <mt-tab-container-item id="1">
-		    <GoodsRow :goodsData="goodsData" :Columns="2" backgroundColor="#eee"/>
+        <Sort />
+        <ScrollView :height="height-124" :pullup="pullup"  @pullingUp="loadData">
+          <GoodsRow :goodsData="goodsData" :Columns="2" backgroundColor="#eee"/>
+        </ScrollView>
+		    
 		  </mt-tab-container-item>
 		  <mt-tab-container-item id="2">
-		    <shopRow />
+        <ScrollView :height="height-84" :open="openScrollView.Shops.open" :pullup="pullup"  @pullingUp="loadData">
+          <shopRow />
+        </ScrollView>
+		    
 		  </mt-tab-container-item>
 		  <mt-tab-container-item id="3">
-		    <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+        <ScrollView :height="height-84" :open="openScrollView.Articles.open" :pullup="pullup"  @pullingUp="loadData">
+          <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+          <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+          
+        </ScrollView>
 		  </mt-tab-container-item>
 		  <mt-tab-container-item id="4">
-		    <GoodsRow :goodsData="goodsData" :Columns="2" backgroundColor="#eee"/>
+        <Sort />
+        <ScrollView :height="height-124" :open="openScrollView.Ticketing.open" :pullup="pullup"  @pullingUp="loadData">
+          <GoodsRow :goodsData="goodsData" :Columns="2" backgroundColor="#eee"/>
+        </ScrollView>
 		  </mt-tab-container-item>
 		  <mt-tab-container-item id="5">
-		    <GoodsRow :goodsData="goodsData" :Columns="2" backgroundColor="#eee"/>
+        <Sort @Sort="CouponsSort"/>
+        <ScrollView :height="height-124" :open="openScrollView.Coupons.open" :pullup="pullup" :noDada="openScrollView.Coupons.noDada"  @pullingUp="CouponsloadData">
+          <GoodsRow :goodsData="goodsData2" :Columns="2" backgroundColor="#eee"/>
+        </ScrollView>
 		  </mt-tab-container-item>
 		</mt-tab-container>
 	</div>
 </template>
 <script>
-	import ShopRow from "../../BaseComponents/ShopRow";
-	import GoodsRow from "../../BaseComponents/GoodsRow";
-	import BaseArticle from "../../BaseComponents/BaseArticle";
 	var googs = [
       {
         "id": "222",
@@ -162,18 +176,98 @@
 				selected: '1',
 				value: '',
 				goodsData: googs,
+        goodsData2: [],
 				articleData: articleData,
 				articleItemStyleObj: {
-		        'border': '1px solid #dfdfdf',
-		        'padding': '10px'
-		      }
+	        'border': '1px solid #dfdfdf',
+	        'padding': '10px'
+	      },
+        pullup: true,
+        height: 0,
+        openScrollView: {
+          Shops: {
+            open: false,
+            page: 0,
+            pageSize: 10
+          },
+          Articles: {
+            open: false,
+            page: 0,
+            pageSize: 10
+          },
+          Ticketing: {
+            open: false,
+            page: 0,
+            pageSize: 10
+          },
+          Coupons: {
+            open: false,
+            page: 0,
+            pageSize: 10,
+            noDada: true
+          }
+        }
 			}
 		},
+    mounted() {
+      var that = this;
+      that.$nextTick(() => {
+        setTimeout(function(){
+          that.height = document.documentElement.clientHeight;
+        },20);
+      });
+    },
 		components: {
-			ShopRow,
-			GoodsRow,
-			BaseArticle,
-		}
+      GoodsRow: r => { require.ensure([], () => r(require('../../BaseComponents/GoodsRow')), 'GoodsRow') },
+      ScrollView: r => { require.ensure([], () => r(require('../../BaseComponents/ScrollView')), 'ScrollView') },
+      BaseArticle: r => { require.ensure([], () => r(require('../../BaseComponents/BaseArticle')), 'BaseArticle') },
+      Sort: r => { require.ensure([], () => r(require('../../BaseComponents/Sort')), 'Sort') },
+			ShopRow: r => { require.ensure([], () => r(require('../../BaseComponents/ShopRow')), 'ShopRow') }
+		},
+    methods: {
+      loadData() {
+        console.log(0);
+      },
+      CouponsloadData() {
+        var that = this;
+        that.openScrollView.Coupons.page++;
+        
+        if (that.openScrollView.Coupons.page>2) {
+          that.openScrollView.Coupons.noDada = false
+        } else {
+          setTimeout(function(){
+            that.goodsData2 = that.goodsData2.concat(googs);
+          },2000);
+        }
+      },
+      CouponsSort(data) {
+        var that = this;
+        that.openScrollView.Coupons.noDada = true;
+        this.openScrollView.Coupons.page = 0;
+        that.goodsData2 = [];
+        setTimeout(function(){
+          that.goodsData2 = that.goodsData2.concat(googs);
+        },2000);
+      }
+    },
+    watch: {
+      selected: function(newVal,oldVal) {
+        var that = this;
+        console.log(newVal);
+        if (newVal==2) {
+          that.openScrollView.Shops.open = true;
+        } else if (newVal==3) {
+          that.openScrollView.Articles.open = true;
+        } else if (newVal==4) {
+          that.openScrollView.Ticketing = true;
+        } else if (newVal==5) {
+          that.openScrollView.Coupons.open = true;
+          setTimeout(function(){
+            that.goodsData2 = that.goodsData2.concat(googs);
+          },2000);
+        }
+      }
+    }
 	}
 </script>
 <style scoped>

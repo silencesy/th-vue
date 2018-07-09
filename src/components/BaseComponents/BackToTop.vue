@@ -18,14 +18,8 @@
     },
     methods: {
       backTop() {
-        let back = setInterval(() => {
-          if(document.body.scrollTop||document.documentElement.scrollTop){
-            document.body.scrollTop-=1000;
-            document.documentElement.scrollTop-=1000;
-          }else {
-            clearInterval(back)
-          }
-        });
+        document.body.scrollTop = 0
+        document.documentElement.scrollTop = 0
       },
       handleScroll(){
         if (document.documentElement.scrollTop + document.body.scrollTop > 250) {

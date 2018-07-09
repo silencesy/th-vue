@@ -44,8 +44,6 @@ Vue.use(Mint, {
 import 'lib-flexible/flexible.js'
 Vue.config.productionTip = false
 
-
-
 Vue.mixin({
   data() {
     return {

@@ -176,6 +176,16 @@ export default new Router({
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsGoods')), 'CouponsGoods')
       }
+    },
+    {
+      path: "/OrderConfirmation",
+      name: "OrderConfirmation",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Order/OrderConfirmation')), 'OrderConfirmation')
+      }
     }
   ]
 })

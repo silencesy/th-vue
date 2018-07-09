@@ -172,16 +172,4 @@ export default {
     right: 24px;
     top: 16px;
   }
-  input::-webkit-input-placeholder {
-    color: #fff;
-  }
-  input:-moz-placeholder {
-    color: #fff; 
-  }
-  input::-moz-placeholder {
-    color: #fff;
-  }
-  input:-ms-input-placeholder {
-    color: #fff;
-  }
 </style>  
