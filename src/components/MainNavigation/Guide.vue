@@ -9,32 +9,14 @@
     <div class="page-tab-container">  
       <mt-tab-container class="page-tabbar-tab-container" v-model="active" swipeable>  
         <mt-tab-container-item class="item-container wrapper" id="tab-container1">
-          <div class="wrapper" ref='Wrapper1' :style="{height:height+'px'}">
-            <div class="content">
-                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
-                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
-                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
-                
-            </div>
-          </div>
+          <ScrollView>
+          </ScrollView>
         </mt-tab-container-item>  
         <mt-tab-container-item class="item-container" id="tab-container2">  
-          <div class="wrapper" ref='Wrapper2' :style="{height:height+'px'}">
-            <div class="content">
-                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/> 
-                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/> 
-                <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/> 
-            </div>
-          </div>
+          
         </mt-tab-container-item>  
         <mt-tab-container-item class="item-container" id="tab-container3">  
-          <div class="wrapper" ref='Wrapper3' :style="{height:height+'px'}">
-            <div class="content">
-                 <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
-                 <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
-                 <BaseArticle :articleData="articleData" articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
-            </div>
-          </div>
+          
         </mt-tab-container-item>  
       </mt-tab-container>   
     </div>  
@@ -43,7 +25,7 @@
   
 <script>  
 import BaseArticle from "../BaseComponents/BaseArticle";
-import BScroll from 'better-scroll';
+import ScrollView from '../BaseComponents/ScrollView.vue';
 let articleData = {
       "list": [
         {
@@ -90,38 +72,28 @@ export default {
       articleItemStyleObj: {
         'border': '1px solid #dfdfdf',
         'padding': '10px'
-      }
+      },
+      pullup: true,
+      pulldown: true
     };  
   },
   components: {
-    BaseArticle
+    BaseArticle,
+    ScrollView
   },
   mounted() {
     var that = this;
     that.height = that.screenHeight-95;
-    that.$nextTick(() => {
-        that.scroll1 = new BScroll(that.$refs.Wrapper1, {
-            scrollY: true,
-            click: true,
-            pullUpLoad: {
-              threshold: 50
-            }
-        })
-        that.scroll2 = new BScroll(that.$refs.Wrapper2, {
-            scrollY: true,
-            click: true,
-            pullUpLoad: {
-              threshold: 50
-            }
-        })
-        that.scroll3 = new BScroll(that.$refs.Wrapper3, {
-            scrollY: true,
-            click: true,
-            pullUpLoad: {
-              threshold: 50
-            }
-        })
-      })
+  },
+  methods: {
+    refresh() {
+      console.log(123);
+      this.$refs.pullrefresh.$emit('pullrefresh.finishLoad');
+    },
+    load() {
+      console.log(456);
+      this.$refs.pullrefresh.$emit('infinitescroll.loadedDone');
+    }
   }
 };  
 </script>  
@@ -143,6 +115,7 @@ export default {
   }
   .item-container {
     background-color: #fff;
+ 
   }
   .active-bttom {
     border-bottom: 1px solid #f6442b;
@@ -157,4 +130,18 @@ export default {
 		background: rgba(0,0,0,0);
 		border-bottom: 2px solid #f6442b; 
 	}
+  .page-tabbar-tab-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 55px;
+  }
+  .item-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
 </style> 
