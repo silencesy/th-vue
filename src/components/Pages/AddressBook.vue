@@ -1,23 +1,27 @@
 <template>
 	<div class="AddressBook">
-		<div v-for="(item,index) in idArr" class="addressPer">
-			<div class="addList">
-				<p>Amanda</p>
-				<p>15637849685</p>
-				<p>154520620@qq.com</p>
-				<p>上海市黄浦区蒙自路169号</p>
-			</div>
-			
-	    <div class="addBottom">
-				<div class="addDefault">
-					<input class="defaultRadio" type="radio" :id="item" :value="item" v-model="picked" @change="setDefault(item)">
-	       	<label :for="item">Default</label>
+		<div class="fix">
+			<div v-for="(item,index) in idArr" class="addressPer">
+				<div class="addList">
+					<p>Amanda</p>
+					<p>15637849685</p>
+					<p>154520620@qq.com</p>
+					<p>上海市黄浦区蒙自路169号</p>
+				</div>		
+		    <div class="addBottom">
+					<div class="addDefault">
+						<input class="defaultRadio" type="radio" :id="item" :value="item" v-model="picked" @change="setDefault(item)">
+		       	<label :for="item">Default</label>
+					</div>
+					<div class="addChange">
+						<span><i class="iconfont icon-bianji">Edit</i></span>
+						<span @click="setDelete(item)"><i class="iconfont icon-shanchu">Delete</i></span>
+					</div>
 				</div>
-				<div class="addChange">
-					<span><i class="iconfont icon-bianji">Edit</i></span>
-					<span @click="setDelete(item)"><i class="iconfont icon-shanchu">Delete</i></span>
-				</div>
 			</div>
+		</div>
+		<div class="bottom">
+			<router-link to='/'>+Add New Shipping Address</router-link>
 		</div>
 	</div>
 </template>
@@ -133,5 +137,21 @@
   }
   .defaultRadio:checked + label:before {
     border: 1px solid #f9421e
+  }
+  .bottom {
+  	position: fixed;
+  	bottom: 0;
+  	left: 0;
+  	right: 0;
+  	height: 40px;
+  	line-height: 40px;
+  	text-align: center;
+  	background: #f9421e;
+  }
+  .bottom a {
+    color: #fff;
+  }
+  .fix .addressPer:last-child {
+		margin-bottom: 50px;
   }
 </style>
