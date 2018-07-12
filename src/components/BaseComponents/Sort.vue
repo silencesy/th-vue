@@ -1,8 +1,8 @@
 <template>
 	<div class="Sort">
-		<div :class="{active:index == 1}" @click="tab(1)">Latest</div>
-		<div :class="{active:index == 2}" @click="tab(2)">Sale</div>
-		<div :class="{active:index == 3}" @click="tab(3)">Price <span class="arrow-box"><i class="iconfont icon-xiangshangjiantou-copy-copy-copy-copy" :class="{active:index == 3 && lift == 3}"></i><i class="iconfont icon-xiangshangjiantou-copy-copy-copy" :class="{active:index == 3 && lift == 4}"></i></span></div>
+		<div :class="{active:index == 'createTime_desc'}" @click="tab('createTime_desc')">Latest</div>
+		<div :class="{active:index == 'sellNumber_desc'}" @click="tab('sellNumber_desc')">Sale</div>
+		<div :class="{active:index == 'price_desc'}" @click="tab('price_desc')">Price <span class="arrow-box"><i class="iconfont icon-xiangshangjiantou-copy-copy-copy-copy" :class="{active:index == 'price_desc' && lift == 'price_asc'}"></i><i class="iconfont icon-xiangshangjiantou-copy-copy-copy" :class="{active:index == 'price_desc' && lift == 'price_desc'}"></i></span></div>
 	</div>
 </template>
 <script>
@@ -13,16 +13,10 @@
 	 */
 	export default {
 		name: "Sort",
-		props: {
-			init: {
-				type: Boolean,
-				default: false
-			}
-		},
 		data() {
 			return {
-				index: 1,
-				lift: 4,
+				index: 'createTime_desc',
+				lift: 'price_desc',
 				frist: false
 			}
 		},
@@ -31,7 +25,7 @@
 				var that = this;
 				if (that.index!=index) {
 					that.index = index;
-					if (index == 1||index == 2) {
+					if (index == 'createTime_desc'||index == 'sellNumber_desc') {
 						that.$emit('Sort',index);
 					}
 				}
@@ -39,33 +33,30 @@
 					if(that.frist) {
 						that.frist = false;
 						that.$emit('Sort',that.lift);
-					} else if (that.index == 3 && index == 3){
-						if (that.lift == 3) {
-							that.lift = 4;
+					} else if (that.index == 'price_desc' && index == 'price_desc'){
+						if (that.lift == 'price_desc') {
+							that.lift = 'price_asc';
 							that.$emit('Sort',that.lift);
 						} else {
-							that.lift = 3;
+							that.lift = 'price_desc';
 							that.$emit('Sort',that.lift);
 						}
 					}
 				},20);
+			},
+			init() {
+				this.index = 'createTime_desc';
+				this.lift ='price_asc';
+				this.frist = false;
 			}
 		},
 		watch: {
 			index: function(newVal,oldVal) {
 				var that = this;
-				if (newVal==3) {
+				if (newVal=='price_desc') {
 					that.frist = true;
 				} else {
 					that.frist = false;
-				}
-			},
-			init: function(newVal,oldVal) {
-				if (newVal == true) {
-					this.index = 1;
-					this.lift =4;
-					this.frist = false;
-					this.init = false;
 				}
 			}
 		}

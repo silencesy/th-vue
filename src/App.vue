@@ -133,7 +133,7 @@ export default {
     background-color: #fff;
   }
   .mint-spinner-fading-circle {
-    margin: 0 auto;
+    margin: 10px auto;
   }
   /*tab栏重置*/
   .mint-navbar .mint-tab-item.is-selected {

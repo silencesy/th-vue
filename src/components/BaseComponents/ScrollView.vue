@@ -1,5 +1,5 @@
 <template>
-    <div class="ScrollView wrapper" ref="wrapper" :style="{width:'100%',height:height+'px'}">
+    <div class="ScrollView wrapper" ref="wrapper" :style="{width:'100%',height:height+'px',backgroundColor: color}">
         <div class="content">
             <slot></slot>
             <mt-spinner v-show="noDada" type="fading-circle" :size='18' color="#f24827"></mt-spinner>
@@ -24,7 +24,9 @@
         */
         data: {
           type: Array,
-          default: null
+          default: function () {
+            return []
+          }
         },
         /**
          * 请求成功
@@ -44,6 +46,13 @@
         height: {
           type: Number,
           default: 0
+        },
+        /**
+         * 背景颜色
+         */
+        color: {
+          type: String,
+          default: '#fff'
         },
         probeType: {
           type: Number,
@@ -108,6 +117,7 @@
       },
       mounted() {
         var that = this;
+        if(this.data.length=0) this.noDada=false
         that.$nextTick(() => {
           setTimeout(function(){
             that._initScroll();
@@ -146,19 +156,16 @@
 
           // 是否派发滚动到底部事件，用于上拉加载
           if (that.pullup) {
-            that.scroll.on('pullingUp',function(){
-              // that.scroll.finishPullUp();
-              that.$emit('pullingUp');
-            })
-            // that.scroll.on('scrollEnd', () => {
-            //   // 滚动到底部
-            //   if (that.scroll.y <= (that.scroll.maxScrollY + 50)) {
-            //     that.$emit('pullingUp')
-            //   }
-            //   setTimeout(function(){
-            //     that.finishPullUp();
-            //   },2000)
+            // that.scroll.on('pullingUp',function(){
+            //   that.$emit('pullingUp');
+              
             // })
+            that.scroll.on('scrollEnd', () => {
+              // 滚动到底部
+              if (that.scroll.y <= (that.scroll.maxScrollY + 50)) {
+                that.$emit('pullingUp')
+              }
+            })
           }
           
           // 是否派发顶部下拉事件，用于下拉刷新
@@ -179,19 +186,23 @@
           }
         },
         disable(){
-          that.scroll && that.scroll.disable()  
+          this.scroll && this.scroll.disable()  
         },
         enable(){
-          that.scroll && that.scroll.enable()
+          this.scroll && this.scroll.enable()
         },
         refresh(){
-          that.scroll && that.scroll.refresh()
+          this.scroll && this.scroll.refresh()
         },
         scrollTo(){
-          that.scroll && that.scroll.scrollTo.apply(that.scroll, arguments)
+          this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
         },
         scrollToElement() {
-          that.scroll && that.scroll.scrollToElement.apply(that.scroll, arguments) 
+          this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments) 
+        },
+        finishPullUp() {
+          console.log(123);
+          this.scroll.finishPullUp();
         }
       },
       watch: {
@@ -209,5 +220,6 @@
 <style scoped>
     .wrapper {
       overflow: hidden;
+      background-color: #eee;
     }
 </style>

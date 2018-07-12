@@ -5,9 +5,10 @@ import App from './App'
 import router from './router'
 import Vuex from 'vuex'
 import http from "./utils/http"
+import utils from "./utils/utils"
 Vue.use(Vuex);
 Vue.use(http);
-
+Vue.use(utils);
 
 //fastClick (消除移动端300毫秒延迟)
 import FastClick from 'fastclick'
@@ -28,7 +29,7 @@ import 'mint-ui/lib/style.css'
 // 图片懒加载
 Vue.use(Mint, {
   lazyload: {
-    preLoad: 200,
+    preLoad: 5000,
     error: 'http://api.mall.thatsmags.com/Public/ckfinder/images/grey.jpg',
     loading: '',
     attempt: 1,

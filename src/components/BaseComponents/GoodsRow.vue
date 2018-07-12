@@ -9,14 +9,14 @@
 					</div>
 					<div class="good-info">
 						<div class="goods-name line2">
-							{{item.goods_name}}
+							{{item.title}}
 						</div>
 						<div class="goods-price">
 							<div class="theme_color">
-								{{item.goods_price}}
+								￥{{item.price}}
 							</div>
 							<div>
-								<del>{{item.goods_price}}</del>
+								<del>{{item.coupon_price}}</del>
 							</div>
 						</div>
 					</div>

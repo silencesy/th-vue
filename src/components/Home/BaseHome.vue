@@ -45,7 +45,7 @@ export default {
       if (nowVal == 'Home') {
         nowVal = '/'
       }
-      this.$router.push(nowVal);
+      this.$router.push(nowVal); 
     },
     '$route' (to, from) {
       this.selected = to.name;
