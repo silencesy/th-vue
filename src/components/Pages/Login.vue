@@ -4,13 +4,13 @@
 			<img src="static/images/common/Mart.svg" alt="">
 		</div>
 		<div class="content">
-			<div class="contentInfo"><input type="text" placeholder="Enter phone number"></div>
-			<div class="contentInfo"><input type="password" placeholder="Enter password"></div>
+			<div class="contentInfo"><input type="text" v-model='name' placeholder="Enter phone number"></div>
+			<div class="contentInfo"><input type="password" v-model='password' placeholder="Enter password"></div>
 			<div class="tips">
 				<router-link to='/'>Forgot password?</router-link>
 				<router-link to='/'>Don't have an account?</router-link>
 			</div>
-			<div class="contentInfo"><button>LOG IN</button></div>
+			<div class="contentInfo"><button @click="Login">LOG IN</button></div>
 		</div>
 		<div class="wechat">
 	   	<span class="line"></span>
@@ -24,15 +24,30 @@
 	</div>
 </template>
 <script>
+	import { Toast } from 'mint-ui'
 	export default {
 		name: 'Login',
 		data () {
 			return {
-
+				name: "",
+				password: ""
 			}
 		},
 		mounted () {
 			
+		},
+		methods: {
+			Login() {
+				console.log(this.name,this.password)
+				if(!this.name) {
+					Toast('name empty');
+					// Toast({
+					//   message: 'name empty',
+					//   iconClass: 'icon icon-success'
+					// });
+					// alert('w');
+				} 
+			}
 		}
 	}
 </script>
