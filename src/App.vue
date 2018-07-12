@@ -36,6 +36,9 @@ export default {
     font-size: 16px;
     color: #222;
   }
+  i {
+    font-style: normal;
+  }
   a {
     text-decoration: none;
     color: #222;

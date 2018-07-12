@@ -85,36 +85,6 @@ export default new Router({
     	component: GoodsDetails
     },
     {
-      path: "/CouponsList",
-      name: "CouponsList",
-      meta: {
-        keepAlive: true
-      },
-      component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsList')), 'CouponsList')
-      }
-    },
-    {
-      path: "/WishList/:GoodsId",
-      name: "WishList",
-      meta: {
-        keepAlive: true
-      },
-      component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/WishList')), 'WishList')
-      }
-    },
-    {
-      path: "/AddressBook",
-      name: "AddressBook",
-      meta: {
-        keepAlive: true
-      },
-      component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/AddressBook')), 'AddressBook')
-      }
-    },
-    {
       path: "/home/HomeSearch",
       name: "HomeSearch",
       component: () => import('@/components/Pages/Search/HomeSearch')
@@ -195,6 +165,46 @@ export default new Router({
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Order/OrderConfirmation')), 'OrderConfirmation')
+      }
+    },
+    {
+      path: "/Pay",
+      name: "Pay",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Pay/Pay')), 'Pay')
+      }
+    },
+    {
+      path: "/Unpaid",
+      name: "Unpaid",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Pay/Unpaid')), 'Unpaid')
+      }
+    },
+    {
+      path: "/Paid",
+      name: "Paid",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Pay/Paid')), 'Paid')
+      }
+    },
+    {
+      path: "/ArticleDetail",
+      name: "ArticleDetail",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Article/ArticleDetail')), 'ArticleDetail')
       }
     }
   ]
