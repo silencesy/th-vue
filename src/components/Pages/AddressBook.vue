@@ -136,7 +136,7 @@
     background: #f9421e;
   }
   .defaultRadio:checked + label:before {
-    border: 1px solid #f9421e
+    border: 1px solid #f9421e;
   }
   .bottom {
   	position: fixed;
@@ -147,11 +147,13 @@
   	line-height: 40px;
   	text-align: center;
   	background: #f9421e;
+  	margin: 0 10px 10px 10px;
+    border-radius: 23px;
   }
   .bottom a {
     color: #fff;
   }
   .fix .addressPer:last-child {
-		margin-bottom: 50px;
+		margin-bottom: 60px;
   }
 </style>

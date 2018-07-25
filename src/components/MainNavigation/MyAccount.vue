@@ -183,11 +183,12 @@
     top: 8px;
     right: 2px;
     background: #F9421E;
-    width: 22px;
-    height: 22px;
-    line-height: 22px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
     border-radius: 50%;
     color: #fff;
+    font-size: 12px;
 	}
 	.status a span {
 		display: block;

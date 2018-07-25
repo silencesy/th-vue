@@ -144,6 +144,9 @@ export default {
     color: #f24827 !important;
     margin-bottom: -1px !important;
   }
+  .mint-navbar .mint-tab-item .mint-tab-item-label {
+    font-size: 16px !important;
+  }
   /*搜索重置*/
   .mint-searchbar {
     background-color: #fff !important;
@@ -192,6 +195,7 @@ export default {
     padding-right: 10px;
     color: #999;
   }
+<<<<<<< HEAD
   /*重置多选框*/
   .defaultCheckbox {
     position: absolute;
@@ -247,4 +251,9 @@ export default {
     background-color: #f9421e;
   }
 
+=======
+  .mint-toast-text {
+    color: #fff;
+  }
+>>>>>>> d54328d3383668a817ced41a6c768b410abbbf60
 </style>
