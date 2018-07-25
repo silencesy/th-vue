@@ -11,14 +11,25 @@
     <div class="nav-swiper">
       <BaseSwiper :swiperData="homeData.figure" />
     </div>
+    <!-- deal -->
     <HomeSection :sectionData="homeData.deal"/>
+    <!-- ticketing -->
     <HomeSection :sectionData="homeData.ticketing"/>
-    <HomeSection :sectionData="homeData.feature_products"/>
-    <HomeSection :sectionData="homeData.houseware"/>
-    <HomeSection :sectionData="homeData.motherandbaby"/>
+    <!-- flowers -->
+    <HomeSection :sectionData="homeData.flowers"/>
+    <!-- thDispatcher -->
+    <HomeSection :sectionData="homeData.thDispatcher"/>
+    <!-- homeWare -->
+    <HomeSection :sectionData="homeData.homeWare"/>
+    <!-- babyProduct -->
+    <HomeSection :sectionData="homeData.babyProduct"/>
+    <!-- toys -->
     <HomeSection :sectionData="homeData.toys"/>
+    <!-- coupon -->
     <HomeSection :sectionData="homeData.coupon"/>
-    <HomeSection :sectionData="homeData.coupon"/>
+    <!-- electronic -->
+    <HomeSection :sectionData="homeData.electronic"/>
+    <!-- article -->
     <BaseArticle :articleData="homeData.article"></BaseArticle>
     <div v-show="homeData.figure">
       <GoodsRow :goodsData="hotData">
@@ -86,9 +97,11 @@ export default {
       //   Indicator.close();
       // });
       // console.log(that.$http);
-      that.$http.post('Api/Public/home')
+      that.$http.post('Ads/Home/list')
       .then(function (response) {
+
         that.homeData = response.data.data;
+        console.log(that.homeData)
       })
       .catch(function (error) {
         console.log(error);

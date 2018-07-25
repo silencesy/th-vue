@@ -46,7 +46,7 @@
 			},
 			init() {
 				this.index = 'createTime_desc';
-				this.lift ='price_asc';
+				this.lift ='price_desc';
 				this.frist = false;
 			}
 		},

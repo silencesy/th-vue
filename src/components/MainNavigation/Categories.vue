@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="left" :style="{width:'100%',height:height+'px'}">
-        <ScrollView :height="height" :noDada="noDada" color="#eee">
+        <ScrollView :height="height" :loadding="loadding" color="#eee">
           <ul class="category-container">
             <li class="category-item" :class="item.id==categoryActive?'active':''" v-for="(item,index) in categoryList" @click="checkCategroy(item.id)">{{item.title}}</li>
           </ul>
@@ -19,7 +19,7 @@
         <div class="sort-container">
           <Sort ref="Sort" @Sort="Sort"/>
         </div>
-        <ScrollView ref="ScrollView" :height="height-40" :pullup="pullup"  @pullingUp="loadData">
+        <ScrollView ref="ScrollView" :height="height-40" :pullup="pullup" :data="goodsList"  @pullingUp="loadData">
           <GoodsRow  :goodsData="goodsList" :Columns="2"/>
         </ScrollView>
       </div>
@@ -33,10 +33,10 @@ export default {
   data() {  
     return {  
       height: 0,
-      page: 1,
-      pageSize: 16,
+      page: 0,
+      pageSize: 8,
       pullup: true,
-      noDada: false,
+      loadding: false,
       categoryList: [],
       categoryActive: 1,
       goodsList: [],
@@ -89,26 +89,27 @@ export default {
         this.categoryActive = id;
         // 触发Sort组件初始化
         this.$refs.Sort.init();
+        this.initPara();
+        this.getGoodsData();
       }
-      this.initPara();
-      this.getGoodsData();
     },
     // 获取数据
     getGoodsData() {
       var that = this;
+      // console.log({id: that.categoryActive,page: that.page,pageSize: that.pageSize,sort: that.sort});
+      
       that.$http.post('Item/list',{
         id: that.categoryActive,
-        page: that.page++,
+        page: ++that.page,
         pageSize: that.pageSize,
         sort: that.sort
       })
       .then(function (response) {
-        console.log(response);
         that.goodsList = that.goodsList.concat(response.data.data.data);
+        if (response.data.data.totalPage == 0 || that.page >= response.data.data.totalPage) {
+          that.$refs.ScrollView.endup();
+        }
         that.totalPage = response.data.data.totalPage;
-        setTimeout(function(){
-          that.$refs.ScrollView.finishPullUp();
-        },200);
       });
     },
     // 改变排序
@@ -119,10 +120,11 @@ export default {
     },
     // 初始化参数
     initPara() {
-      this.page = 1;
+      this.page = 0;
       this.goodsList = [];
       this.totalPage = 0;
       this.$refs.ScrollView.scrollTo(0,0,0,'easing');
+      this.$refs.ScrollView.startup();
     }
   },
   watch: {

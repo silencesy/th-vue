@@ -192,4 +192,59 @@ export default {
     padding-right: 10px;
     color: #999;
   }
+  /*重置多选框*/
+  .defaultCheckbox {
+    position: absolute;
+    display: none;
+  }
+  .defaultCheckbox + label {
+    position: relative;
+    display: inline-block;
+    padding-left: 30px;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+  .defaultCheckbox + label:hover:before {
+    animation-duration: 0.4s;
+    animation-fill-mode: both;
+    animation-name: hover-color;
+  }
+  .defaultCheckbox + label:before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    content: '';
+    border: 1px solid #DFDFDF;
+  }
+  .defaultCheckbox + label:after {
+    position: absolute;
+    display: none;
+    content: '';
+  }
+  .defaultCheckbox:checked + label:before {
+    animation-name: none;
+  }
+  .defaultCheckbox:checked + label:after {
+    display: block;
+  }
+  .defaultCheckbox + label:before {
+    border-radius: 50%;
+  }
+  .defaultCheckbox + label:after {
+    top: 0;
+    left: 0;
+    width: 21px;
+    height: 21px;
+    background: url('./assets/images/hook.png') no-repeat;
+    border-radius: 50%;
+    background-position: center center;
+    background-size: 75% 70%;
+  }
+  .defaultCheckbox:checked + label:before {
+    background-color: #f9421e;
+  }
+
 </style>

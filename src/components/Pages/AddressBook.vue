@@ -11,7 +11,7 @@
 		    <div class="addBottom">
 					<div class="addDefault">
 						<input class="defaultRadio" type="radio" :id="item" :value="item" v-model="picked" @change="setDefault(item)">
-		       	<label :for="item">Default</label>
+		       			<label :for="item">Default</label>
 					</div>
 					<div class="addChange">
 						<span><i class="iconfont icon-bianji">Edit</i></span>

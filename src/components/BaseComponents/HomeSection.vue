@@ -1,20 +1,20 @@
 <template>
 	<div class="HomeSection">
 		<div class="banner-img-box">
-			<img :src="sectionData.image" alt="">
+			<img :src="sectionData.pic" alt="">
 		</div>
 		<div class="swipe-box">
 			<swiper :options="swiperOption"  ref="baseSwiper">
-				<swiper-slide class="goods-item" v-for="(item,index) in sectionData.list" :key="index">
+				<swiper-slide class="goods-item" v-for="(item,index) in sectionData.data" :key="index">
 					<router-link :to="{name: 'GoodsDetails', params: {GoodsId:item.id}}">
 						<div class="img-box">
-							<img v-lazy="item.set_img" alt="">
+							<img v-lazy="item.pic" alt="">
 						</div>
 						<div class="">
-							<div class="line2 goods-name">{{item.goods_name}}</div>
+							<div class="line2 goods-name">{{item.title}}</div>
 							<div class="price">
-								<div class="theme_color">￥{{item.goods_price}}</div>
-								<div>{{item.goods_sale_price}}</div>
+								<div class="theme_color">￥{{item.price}}</div>
+								<div>{{item.coupon_price}}</div>
 							</div>
 						</div>
 					</router-link>

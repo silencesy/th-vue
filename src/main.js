@@ -4,8 +4,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
+
+// axios封装（请求拦截 响应拦截 错误统一处理）
 import http from "./utils/http"
+
+// 自定义工具库
 import utils from "./utils/utils"
+
+// api地统一址入口
+import urls from "./utils/interface"
+Vue.use(urls);
+
+
 Vue.use(Vuex);
 Vue.use(http);
 Vue.use(utils);

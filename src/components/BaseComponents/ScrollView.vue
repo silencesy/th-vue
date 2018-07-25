@@ -2,7 +2,10 @@
     <div class="ScrollView wrapper" ref="wrapper" :style="{width:'100%',height:height+'px',backgroundColor: color}">
         <div class="content">
             <slot></slot>
-            <mt-spinner v-show="noDada" type="fading-circle" :size='18' color="#f24827"></mt-spinner>
+            <div v-show="loadding2" class="loadding-box">
+              <mt-spinner  type="fading-circle" :size='18' color="#f24827"></mt-spinner>
+            </div>
+            <div v-show="isShow" class="promptText">{{promptText2}}</div>
         </div>
     </div>
 </template>
@@ -44,7 +47,7 @@
          * 容器高度
          */
         height: {
-          type: Number,
+          type: [Number,String],
           default: 0
         },
         /**
@@ -108,16 +111,39 @@
           default: 20
         },
         /**
-         * 加载完毕
+         * 是否显示加载的图标
          */
-        noDada: {
+        loadding: {
           type: Boolean,
           default: true
+        },
+        /**
+         * 上拉结束提示文字或者没有数据的时候提示文字
+         */
+        promptText: {
+          type: String,
+          default: "No more data"
+        },
+        /**
+         * 小于多少个不显示提示语
+         */
+        LessThanNumber: {
+          type: Number,
+          default: 6
+        }
+      },
+      data () {
+        return {
+          // 控制加载图标
+          loadding2: this.loadding,
+          // 数据全部请求完成或者没有数据时提示用户
+          promptText2: this.promptText,
+          // 是否显示promptText
+          isShow: false
         }
       },
       mounted() {
         var that = this;
-        if(this.data.length=0) this.noDada=false
         that.$nextTick(() => {
           setTimeout(function(){
             that._initScroll();
@@ -140,9 +166,6 @@
               threshold: 50
             }
           })
-
-          
-
           // 是否派发滚动事件
           if(that.listenScroll){
             that.scroll.on('scroll',(pos) => {
@@ -201,8 +224,30 @@
           this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments) 
         },
         finishPullUp() {
-          console.log(123);
           this.scroll.finishPullUp();
+        },
+        // 结束加载
+        endup() {
+          
+          var that = this;
+          setTimeout(() => {
+            that.loadding2 = false;
+            if (that.data.length==0 ) {
+              that.isShow = true;
+            } else if (that.data.length<that.LessThanNumber){
+              that.isShow = false;
+            } else {
+              that.promptText2 = '- End -';
+              that.isShow = true;
+            }
+          }, 20);
+          
+        },
+        // 开始加载
+        startup() {
+          this.loadding2 = true;
+          this.isShow = false;
+          this.promptText2 = this.promptText;
         }
       },
       watch: {
@@ -213,6 +258,12 @@
             }
             this._initScroll();
           }
+        },
+        data: function() {
+          setTimeout(() => {
+            this.refresh();
+            // this.finishPullUp();
+          }, 20);
         }
       }
     }
@@ -221,5 +272,13 @@
     .wrapper {
       overflow: hidden;
       background-color: #eee;
+    }
+    .loadding-box {
+      padding: 0px 0 8px 0;
+    }
+    .promptText {
+      text-align: center;
+      padding-bottom: 15px;
+      color: #999; 
     }
 </style>
