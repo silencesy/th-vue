@@ -118,7 +118,7 @@ export default new Router({
       }
     },
     {
-      path: "/AddressBook/:GoodsId",
+      path: "/AddressBook",
       name: "AddressBook",
       meta: {
         keepAlive: true
@@ -154,7 +154,7 @@ export default new Router({
         keepAlive: true
       },
       component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/Login')), 'Login')
+        require.ensure([], () => resolve(require('@/components/Pages/Login/Login')), 'Login')
       }
     },
     {
@@ -205,6 +205,46 @@ export default new Router({
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Article/ArticleDetail')), 'ArticleDetail')
+      }
+    },
+    {
+      path: "/AddAddress",
+      name: "AddAddress",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/AddAddress')), 'AddAddress')
+      }
+    },
+    {
+      path: "/SignUp",
+      name: "SignUp",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Login/SignUp')), 'SignUp')
+      }
+    },
+    {
+      path: "/RePassword",
+      name: "RePassword",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Login/RePassword')), 'RePassword')
+      }
+    },
+    {
+      path: "/ForgotPassword",
+      name: "ForgotPassword",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Login/ForgotPassword')), 'ForgotPassword')
       }
     }
   ]

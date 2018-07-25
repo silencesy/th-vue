@@ -25,6 +25,7 @@ Vue.use(VueAwesomeSwiper)
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 
+
 // 图片懒加载
 Vue.use(Mint, {
   lazyload: {
