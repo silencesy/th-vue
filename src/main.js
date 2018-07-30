@@ -15,7 +15,7 @@ import utils from "./utils/utils"
 import urls from "./utils/interface"
 Vue.use(urls);
 
-
+console.log(router);
 Vue.use(Vuex);
 Vue.use(http);
 Vue.use(utils);
@@ -27,6 +27,7 @@ if ('addEventListener' in document) {
 		FastClick.attach(document.body);
 	}, false);
 }
+
 // 轮播
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'

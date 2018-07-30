@@ -4,12 +4,12 @@
 			<img class="banner-img" :src="articleData.pic" alt="">
 		</div>
 		<div class="article-content" :style="{backgroundColor:articleContentBg}">
-			<div class="article-item" v-for="(item,index) in articleData.data" :key="index" :style="articleItemStyleObj">
+			<div class="article-item" v-for="(item,index) in articleData.data" :key="index" :style="articleItemStyleObj" @click="goDetails(item.id)">
 				<div class="img-box">
 					<img v-lazy="item.pic" alt="">
 				</div>
 				<div class="article-info">
-					<p>{{item.title}}</p>
+					<p class="line2">{{item.title}}</p>
 					<span class="date">{{item.createTime}}</span>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 	name: 'BaseArticle',
 	props: {
 		articleData: {
-			type: Object,
+			type: [Object,Array],
 			default: function () {  
 		      return {}
 		    }  
@@ -49,6 +49,11 @@
 	    swiper() {  
 	      return this.$refs.baseSwiper.swiper;  
 	    }  
+  	},
+  	methods: {
+  		goDetails(id) {
+  			this.$router.push({ name: 'ArticleDetail', params: { id: id}})
+  		}
   	}
 	}
 </script>

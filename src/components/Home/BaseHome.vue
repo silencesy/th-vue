@@ -53,7 +53,7 @@ export default {
   },
   mounted() {
     var that = this;
-    that.selected = this.$route.name;
+    that.selected = that.$route.name;
   }
 }
 </script>

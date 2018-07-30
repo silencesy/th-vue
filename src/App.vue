@@ -43,11 +43,23 @@ export default {
     text-decoration: none;
     color: #222;
   }
+  ul,li {
+    list-style: none;
+  }
   .iconfont {
     font-size: 16px;
   }
   .theme_color {
     color: #f24827;
+  }
+  .line1 {
+    display:-webkit-box;
+    overflow:hidden;
+    white-space:normal!important;
+    text-overflow:ellipsis;
+    word-wrap:break-word;
+    -webkit-line-clamp:1;
+    -webkit-box-orient:vertical;
   }
   .line2 {
     display:-webkit-box;
@@ -67,6 +79,7 @@ export default {
     -webkit-line-clamp:3;
     -webkit-box-orient:vertical;
   }
+
   body {
     background-color: #eee;
   }
@@ -140,10 +153,24 @@ export default {
   }
   /*tab栏重置*/
   .mint-navbar .mint-tab-item.is-selected {
-    border-bottom: 1px solid #f24827 !important;
+    border-bottom: none !important;
     color: #f24827 !important;
     margin-bottom: -1px !important;
+    position: relative;
   }
+   .mint-navbar .mint-tab-item.is-selected:after {
+    content: ' ';
+    width: 60px;
+    height: 2px;
+    background-color: #f24827;
+    position: absolute;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+
+   }
   .mint-navbar .mint-tab-item .mint-tab-item-label {
     font-size: 16px !important;
   }
@@ -162,7 +189,7 @@ export default {
     padding-left: 8px !important;
   }
   .mint-search {
-    height: 52px !important;
+    height: 38px !important;
   }
   .mint-searchbar-inner .mintui-search {
     color: #8E8E93 !important;
@@ -195,7 +222,6 @@ export default {
     padding-right: 10px;
     color: #999;
   }
-<<<<<<< HEAD
   /*重置多选框*/
   .defaultCheckbox {
     position: absolute;
@@ -250,10 +276,27 @@ export default {
   .defaultCheckbox:checked + label:before {
     background-color: #f9421e;
   }
-
-=======
   .mint-toast-text {
     color: #fff;
+  } 
+  .nav > .nav-item .mint-button-text {
+    display: inline-block;
+    width: 100px;
+    position: relative;
   }
->>>>>>> d54328d3383668a817ced41a6c768b410abbbf60
+  .nav > .nav-item.active .mint-button-text {
+    color: #F9421E;
+  }
+  .nav > .nav-item.active .mint-button-text::after {
+    background-color: #F9421E;
+    width: 55px;
+    height: 2px;
+    content: " ";
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    position: absolute;
+  }
 </style>

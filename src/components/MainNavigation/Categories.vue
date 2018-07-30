@@ -11,7 +11,7 @@
       <div class="left" :style="{width:'100%',height:height+'px'}">
         <ScrollView :height="height" :loadding="loadding" color="#eee">
           <ul class="category-container">
-            <li class="category-item" :class="item.id==categoryActive?'active':''" v-for="(item,index) in categoryList" @click="checkCategroy(item.id)">{{item.title}}</li>
+            <li class="category-item line1" :class="item.id==categoryActive?'active':''" v-for="(item,index) in categoryList" @click="checkCategroy(item.id)">{{item.title}}</li>
           </ul>
         </ScrollView>
       </div>
@@ -69,7 +69,7 @@ export default {
     // 获取类别
     getCategory() {
       var that = this;
-      that.$http.post('Category/list',{fname: '0'})
+      that.$http.post(this.urls.categoryList,{fname: '0'})
       .then(function (response) {
         that.categoryList = response.data.data;
       });
@@ -77,8 +77,9 @@ export default {
     //获取当前类别
     getActiveCategory() {
       var that = this;
-      if (that.$route.query.id) {
-        that.categoryActive = that.$route.query.id;
+      console.log(that.$route.query.id)
+      if (that.$route.params.id) {
+        that.categoryActive = that.$route.params.id;
       } else {
         that.categoryActive = 0;
       }
@@ -98,7 +99,7 @@ export default {
       var that = this;
       // console.log({id: that.categoryActive,page: that.page,pageSize: that.pageSize,sort: that.sort});
       
-      that.$http.post('Item/list',{
+      that.$http.post(this.urls.goodsList,{
         id: that.categoryActive,
         page: ++that.page,
         pageSize: that.pageSize,

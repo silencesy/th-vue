@@ -216,11 +216,14 @@
 		padding: 0 15px;
 		border-bottom: 1px solid #DFDFDF;
 	}
+	.accountBottom a:last-child {
+		border-bottom: none;
+	}
 	.accountBottom a div:nth-child(1) i {
 		padding-right: 10px;
-    font-size: 24px;
-    vertical-align: middle;
-    color: #999;
+	    font-size: 24px;
+	    vertical-align: middle;
+	    color: #999;
 	}
 
 

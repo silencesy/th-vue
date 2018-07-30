@@ -1,5 +1,5 @@
 <template>
-	<div class="Sort">
+	<div class="Sort" :style="{backgroundColor:backgroundColor}">
 		<div :class="{active:index == 'createTime_desc'}" @click="tab('createTime_desc')">Latest</div>
 		<div :class="{active:index == 'sellNumber_desc'}" @click="tab('sellNumber_desc')">Sale</div>
 		<div :class="{active:index == 'price_desc'}" @click="tab('price_desc')">Price <span class="arrow-box"><i class="iconfont icon-xiangshangjiantou-copy-copy-copy-copy" :class="{active:index == 'price_desc' && lift == 'price_asc'}"></i><i class="iconfont icon-xiangshangjiantou-copy-copy-copy" :class="{active:index == 'price_desc' && lift == 'price_desc'}"></i></span></div>
@@ -13,6 +13,12 @@
 	 */
 	export default {
 		name: "Sort",
+		props: {
+			backgroundColor: {
+				type: String,
+				default: '#fff'
+			}
+		},
 		data() {
 			return {
 				index: 'createTime_desc',

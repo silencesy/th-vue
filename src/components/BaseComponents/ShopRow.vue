@@ -1,68 +1,29 @@
 <template>
 	<div class="ShopRow">
 		<ul class="shop-container">
-			<li class="shop-item">
+			<li class="shop-item" v-for="(item,index) in shopData">
 				<div class="img-box">
-					<img src="http://api.mall.thatsmags.com/Public/ckfinder/images/home/UMBRA/Umbralogo.jpg" alt="">
+					<img :src="item.pic" alt="">
 				</div>
 				<div class="name">
-					Umbra
+					{{item.title}}
 				</div>
 			</li>
-			<li class="shop-item">
-				<div class="img-box">
-					<img src="http://api.mall.thatsmags.com/Public/ckfinder/images/home/UMBRA/Umbralogo.jpg" alt="">
-				</div>
-				<div class="name">
-					Umbra
-				</div>
-			</li>
-			<li class="shop-item">
-				<div class="img-box">
-					<img src="http://api.mall.thatsmags.com/Public/ckfinder/images/home/UMBRA/Umbralogo.jpg" alt="">
-				</div>
-				<div class="name">
-					Umbra
-				</div>
-			</li>
-			<li class="shop-item">
-				<div class="img-box">
-					<img src="http://api.mall.thatsmags.com/Public/ckfinder/images/home/UMBRA/Umbralogo.jpg" alt="">
-				</div>
-				<div class="name">
-					Umbra
-				</div>
-			</li>
-			<li class="shop-item">
-				<div class="img-box">
-					<img src="http://api.mall.thatsmags.com/Public/ckfinder/images/home/UMBRA/Umbralogo.jpg" alt="">
-				</div>
-				<div class="name">
-					Umbra
-				</div>
-			</li>
-			<li class="shop-item">
-				<div class="img-box">
-					<img src="http://api.mall.thatsmags.com/Public/ckfinder/images/home/UMBRA/Umbralogo.jpg" alt="">
-				</div>
-				<div class="name">
-					Umbra
-				</div>
-			</li>
-			<li class="shop-item">
-				<div class="img-box">
-					<img src="http://api.mall.thatsmags.com/Public/ckfinder/images/home/UMBRA/Umbralogo.jpg" alt="">
-				</div>
-				<div class="name">
-					Umbra
-				</div>
-			</li>
+			
 		</ul>
 	</div>
 </template>
 <script>
 	export default {
 		name: "ShopRow",
+		props: {
+			shopData: {
+			type: Array,
+				default: function () {  
+			      return []  
+			    } 
+			}
+		},
 		data() {
 			return {
 

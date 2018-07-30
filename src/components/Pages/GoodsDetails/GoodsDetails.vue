@@ -106,13 +106,13 @@
 			}
 		},
 		components: {
-			GoodsSwiper: r => { require.ensure([], () => r(require('../BaseComponents/BaseSwiper')), 'GoodsSwiper') },
-			BackToTop: r => { require.ensure([], () => r(require('../BaseComponents/BackToTop')), 'BackToTop') },
-			ScrollView: r => { require.ensure([], () => r(require('../BaseComponents/ScrollView')), 'ScrollView') },
-			Count: r => { require.ensure([], () => r(require('../BaseComponents/Count')), 'Count') },
+			GoodsSwiper: r => { require.ensure([], () => r(require('@/components/BaseComponents/BaseSwiper')), 'GoodsSwiper') },
+			BackToTop: r => { require.ensure([], () => r(require('@/components/BaseComponents/BackToTop')), 'BackToTop') },
+			ScrollView: r => { require.ensure([], () => r(require('@/components/BaseComponents/ScrollView')), 'ScrollView') },
+			Count: r => { require.ensure([], () => r(require('@/components/BaseComponents/Count')), 'Count') },
 		},
 		mounted() {
-  		// console.log(this.$route.params.GoodsId);
+  		// console.log(this.$route.params.id);
   		this.getData();
   		// console.log(this.urls.productDetails)
   	},

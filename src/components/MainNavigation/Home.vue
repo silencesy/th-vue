@@ -1,6 +1,7 @@
 <template>  
   <div class="home" v-show="homeData.figure" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading"
   infinite-scroll-distance="0" infinite-scroll-immediate-check="false">
+    <!-- Search -->
     <div class="search" :style="{backgroundColor: backgroundColor}">
       <router-link to="/home/HomeSearch">
         <span class="search-placeholder">Search</span>
@@ -8,11 +9,14 @@
         <i class="iconfont icon-sousuo"></i>
       </router-link>
     </div>
+    <!-- figure -->
     <div class="nav-swiper">
       <BaseSwiper :swiperData="homeData.figure" />
     </div>
     <!-- deal -->
     <HomeSection :sectionData="homeData.deal"/>
+    <!-- shop -->
+    <HomeSection :sectionData="homeData.shop" shop="shop"/>
     <!-- ticketing -->
     <HomeSection :sectionData="homeData.ticketing"/>
     <!-- flowers -->
@@ -31,16 +35,19 @@
     <HomeSection :sectionData="homeData.electronic"/>
     <!-- article -->
     <BaseArticle :articleData="homeData.article"></BaseArticle>
-    <div v-show="homeData.figure">
+    <!-- hotProduct -->
+    <div v-if="homeData.figure">
       <GoodsRow :goodsData="hotData">
         <div class="banner-img-box" slot="banner-img">
-          <img class="banner-img" src="http://api.mall.thatsmags.com/Public/ckfinder/images/banner/floor/7hot.png"  alt="">
+          <img class="banner-img" :src="homeData.hotProducts.pic"  alt="">
         </div>
       </GoodsRow>
     </div>
+    <!-- more-icon -->
     <div class="more-icon" v-show="showMoreIcon">
       <mt-spinner type="fading-circle" :size='18' color="#f24827"></mt-spinner>
     </div>
+    <!-- backtop -->
     <BackToTop />
   </div>
   
@@ -55,17 +62,25 @@ import BackToTop from "../BaseComponents/BackToTop";
 export default {  
   name: 'home',  
   data() {  
-    return {  
+    return {
+      // 首页数据
       homeData: {},
+      // 加载图标
       showMoreIcon: true,
+      // 分页参数
       pagePara: {
-        set_position: 12,
-        pageSize: 30,
-        p: 0
+        id: 12,
+        pageSize: 6,
+        page: 0,
+        order: 'order_asc'
       },
+      // hotgoods
       hotData: [],
+      // 总共页数
       totalPages: -1,
-      backgroundColor: 'rgba(246,67,44,0)'
+      // 搜索渐变颜色
+      backgroundColor: 'rgba(246,67,44,0)',
+      shop: true
     };  
   },
   components: {
@@ -81,25 +96,15 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
+    // 上拉加载
     loadMore() {
       this.getMoreData();
     },
+    // 获取首页数据
     getHomeData() {
       var that = this;
-      // that.$axios.post('http://api.mall.thatsmags.com/Api/Public/home')
-      // .then(function (response) {
-      //   console.log(response);
-      //   that.homeData = response.data.data;
-      //   Indicator.close();
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      //   Indicator.close();
-      // });
-      // console.log(that.$http);
-      that.$http.post('Ads/Home/list')
+      that.$http.post(that.urls.home)
       .then(function (response) {
-
         that.homeData = response.data.data;
         console.log(that.homeData)
       })
@@ -107,19 +112,20 @@ export default {
         console.log(error);
       });
     },
+    // 请求上拉加载分页数据
     getMoreData() { 
       var that = this;
-      if (that.totalPages == that.pagePara.p || that.totalPages==0) {
+      if (that.totalPages == that.pagePara.page || that.totalPages==0) {
         that.showMoreIcon = false;
       } else {
-        that.pagePara.p++;
-        that.$http.get('Api/Set/getList',{
-          params: that.pagePara
-        })
+        that.pagePara.page++;
+        that.$http.post(that.urls.hotGoods,that.pagePara
+        )
         .then(function (response) {
-          that.hotData = that.hotData.concat(response.data.data.goods);
-          that.totalPages = response.data.data.totalPages;
-          if (that.totalPages == that.pagePara.p || that.totalPages==0) {
+          console.log(response);
+          that.hotData = that.hotData.concat(response.data.data.data);
+          that.totalPages = response.data.data.totalPage;
+          if (that.totalPages == that.pagePara.page || that.totalPages==0) {
             that.showMoreIcon = false;
           }
         })
@@ -129,12 +135,12 @@ export default {
         });
       }
     },
+    // 顶部搜索栏渐变
     handleScroll () {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
       var distance = 250;
       if(scrollTop > distance){
           this.backgroundColor = "rgba(246,67,44,0.95)";
-
       }
       else{
         var opacity = 0.95 * (scrollTop/distance);

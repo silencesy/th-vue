@@ -1,104 +1,123 @@
 <template>  
   <div>  
     <div class="nav">  
-      <mt-button class="nav-item" size="small" @click.native.prevent="active = 'tab-container1'">tab 1</mt-button>  
-      <mt-button class="nav-item" size="small" @click.native.prevent="active = 'tab-container2'">tab 2</mt-button>  
-      <mt-button class="nav-item" size="small" @click.native.prevent="active = 'tab-container3'">tab 3</mt-button>  
+      <mt-button class="nav-item" :class="{active: active == 'Latest'}" size="small" @click.native.prevent="active = 'Latest'">Latest</mt-button>  
+      <mt-button class="nav-item" :class="{active: active == 'Hottest'}" size="small" @click.native.prevent="active = 'Hottest'">Hottest</mt-button>  
     </div>  
       
     <div class="page-tab-container">  
       <mt-tab-container class="page-tabbar-tab-container" v-model="active" swipeable>  
-        <mt-tab-container-item class="item-container wrapper" id="tab-container1">
-          <ScrollView>
-          </ScrollView>
-        </mt-tab-container-item>  
-        <mt-tab-container-item class="item-container" id="tab-container2">  
+        <mt-tab-container-item class="item-container wrapper" id="Latest">
+          <div :style="{width:'100%',height:height+'px'}">
+            <ScrollView ref="ScrollView" :height="height" color="#eee" :pullup="pullup" :data="articleListData1.data"  @pullingUp="getData">
+              <BaseArticle :articleData='articleListData1' articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+            </ScrollView>
+          </div>
           
         </mt-tab-container-item>  
-        <mt-tab-container-item class="item-container" id="tab-container3">  
-          
-        </mt-tab-container-item>  
+        <mt-tab-container-item class="item-container" id="Hottest">
+          <div :style="{width:'100%',height:height+'px'}">
+            <ScrollView ref="ScrollView2" :open="open" :height="height" color="#eee" :pullup="pullup" :data="articleListData2.data"  @pullingUp="getData2">
+              <BaseArticle :articleData='articleListData2' articleContentBg="#eee" :articleItemStyleObj="articleItemStyleObj"/>
+            </ScrollView>
+          </div>
+        </mt-tab-container-item>   
       </mt-tab-container>   
     </div>  
   </div>  
 </template>    
   
 <script>  
-import BaseArticle from "../BaseComponents/BaseArticle";
-import ScrollView from '../BaseComponents/ScrollView.vue';
-let articleData = {
-      "list": [
-        {
-          "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/Article/614103700.png",
-          "set_id": "16",
-          "article_name": "Keep Your Kitchen Nice and Tidy with These Innovative Items",
-          "create_time": "2018-06-11",
-          "description": null,
-          "coverpic": "http://api.mall.thatsmags.com"
-        },
-        {
-          "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/toys/NERF/A4492/A449295111.jpg",
-          "set_id": "9",
-          "article_name": "Your Kids Will Love These Fun NERF Toys",
-          "create_time": "2018-05-25",
-          "description": null,
-          "coverpic": "http://api.mall.thatsmags.com"
-        },
-        {
-          "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/Article/cook.jpg",
-          "set_id": "13",
-          "article_name": "Cooking Made Easy With This Premium Kitchenware",
-          "create_time": "2018-06-05",
-          "description": null,
-          "coverpic": "http://api.mall.thatsmags.com"
-        },
-        {
-          "set_img": "http://api.mall.thatsmags.com/Public/ckfinder/images/Article/1.jpg",
-          "set_id": "17",
-          "article_name": "Baby-Proof Your Home with These Safe Cleaning Products",
-          "create_time": "2018-06-11",
-          "description": null,
-          "coverpic": "http://api.mall.thatsmags.com"
-        }
-      ]
-    }
 export default {  
   name: 'page-tab-container',  
   data() {  
     return {  
-      active: 'tab-container1',
+      active: 'Latest',
       height: 0,
-      articleData: articleData,
+      open: false,
       articleItemStyleObj: {
         'border': '1px solid #dfdfdf',
-        'padding': '10px'
+        'paddingLeft': '10px'
+      },
+      articleListData1: {
+        data:[]
+      },
+      articleListData2: {
+        data:[]
       },
       pullup: true,
-      pulldown: true
+      param1: {
+        page: 0,
+        pageSize: 8,
+        sort: 'createTime_desc',
+        totalPage: -1
+      },
+      param2: {
+        page: 0,
+        pageSize: 8,
+        sort: 'click_desc',
+        totalPage: -1
+      }
     };  
   },
   components: {
-    BaseArticle,
-    ScrollView
+    BaseArticle: r => { require.ensure([], () => r(require('../BaseComponents/BaseArticle')), 'BaseArticle') },
+    ScrollView: r => { require.ensure([], () => r(require('../BaseComponents/ScrollView')), 'ScrollView') }
   },
   mounted() {
     var that = this;
-    that.height = that.screenHeight-95;
+    that.$nextTick(() => {
+      setTimeout(function(){
+        that.height = document.documentElement.clientHeight-95;
+      },20);
+    });
+    that.getData();
+  },
+  watch: {
+    active: function(newVal,oldVal) {
+      if (newVal == 'Hottest') {
+        if (!this.open) {
+          console.log(123);
+          this.open = true;
+          this.getData2();
+        }
+      }
+    }
   },
   methods: {
-    refresh() {
-      console.log(123);
-      this.$refs.pullrefresh.$emit('pullrefresh.finishLoad');
+    getData() {
+      var that = this;
+      that.param1.page++;
+      that.$http.post(that.urls.articleList,that.param1)
+      .then(function (response) {
+        if (response.data.data.totalPage == 0 || that.param1.page >= response.data.data.totalPage) {
+          that.$refs.ScrollView.endup();
+        }
+        that.articleListData1.data=that.articleListData1.data.concat(response.data.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     },
-    load() {
-      console.log(456);
-      this.$refs.pullrefresh.$emit('infinitescroll.loadedDone');
+    getData2() {
+      var that = this;
+      that.param2.page++;
+      that.$http.post(that.urls.articleList,that.param2)
+      .then(function (response) {
+        if (response.data.data.totalPage == 0 || that.param2.page >= response.data.data.totalPage) {
+          that.$refs.ScrollView2.endup();
+        }
+        that.articleListData2.data=that.articleListData2.data.concat(response.data.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
   }
 };  
 </script>  
 
-<style lang="css" scoped>  
+<style scoped>  
   .nav {
     display: flex;
     border-bottom: 1px solid #dfdfdf;
@@ -113,35 +132,7 @@ export default {
     border-width: 0;
     box-shadow: none;
   }
-  .item-container {
-    background-color: #fff;
- 
-  }
-  .active-bttom {
-    border-bottom: 1px solid #f6442b;
-  }
-	.mint-button--default {
-		box-shadow: none;
-		flex: 1;
-		box-sizing: border-box;
-		font-size: 16px;
-	}	
-	.mint-button::after {
-		background: rgba(0,0,0,0);
-		border-bottom: 2px solid #f6442b; 
-	}
-  .page-tabbar-tab-container {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    padding-bottom: 55px;
-  }
-  .item-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+  .mint-button::after {
+    background-color: transparent;
   }
 </style> 

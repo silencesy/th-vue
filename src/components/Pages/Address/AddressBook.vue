@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<div class="bottom">
-			<router-link to='/'>+Add New Shipping Address</router-link>
+			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
 		</div>
 	</div>
 </template>

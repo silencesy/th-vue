@@ -1,12 +1,13 @@
 <template>
 	<div class="HomeSection">
 		<div class="banner-img-box">
-			<img :src="sectionData.pic" alt="">
+			<img @click="goClassList" :src="sectionData.pic" alt="">
 		</div>
 		<div class="swipe-box">
 			<swiper :options="swiperOption"  ref="baseSwiper">
 				<swiper-slide class="goods-item" v-for="(item,index) in sectionData.data" :key="index">
-					<router-link :to="{name: 'GoodsDetails', params: {GoodsId:item.id}}">
+					<!-- 商品区块 -->
+					<router-link :to="{name: 'GoodsDetails', params: {id:item.id}}" v-if="!shop">
 						<div class="img-box">
 							<img v-lazy="item.pic" alt="">
 						</div>
@@ -16,6 +17,15 @@
 								<div class="theme_color">￥{{item.price}}</div>
 								<div>{{item.coupon_price}}</div>
 							</div>
+						</div>
+					</router-link>
+					<!-- 商户区块 -->
+					<router-link :to="{name: 'GoodsDetails', params: {id:item.id}}" v-if="shop">
+						<div class="img-box">
+							<img v-lazy="item.pic" alt="">
+						</div>
+						<div class="">
+							<div class="line2 goods-name">{{item.title}}</div>
 						</div>
 					</router-link>
 				</swiper-slide>
@@ -35,6 +45,10 @@ import { mapState } from 'vuex'
 				default: function () {  
 			      return { message: 'hello' }  
 			    }  
+			},
+			shop: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {  
@@ -69,7 +83,9 @@ import { mapState } from 'vuex'
 		}
 	},
   	methods: {
-  		
+  		goClassList() {
+  			this.$router.push({name:'Categories',params:{id:'1'}});
+  		}
   	}
 	}
 </script>

@@ -3,7 +3,7 @@
 		<slot name="banner-img"></slot>
 		<ul class="goods-container" :style="{backgroundColor:backgroundColor}">
 			<li class="goods-item" v-for="(item,index) in goodsData" :key="index" :style="{width: width}">
-				<router-link :to="{name: 'GoodsDetails', params: {GoodsId:item.id}}">
+				<router-link :to="{name: 'GoodsDetails', params: {id:item.id}}">
 					<div class="img-box">
 						<img v-lazy="item.pic" alt="">
 					</div>

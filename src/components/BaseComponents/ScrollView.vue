@@ -71,6 +71,13 @@
         /**
         * 是否开启横向滚动
         */
+        scrollY: {
+          type: Boolean,
+          default: true
+        },
+        /**
+        * 是否开启横向滚动
+        */
         scrollX: {
           type: Boolean,
           default: false
@@ -162,6 +169,7 @@
             probeType: that.probeType,
             click: that.click,
             scrollX: that.scrollX,
+            scrollY: that.scrollY,
             pullUpLoad: {
               threshold: 50
             }

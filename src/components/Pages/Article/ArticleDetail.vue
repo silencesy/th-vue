@@ -1,11 +1,14 @@
 <template>
-	<div class="ArticleDetail">
+	<div class="ArticleDetail" v-if="articleData.title">
 		<div class="article">
 			<div class="content">
-				<p class="title">Add Essential Minerals to Your Water with this Stylish Pitcher</p>
-				<p class="date word">2018-06-30</p>
-				<img src="static/images/common/article.png" alt="">
-				<p class="word">Aside from the fact that tap water in the PRC often has ‘funky’ taste, the water coming from the pipes in your apartment may also lack something your body needs daily: minerals, specifically magnesium. That’s why we’re excited to introduce you to Best Water Technology’s (BWT) magnesium mineralizing pitcher and filters, available right now on thMart.</p>
+				<p class="title">{{articleData.title}}</p>
+				<p class="date word">{{articleData.createTime}}</p>
+				<!-- <img src="static/images/common/article.png" alt="">
+				<p class="word"></p> -->
+				<div class="content-html" v-html="articleData.article_content">
+					
+				</div>
 			</div>
 			<div class="goods">
 				<router-link to="/">
@@ -33,14 +36,29 @@
 		name: '',
 		data () {
 			return {
-
+				articleData: {},
 			}
 		},
 		// components: {
 		// 	BaseArticle: r => { require.ensure([], () => r(require('../../BaseComponents/BaseArticle')), 'BaseArticle') }
 		// },
 		mounted () {
-			
+			this.getData();
+		},
+		methods: {
+			getData() {
+				var that = this;
+				that.$http.post(that.urls.articleDetail,{
+					id: that.$route.params.id
+				})
+				.then(function (response) {
+					that.articleData = response.data.data;
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+			}
 		}
 	}
 </script>
@@ -55,6 +73,7 @@
 		line-height: 24px;
 	}
 	.title {
+		font-size: 18px;
 		font-weight: 600;
 	}
 	.date {
@@ -120,6 +139,9 @@
 	.articlePick {
 		margin: 10px;
 	}
-
+	.content-html >>> img {
+		width: 100% !important;
+		height: auto !important;
+	}
 
 </style>

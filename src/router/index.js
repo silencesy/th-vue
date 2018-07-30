@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // 主页
 import BaseHome from '@/components/Home/BaseHome'
-import GoodsDetails from '@/components/Pages/GoodsDetails'
+// import GoodsDetails from '@/components/Pages/GoodsDetails'
 // import CouponsList from '@/components/Pages/CouponsList'
 
 
@@ -14,13 +14,22 @@ import GoodsDetails from '@/components/Pages/GoodsDetails'
 // import Guide from '@/components/MainNavigation/Guide'
 // import Cart from '@/components/MainNavigation/Cart'
 // import MyAccount from '@/components/MainNavigation/MyAccount'
+// Router.prototype.goBack = function () { 
+// 　　this.isBack = true
+// 　　window.history.go(-1)
+// }
 
-Router.prototype.goBack = function () {
-  this.isBack = true
-  window.history.go(-1)
+Router.prototype.goBack = function () { 
+　　this.isBack = true
+　　window.history.go(-1)
 }
 
+Router.prototype.goBack2 = function () {
+ this.isBack = true
+ this.go(-1)
+}
 Vue.use(Router)
+
 export default new Router({
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
@@ -46,9 +55,12 @@ export default new Router({
           path: '/Categories',
           name: 'Categories',
           // meta: {
-          //   keepAlive: false
+          //   keepAlive: true
           // },
-          component: () => import('@/components/MainNavigation/Categories')
+          component(resolve) {
+            require.ensure([], () => resolve(require('@/components/MainNavigation/Categories')), 'Categories')
+          }
+          // component: () => import('@/components/MainNavigation/Categories')
         },
         {
           path: '/Guide',
@@ -77,25 +89,17 @@ export default new Router({
       ]
     },
     {
-    	path: "/GoodsDetails/:GoodsId",
-    	name: "GoodsDetails",
-      meta: {
-        keepAlive: false
-      },
-    	component: GoodsDetails
-    },
-    {
       path: "/home/HomeSearch",
       name: "HomeSearch",
       component: () => import('@/components/Pages/Search/HomeSearch')
     },
     {
-    	path: "/GoodsDetails/:GoodsId",
+    	path: "/GoodsDetails/:id",
     	name: "GoodsDetails",
       meta: {
         keepAlive: false
       },
-    	component: GoodsDetails
+    	component: () => import('@/components/Pages/GoodsDetails/GoodsDetails')
     },
     {
       path: "/CouponsList",
@@ -114,7 +118,7 @@ export default new Router({
         keepAlive: true
       },
       component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/WishList')), 'WishList')
+        require.ensure([], () => resolve(require('@/components/Pages/WishList/WishList')), 'WishList')
       }
     },
     {
@@ -124,7 +128,7 @@ export default new Router({
         keepAlive: true
       },
       component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/AddressBook')), 'AddressBook')
+        require.ensure([], () => resolve(require('@/components/Pages/Address/AddressBook')), 'AddressBook')
       }
     },
     {
@@ -134,7 +138,7 @@ export default new Router({
         keepAlive: true
       },
       component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/Contact')), 'Contact')
+        require.ensure([], () => resolve(require('@/components/Pages/Contact/Contact')), 'Contact')
       }
     },
     {
@@ -198,10 +202,10 @@ export default new Router({
       }
     },
     {
-      path: "/ArticleDetail",
+      path: "/ArticleDetail/:id",
       name: "ArticleDetail",
       meta: {
-        keepAlive: true
+        keepAlive: false
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Article/ArticleDetail')), 'ArticleDetail')
@@ -214,7 +218,7 @@ export default new Router({
         keepAlive: true
       },
       component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/AddAddress')), 'AddAddress')
+        require.ensure([], () => resolve(require('@/components/Pages/Address/AddAddress')), 'AddAddress')
       }
     },
     {
@@ -249,3 +253,5 @@ export default new Router({
     }
   ]
 })
+
+
