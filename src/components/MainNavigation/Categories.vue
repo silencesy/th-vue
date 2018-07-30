@@ -9,7 +9,7 @@
     </div>
     <div class="container">
       <div class="left" :style="{width:'100%',height:height+'px'}">
-        <ScrollView :height="height" :noDada="noDada">
+        <ScrollView :height="height" :loadding="loadding" color="#eee">
           <ul class="category-container">
             <li class="category-item" :class="item.id==categoryActive?'active':''" v-for="(item,index) in categoryList" @click="checkCategroy(item.id)">{{item.title}}</li>
           </ul>
@@ -17,68 +17,13 @@
       </div>
       <div class="right" :style="{width:'100%',height:height-40+'px'}">
         <div class="sort-container">
-          <Sort :init="init" @Sort="Sort"/>
+          <Sort ref="Sort" @Sort="Sort"/>
         </div>
-        <ScrollView :height="height-40" :pullup="pullup"  @pullingUp="loadData">
-          <ul>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-            <li>123123</li>
-          </ul>
+        <ScrollView ref="ScrollView" :height="height-40" :pullup="pullup" :data="goodsList"  @pullingUp="loadData">
+          <GoodsRow  :goodsData="goodsList" :Columns="2"/>
         </ScrollView>
       </div>
     </div>
-    <!-- <div class="left wrapper" ref="leftWrapper" :style="{width:'100%',height:height+'px'}">
-      <div class="content">
-        <mt-cell title="标题文字"  is-link v-for="(item,index) in 20" :key="index"></mt-cell>
-      </div>
-    </div>
-    <div class="right wrapper" ref="rightWrapper" :style="{width:'100%',height:height+'px'}">
-      <div class="content">
-        <GoodsRow  :goodsData="goodsData" :Columns="2" backgroundColor="#eee"/>
-        <div class="more-icon" v-show="showMoreIcon">
-          <mt-spinner type="fading-circle" :size='18' color="#f24827"></mt-spinner>
-        </div>
-      </div>
-    </div>
-    <div class="right wrapper" ref="rightWrapper" :style="{width:'100%',height:height+'px'}">
-      <ScrollView :pullup="pullup" @pullingUp="loadData">
-        <GoodsRow  :goodsData="goodsData" :Columns="2" backgroundColor="#eee"/>
-      </ScrollView>
-    </div> -->
   </div>  
 </template>  
   
@@ -88,14 +33,15 @@ export default {
   data() {  
     return {  
       height: 0,
-      goodsData: [],
-      p: 0,
+      page: 0,
+      pageSize: 8,
       pullup: true,
-      noDada: false,
-      selected: '1',
+      loadding: false,
       categoryList: [],
       categoryActive: 1,
-      init: false
+      goodsList: [],
+      totalPage: 0,
+      sort: 'createTime_desc'
     };
   },
   components: {
@@ -105,41 +51,86 @@ export default {
   },
   mounted() {
     var that = this;
+    
     that.$nextTick(() => {
       setTimeout(function(){
         that.height = document.documentElement.clientHeight-55-50;
       },20);
     });
     that.getCategory();
+    that.getActiveCategory();
+    that.getGoodsData();
   },
   methods: {
+    // 上拉加载
     loadData() {
-      console.log(1111);
+      this.getGoodsData();
     },
+    // 获取类别
     getCategory() {
       var that = this;
       that.$http.post('Category/list',{fname: '0'})
       .then(function (response) {
-        that.categoryList = response.data.message;
+        that.categoryList = response.data.data;
       });
     },
+    //获取当前类别
+    getActiveCategory() {
+      var that = this;
+      if (that.$route.query.id) {
+        that.categoryActive = that.$route.query.id;
+      } else {
+        that.categoryActive = 0;
+      }
+    },
+    // 切换分类
     checkCategroy(id) {
       if (this.categoryActive!=id) {
         this.categoryActive = id;
-        this.init = true;
+        // 触发Sort组件初始化
+        this.$refs.Sort.init();
+        this.initPara();
+        this.getGoodsData();
       }
     },
-    lift() {
-      console.log(0);
+    // 获取数据
+    getGoodsData() {
+      var that = this;
+      // console.log({id: that.categoryActive,page: that.page,pageSize: that.pageSize,sort: that.sort});
+      
+      that.$http.post('Item/list',{
+        id: that.categoryActive,
+        page: ++that.page,
+        pageSize: that.pageSize,
+        sort: that.sort
+      })
+      .then(function (response) {
+        that.goodsList = that.goodsList.concat(response.data.data.data);
+        if (response.data.data.totalPage == 0 || that.page >= response.data.data.totalPage) {
+          that.$refs.ScrollView.endup();
+        }
+        that.totalPage = response.data.data.totalPage;
+      });
     },
+    // 改变排序
     Sort(data) {
-      console.log(data);
+      this.sort = data;
+      this.initPara();
+      this.getGoodsData();
+    },
+    // 初始化参数
+    initPara() {
+      this.page = 0;
+      this.goodsList = [];
+      this.totalPage = 0;
+      this.$refs.ScrollView.scrollTo(0,0,0,'easing');
+      this.$refs.ScrollView.startup();
     }
   },
   watch: {
-    selected: function (oldVal,newVal) {
-      console.log(oldVal,newVal);
-    }
+    // selected: function (oldVal,newVal) {
+    //   console.log(oldVal,newVal);
+    // }
   }
 };  
 </script>  

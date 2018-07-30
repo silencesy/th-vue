@@ -1,16 +1,16 @@
 <template>
 	<div class="BaseArticle">
-		<div class="banner-img-box" v-show="articleData.image">
-			<img class="banner-img" :src="articleData.image" alt="">
+		<div class="banner-img-box" v-show="articleData.pic">
+			<img class="banner-img" :src="articleData.pic" alt="">
 		</div>
 		<div class="article-content" :style="{backgroundColor:articleContentBg}">
-			<div class="article-item" v-for="(item,index) in articleData.list" :key="index" :style="articleItemStyleObj">
+			<div class="article-item" v-for="(item,index) in articleData.data" :key="index" :style="articleItemStyleObj">
 				<div class="img-box">
-					<img v-lazy="item.set_img" alt="">
+					<img v-lazy="item.pic" alt="">
 				</div>
 				<div class="article-info">
-					<p>{{item.article_name}}</p>
-					<span class="date">{{item.create_time}}</span>
+					<p>{{item.title}}</p>
+					<span class="date">{{item.createTime}}</span>
 				</div>
 			</div>
 		</div>

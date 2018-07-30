@@ -2,7 +2,15 @@
 	<div class="BaseSwiper">
 		<swiper :options="swiperOption"  ref="baseSwiper">
 			<swiper-slide v-for="(item,index) in swiperData" :key="index">
-				<img :src="item.set_img" alt="">
+				<div v-if="item.url">
+					<router-link :to='item.url'>
+						<img :src="item.pic" alt="">
+					</router-link>
+				</div>
+				<div v-if="!item.url">
+					<img :src="item" alt="">
+				</div>
+				
 			</swiper-slide>  
 			<div class="swiper-pagination"  slot="pagination"></div>
 		</swiper>
@@ -38,8 +46,9 @@
 	}
 </script>
 <style scoped>
-.nav-swiper img {
+.BaseSwiper img {
 	width: 100%;
+	display: block;
 }
 
 </style>

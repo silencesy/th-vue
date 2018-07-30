@@ -5,18 +5,18 @@
 			<li class="goods-item" v-for="(item,index) in goodsData" :key="index" :style="{width: width}">
 				<router-link :to="{name: 'GoodsDetails', params: {GoodsId:item.id}}">
 					<div class="img-box">
-						<img v-lazy="item.coverpic" alt="">
+						<img v-lazy="item.pic" alt="">
 					</div>
 					<div class="good-info">
 						<div class="goods-name line2">
-							{{item.goods_name}}
+							{{item.title}}
 						</div>
 						<div class="goods-price">
 							<div class="theme_color">
-								{{item.goods_price}}
+								￥{{item.price}}
 							</div>
 							<div>
-								<del>{{item.goods_price}}</del>
+								<del>{{item.coupon_price}}</del>
 							</div>
 						</div>
 					</div>

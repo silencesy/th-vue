@@ -6,7 +6,7 @@ import router from '../router/index'
 // 正服or测服
 // let isFormal = true;
 let isFormal = false;
-let test = 'http://proj6.thatsmags.com/';
+let test = 'https://proj6.thatsmags.com/';
 let formal = 'http://api.mall.thatsmags.com/';
 const Axios = axios.create({
   timeout: 10000,
