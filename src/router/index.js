@@ -52,7 +52,7 @@ export default new Router({
           component: () => import('@/components/MainNavigation/Home')
         },
         {
-          path: '/Categories',
+          path: 'Categories',
           name: 'Categories',
           // meta: {
           //   keepAlive: true
@@ -63,7 +63,7 @@ export default new Router({
           // component: () => import('@/components/MainNavigation/Categories')
         },
         {
-          path: '/Guide',
+          path: 'Guide',
           name: 'Guide',
           // meta: {
           //   keepAlive: true
@@ -71,7 +71,7 @@ export default new Router({
           component: () => import('@/components/MainNavigation/Guide')
         },
         {
-          path: '/Cart',
+          path: 'Cart',
           name: 'Cart',
           // meta: {
           //   keepAlive: false
@@ -79,7 +79,7 @@ export default new Router({
           component: () => import('@/components/MainNavigation/Cart')
         },
         {
-          path: '/MyAccount',
+          path: 'MyAccount',
           name: 'MyAccount',
           // meta: {
           //   keepAlive: false
@@ -249,6 +249,16 @@ export default new Router({
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Login/ForgotPassword')), 'ForgotPassword')
+      }
+    },
+    {
+      path: "/GoodsList",
+      name: "GoodsList",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/GoodsList/GoodsList')), 'GoodsList')
       }
     }
   ]

@@ -72,7 +72,7 @@ export default {
         id: 12,
         pageSize: 6,
         page: 0,
-        order: 'order_asc'
+        sort: 'order_asc'
       },
       // hotgoods
       hotData: [],

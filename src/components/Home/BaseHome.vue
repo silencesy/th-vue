@@ -11,7 +11,7 @@
         Home
       </mt-tab-item>
       <mt-tab-item id="Categories">  
-        <img slot="icon" :src="selected=='Categories'?'static/images/common/category-cover.png':'static/images/common/Category.png'">  
+        <img slot="icon" :src="selected=='Categories'?'static/images/common/category-cover.png':'static/images/common/Category.png'">
         Categories
       </mt-tab-item>
       <mt-tab-item id="Guide">  
@@ -41,11 +41,20 @@ export default {
     };  
   },
   watch: {
+    // 当选中值改变触发路由
     selected: function (nowVal, oldVal) {
+      // 如果新的值为'home'则重改为‘/’与路由中的首页对应
       if (nowVal == 'Home') {
         nowVal = '/'
       }
-      this.$router.push(nowVal); 
+      // 如果是分类页则需要传递参数
+      if (nowVal == 'Categories') {
+        this.$router.push({ path: nowVal, query: { id: this.classId }})
+      } else {
+      // 其他页面不需要传递参数
+        this.$router.push(nowVal);
+      }
+      
     },
     '$route' (to, from) {
       this.selected = to.name;

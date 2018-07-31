@@ -5,12 +5,12 @@ Vue.use(Vuex);
 
 // 状态
 const state={
-   trigger: 'Home'
+   classId: '0'
 }
 // 方法
 const mutations = {
-	changeTrigger(state,name) {
-		state.trigger = name
+	changeclassId(state,id) {
+		state.classId = id;
 	}
 }
 // 过滤

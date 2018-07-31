@@ -1,12 +1,12 @@
 <template>
 	<div class="BaseArticle">
-		<div class="banner-img-box" v-show="articleData.pic">
-			<img class="banner-img" :src="articleData.pic" alt="">
+		<div class="banner-img-box" v-show="articleDataInfo.pic">
+			<img class="banner-img" :src="articleDataInfo.pic" alt="">
 		</div>
 		<div class="article-content" :style="{backgroundColor:articleContentBg}">
-			<div class="article-item" v-for="(item,index) in articleData.data" :key="index" :style="articleItemStyleObj" @click="goDetails(item.id)">
+			<div class="article-item" v-for="(item,index) in articleDataInfo.data" :key="index" :style="articleItemStyleObj" @click="goDetails(item.id)">
 				<div class="img-box">
-					<img v-lazy="item.pic" alt="">
+					<img :src="item.pic" alt="">
 				</div>
 				<div class="article-info">
 					<p class="line2">{{item.title}}</p>
@@ -46,9 +46,17 @@
 	    }
   	},
   	computed: {  
-	    swiper() {  
-	      return this.$refs.baseSwiper.swiper;  
-	    }  
+	    articleDataInfo() {
+	    	var that = this;
+	    	if (that.articleData instanceof Array) {
+	    		var data = 'data';
+	    		var obj = {};
+	    		obj[data] = that.articleData;
+	    		return obj;
+	    	} else {
+	    		return that.articleData;
+	    	}
+	    }
   	},
   	methods: {
   		goDetails(id) {

@@ -25,7 +25,7 @@
 							<img v-lazy="item.pic" alt="">
 						</div>
 						<div class="">
-							<div class="line2 goods-name">{{item.title}}</div>
+							<div class="line1 goods-name">{{item.title}}</div>
 						</div>
 					</router-link>
 				</swiper-slide>
@@ -37,6 +37,7 @@
 <script>
 import store from '../../vuex/store'
 import { mapState } from 'vuex'
+
 	export default {
 		name: 'HomeSection',
 		props: {
@@ -78,13 +79,14 @@ import { mapState } from 'vuex'
 		  var that = this;
 		  if (that.trigger=="Home") {
 		    console.log(1);
-		    
 		  }
 		}
 	},
   	methods: {
   		goClassList() {
-  			this.$router.push({name:'Categories',params:{id:'1'}});
+  			// console.log(this.$router);
+  			this.$router.push('GoodsList');
+  			// this.$router.push({ path: '/Categories', query: { id: 1 }})
   		}
   	}
 	}

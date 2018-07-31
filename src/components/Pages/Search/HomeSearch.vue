@@ -16,7 +16,7 @@
     <mt-tab-container v-model="showContainer">
       <mt-tab-container-item id="1">
         <div class="sort-row">
-          <Sort v-if="selected == 1" backgroundColor="#eee" ref="Sort" @Sort="Sort"/>
+          <Sort v-if="selected == 1 && showSort" backgroundColor="#eee" ref="Sort" @Sort="Sort"/>
         </div>
         <ScrollView ref='textcontent' :height="height" :data="goodsData" :pullup="pullup" color="#eee"  @pullingUp="loadData" :loadding="loadding" :open="open">
           <div v-if="selected == 1">
@@ -39,6 +39,7 @@
         showContainer: '1',
         autofocus: true,
         loadding: false,
+        showSort: false,
         value: '',
         height: 0,
         pullup: true,
@@ -51,21 +52,20 @@
           pageSize: 10,
           sort: "price_desc",
           search: ''
+        },
+        articleItemStyleObj: {
+          'border': '1px solid #dfdfdf',
+          'paddingLeft': '10px'
         }
       }
     },
     mounted() {
       var that = this;
       that.apiUrl = that.urls.goodsList;
-      // console.log(that.urls.goodsList);
       that.$nextTick(() => {
         setTimeout(function(){
           that.height = document.documentElement.clientHeight - 119;
         },20);
-        // .submit = function () {
-        //   alert(123);
-        // }
-        // console.log(this.$refs.searchSubmit.submit());
       });
     },
     components: {
@@ -77,7 +77,9 @@
     },
     methods: {
       loadData() {
-        this.getData();
+        if (this.searchParam.search) {
+          this.getData();
+        }
       },
       // 返回上一页
       goBackPage() {
@@ -85,9 +87,10 @@
       },
       // 改变排序
       Sort(data) {
-        this.initParam();
         this.searchParam.sort = data;
-        this.getData();
+        if (this.searchParam.search) {
+          this.searchSubmit();
+        }
       },
       searchSubmit() {
         this.initParam();
@@ -103,11 +106,15 @@
       },
       getData() {
         var that = this;
+        if (that.selected == 1) {
+          that.showSort = true;
+        } else {
+          that.showSort = false;
+        }
         that.searchParam.page++;
         // 请求数据
         that.$http.post(that.apiUrl,that.searchParam)
         .then(function (response) {
-          console.log(response);
           if (response.data.data == null || response.data.data.totalPage == 0 || that.searchParam.page >= response.data.data.totalPage || response.data.data.data.length==0) {
               that.$refs.textcontent.endup();
               if (response.data.data) {
@@ -116,7 +123,6 @@
           } else {
             that.goodsData = that.goodsData.concat(response.data.data.data);
           }
-          
         });
       }
     },
@@ -124,7 +130,6 @@
       selected: function(newVal,oldVal) {
         var that = this;
         that.$refs.textcontent.refresh();
-        // that.open = true;
         if (newVal == 2) {
           that.apiUrl = that.urls.hotGoods;
           that.goodsData=[];
@@ -132,28 +137,19 @@
           that.searchParam.sort = 'order_asc';
           if (that.searchParam.search) {
             that.searchSubmit();
-          } else {
-            that.$refs.textcontent.endup();
-          }
-          
+          } 
         } else if (newVal == 1) {
           that.apiUrl = that.urls.goodsList;
           that.searchParam.id = 0;
           that.searchParam.sort = 'price_asc';
           if (that.searchParam.search) {
             that.searchSubmit();
-          } else {
-            that.$refs.textcontent.endup();
-            that.goodsData=[];
-          }
+          } 
         } else if (newVal == 3) {
           that.apiUrl = that.urls.articleList;
           that.searchParam.sort = 'createTime_desc';
           if (that.searchParam.search) {
             that.searchSubmit();
-          } else {
-            that.$refs.textcontent.endup();
-            that.goodsData=[];
           }
         }
         if(newVal!=1) {

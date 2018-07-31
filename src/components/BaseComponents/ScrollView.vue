@@ -271,7 +271,7 @@
           setTimeout(() => {
             this.refresh();
             // this.finishPullUp();
-          }, 20);
+          }, 50);
         }
       }
     }
