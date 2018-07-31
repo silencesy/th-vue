@@ -299,4 +299,12 @@ export default {
     margin: auto;
     position: absolute;
   }
+  input {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  textarea {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 </style>

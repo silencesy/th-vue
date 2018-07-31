@@ -250,6 +250,16 @@ export default new Router({
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Login/ForgotPassword')), 'ForgotPassword')
       }
+    },
+    {
+      path: "/ShopHome",
+      name: "ShopHome",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopHome')), 'ShopHome')
+      }
     }
   ]
 })
