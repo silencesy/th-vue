@@ -20,12 +20,12 @@
 						</div>
 					</router-link>
 					<!-- 商户区块 -->
-					<router-link :to="{name: 'GoodsDetails', params: {id:item.id}}" v-if="shop">
+					<router-link :to="{name: 'ShopHome', params: {id:item.id}}" v-if="shop">
 						<div class="img-box">
 							<img v-lazy="item.pic" alt="">
 						</div>
 						<div class="">
-							<div class="line2 goods-name">{{item.title}}</div>
+							<div class="line1 goods-name">{{item.title}}</div>
 						</div>
 					</router-link>
 				</swiper-slide>
@@ -37,6 +37,7 @@
 <script>
 import store from '../../vuex/store'
 import { mapState } from 'vuex'
+
 	export default {
 		name: 'HomeSection',
 		props: {
@@ -47,6 +48,14 @@ import { mapState } from 'vuex'
 			    }  
 			},
 			shop: {
+				type: Boolean,
+				default: false
+			},
+			bannerId: {
+				type: [Number,String],
+				default: 1
+			},
+			Categories: {
 				type: Boolean,
 				default: false
 			}
@@ -78,13 +87,20 @@ import { mapState } from 'vuex'
 		  var that = this;
 		  if (that.trigger=="Home") {
 		    console.log(1);
-		    
 		  }
 		}
 	},
   	methods: {
   		goClassList() {
-  			this.$router.push({name:'Categories',params:{id:'1'}});
+  			if(this.shop) {
+  				this.$router.push('ShopList');
+  			} else if (this.Categories) {
+  				localStorage.setItem("classFlag",true);
+  				this.$router.push({ path: 'Categories', query: { id: this.bannerId }})
+  			} else {
+  				this.$router.push({path: 'GoodsList',query: { id: this.bannerId }});
+  			}
+  			
   		}
   	}
 	}

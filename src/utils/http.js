@@ -1,13 +1,14 @@
 import axios from 'axios'
-// import { Toast,Indicator } from 'mint-ui'
+import promise from 'es6-promise';
+import { Toast,Indicator } from 'mint-ui'
 import qs from 'qs'
 import router from '../router/index'
-
+promise.polyfill();
 // 正服or测服
 // let isFormal = true;
 let isFormal = false;
-let test = 'https://proj6.thatsmags.com/';
-let formal = 'http://api.mall.thatsmags.com/';
+let test = 'https://proj6.thatsmags.com/thmartApi/';
+let formal = 'http://api.mall.thatsmags.com/thmartApi/';
 const Axios = axios.create({
   timeout: 10000,
   baseURL: isFormal==true?formal:test,
@@ -58,19 +59,36 @@ Axios.interceptors.request.use(
 //返回状态判断(添加响应拦截器)
 Axios.interceptors.response.use(
   res => {
-    //对响应数据做些事
-    // if (res.data && !res.data.success) {
-    //   Message({
-    //     //  饿了么的消息弹窗组件,类似toast
-    //     showClose: true,
-    //     message: res.data.error.message.message
-    //       ? res.data.error.message.message
-    //       : res.data.error.message,
-    //     type: "error"
-    //   });
-    //   return Promise.reject(res.data.error.message);
-    // }
-    // Indicator.close();
+    // 对响应的状态吗做统一处理
+    if (res.data) {
+      if (res.data.code == 102) {
+
+      }
+      // 手机号已被注册
+      if (res.data.code == 104) {
+        Toast('This phone number has been registered!');
+      }
+      // 验证码发送次数过多，稍后再试
+      if (res.data.code == 105) {
+        Toast('Frequent operation, please try again later!');
+      }
+      // 验证码错误
+      if (res.data.code == 106) {
+        Toast('Verification code error!');
+      }
+      // 两次密码错误
+      if (res.data.code == 107) {
+        Toast('The two passwords you entered do not match!');
+      }
+      // 手机号未注册
+      if (res.data.code == 109) {
+        Toast('This phone number has not been registered yet!');
+      }
+      // 手机号登录密码错误
+      if (res.data.code == 110) {
+        Toast('The password is incorrect!');
+      }
+    }
     return res;
   },
   error => {

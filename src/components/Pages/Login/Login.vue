@@ -2,48 +2,45 @@
 	<div class="Login">
 		<LoginSystem>		
 			<div slot="info">
-				<mt-navbar v-model="selected">
-	        <mt-tab-item id="1">Login via password</mt-tab-item>
-	        <mt-tab-item id="2">Login via SMS</mt-tab-item>
-	      </mt-navbar>
-	      <mt-tab-container v-model="selected">
+			<mt-navbar v-model="selected">
+		        <mt-tab-item id="1">Login via password</mt-tab-item>
+		        <mt-tab-item id="2">Login via SMS</mt-tab-item>
+		    </mt-navbar>
+	      	<mt-tab-container v-model="selected">
 		      <mt-tab-container-item id="1">
 			      <div class="content">
-							<div class="contentInfo"><input type="text"placeholder="Enter phone number"></div>
-							<div class="contentInfo"><input type="password" placeholder="Enter password"></div>
+							<div class="contentInfo"><input type="text" v-model="passwordNumber" placeholder="Enter phone number"></div>
+							<div class="contentInfo"><input type="password" v-model="passwordPassword" placeholder="Enter password"></div>
 							<div class="tips">
-								<router-link to='/'>Forgot password?</router-link>
-								<router-link to='/'>Don't have an account?</router-link>
+								<router-link to='/ForgotPassword'>Forgot password?</router-link>
+								<router-link to='/SignUp'>Don't have an account?</router-link>
 							</div>
-							<div class="contentInfo"><button class="btn">LOG IN</button></div>
+							<div class="contentInfo"><button class="btn" @click="passwordLogin">LOG IN</button></div>
 						</div>
 						<div class="wechat">
 					   	<span class="line"></span>
 					   	<span class="txt">Wechat Login</span>
 					   	<span class="line"></span>
-					   	<i class="iconfont icon-weixin1"></i>
+					   	<a :href="[url]"><i class="iconfont icon-weixin1"></i></a>
 					  </div>
-		      </mt-tab-container-item>
-		      <mt-tab-container-item id="2">
-		        <div class="content">
-							<div class="contentInfo signInfo">
-								<input type="text" v-model='number' placeholder="Enter phone number">
-								<button class="code">Send Code</button>
-							</div>
-							<div class="contentInfo"><input type="password" v-model='code' placeholder="Enter verification code"></div>
-							<div class="tips">
-								<router-link to='/'>Forgot password?</router-link>
-								<router-link to='/'>Don't have an account?</router-link>
-							</div>
-							<div class="contentInfo"><button class="btn">LOG IN</button></div>
+				</mt-tab-container-item>
+				<mt-tab-container-item id="2">
+		        	<div class="content">
+						<SendCode @numberChange="numberChange"/>
+						<div class="contentInfo"><input type="password" v-model='code' placeholder="Enter verification code"></div>
+						<div class="tips">
+							<router-link to='/ForgotPassword'>Forgot password?</router-link>
+							<router-link to='/SignUp'>Don't have an account?</router-link>
 						</div>
-						<div class="wechat">
-					   	<span class="line"></span>
-					   	<span class="txt">Wechat Login</span>
-					   	<span class="line"></span>
-					   	<i class="iconfont icon-weixin1"></i>
-					  </div>
-		      </mt-tab-container-item>
+						<div class="contentInfo"><button class="btn" @click="smsLogin">LOG IN</button></div>
+					</div>
+					<div class="wechat">
+						<span class="line"></span>
+						<span class="txt">Wechat Login</span>
+						<span class="line"></span>
+						<a :href="[url]"><i class="iconfont icon-weixin1"></i></a>
+					</div>
+		      	</mt-tab-container-item>
 		    </mt-tab-container>
 			</div>
 		</LoginSystem>
@@ -56,30 +53,87 @@
 		name: 'Login',
 		data () {
 			return {
-				selected: "1"
-				// number: "",
-				// password: ""
+				selected: "1",
+				passwordNumber: '',
+				passwordPassword: '',
+				smsNumber: '',
+				code: '',
+				url: this.urls.formal
 			}
 		},
 		components: {
-			LoginSystem: r => { require.ensure([], () => r(require('../../BaseComponents/LoginSystem')), 'LoginSystem') }
+			LoginSystem: r => { require.ensure([], () => r(require('../../BaseComponents/LoginSystem')), 'LoginSystem') },
+			SendCode: r => { require.ensure([], () => r(require('../../BaseComponents/SendCode')), 'SendCode') }
 		},
 		watch: {
 	    selected: function () {
-	      document.body.scrollTop = 0;
-	      document.documentElement.scrollTop = 0;
-	    }
-	  }
-		// ,
-		// methods: {
-		// 	Btn() {
-		// 		if(!this.number) {
-		// 			Toast('Please enter your number!');
-		// 		} else if(!this.password) {
-		// 			Toast('Please enter your password!');		
-		// 		}
-		// 	}
-		// }
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+		    }
+	  	}
+		,
+		methods: {
+			passwordLogin() {
+				var that = this;
+				var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+				if(!that.passwordNumber) {
+					Toast('Please enter your number!');
+					return false;
+				} else if (!(/^1[34578]\d{9}$/.test(that.passwordNumber))) {
+					Toast('Please enter a 11-digit valid number!');
+					return false;
+				} else if(!that.passwordPassword) {
+					Toast('Please enter your password!');
+					return false;
+				} else if (!reg.test(that.passwordPassword)) {
+					Toast('Please enter your password with 6-16 digits (must contain numbers and letters)!');
+					return false;
+				}
+				// // 表单提交
+				that.$http.post(this.urls.mobileLogin,{
+			    	mobile: that.passwordNumber,
+			    	password: that.passwordPassword
+			    })
+				.then(function (response) {
+					that.loginCallBack(response);
+				});
+			},
+			smsLogin() {
+				var that = this;
+				var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+				if(!that.smsNumber) {
+					Toast('Please enter your number!');
+					return false;
+				} else if (!(/^1[34578]\d{9}$/.test(that.smsNumber))) {
+					Toast('Please enter a 11-digit valid number!');
+					return false;
+				} else if(!that.code) {
+					Toast('Please enter the verification code!');
+					return false;
+				}
+				// // 表单提交
+				that.$http.post(this.urls.mobileLogin,{
+			    	mobile: that.smsNumber,
+			    	code: that.code
+			    })
+				.then(function (response) {
+					that.loginCallBack(response);
+				});
+			},
+			numberChange(data) {
+				this.smsNumber = data;
+			},
+			loginCallBack(response) {
+				console.log(response);
+				localStorage.setItem('token',response.data.data.token);
+				if (localStorage.getItem("goback")) {
+					window.location.href = localStorage.getItem("goback");
+					localStorage.removeItem("goback");
+				} else {
+					this.$router.push('/');
+				}
+			}
+		}
 	}
 </script>
 <style scoped>
@@ -130,7 +184,7 @@
 		border-width: 0;
 		top: 0;
 		right: 10px;
-		width: 100px;
+		width: 130px;
 		text-align: center;
 		height: 30px;
 		line-height: 30px;

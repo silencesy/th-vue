@@ -19,18 +19,13 @@ import BaseHome from '@/components/Home/BaseHome'
 // 　　window.history.go(-1)
 // }
 
-Router.prototype.goBack = function () { 
-　　this.isBack = true
-　　window.history.go(-1)
-}
-
-Router.prototype.goBack2 = function () {
- this.isBack = true
- this.go(-1)
+Router.prototype.goBack = function () {
+  this.fallback = true;
+  // window.history.go(-1);
 }
 Vue.use(Router)
 
-export default new Router({
+var router = new Router({
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   },
@@ -52,18 +47,18 @@ export default new Router({
           component: () => import('@/components/MainNavigation/Home')
         },
         {
-          path: '/Categories',
+          path: 'Categories',
           name: 'Categories',
           // meta: {
           //   keepAlive: true
           // },
-          component(resolve) {
-            require.ensure([], () => resolve(require('@/components/MainNavigation/Categories')), 'Categories')
-          }
-          // component: () => import('@/components/MainNavigation/Categories')
+          // component(resolve) {
+          //   require.ensure([], () => resolve(require('@/components/MainNavigation/Categories')), 'Categories')
+          // }
+          component: () => import('@/components/MainNavigation/Categories')
         },
         {
-          path: '/Guide',
+          path: 'Guide',
           name: 'Guide',
           // meta: {
           //   keepAlive: true
@@ -71,7 +66,7 @@ export default new Router({
           component: () => import('@/components/MainNavigation/Guide')
         },
         {
-          path: '/Cart',
+          path: 'Cart',
           name: 'Cart',
           // meta: {
           //   keepAlive: false
@@ -79,7 +74,7 @@ export default new Router({
           component: () => import('@/components/MainNavigation/Cart')
         },
         {
-          path: '/MyAccount',
+          path: 'MyAccount',
           name: 'MyAccount',
           // meta: {
           //   keepAlive: false
@@ -115,7 +110,8 @@ export default new Router({
       path: "/WishList/:GoodsId",
       name: "WishList",
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/WishList/WishList')), 'WishList')
@@ -125,7 +121,8 @@ export default new Router({
       path: "/AddressBook",
       name: "AddressBook",
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Address/AddressBook')), 'AddressBook')
@@ -252,14 +249,35 @@ export default new Router({
       }
     },
     {
-      path: "/ShopHome",
-      name: "ShopHome",
+      path: "/BindMobile",
+      name: "BindMobile",
       meta: {
         keepAlive: true
       },
       component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Login/BindMobile')), 'BindMobile')
+      }
+    },
+    {
+      path: "/GoodsList",
+      name: "GoodsList",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/GoodsList/GoodsList')), 'GoodsList')
+      }
+    },
+    {
+      path: "/ShopHome/:id",
+      name: "ShopHome",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopHome')), 'ShopHome')
       }
+<<<<<<< HEAD
     },
     {
       path: "/Invest",
@@ -369,9 +387,57 @@ export default new Router({
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Address/AddressTest')), 'AddressTest')
+=======
+    }, 
+    {
+      path: "/ShopGoodsList/:id/:flag",
+      name: "ShopGoodsList",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopGoodsList')), 'ShopGoodsList')
+      }
+    },
+    {
+      path: "/ShopSearch/:id",
+      name: "ShopSearch",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopSearch')), 'ShopSearch')
+      }
+    },
+    {
+      path: "/ShopList",
+      name: "ShopList",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopList')), 'ShopList')
+>>>>>>> 7c911fe95ed31879b03844d6279a2af4bec086d7
       }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.MustLogin) {
+    var token = localStorage.getItem("token") || null;
+    if (token) {
+      next();
+    } else {
+      localStorage.setItem('goback',window.location.href);
+      next('/Login');
+    }
+  } else {
+    next();
+  }
+
+  
+})
+export default router;
 
 

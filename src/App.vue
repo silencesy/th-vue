@@ -21,11 +21,17 @@ export default {
   },
   watch: {
   '$route' (to, from) {
-      const toDepth = to.path.split('/').length
-      const fromDepth = from.path.split('/').length
-      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      console.log(this.$router.fallback);
+      let isBack = this.$router.fallback  //  监听路由变化时的状态为前进还是后退
+      if(isBack) {
+        this.transitionName = 'slide-right'
+      } else {
+        this.transitionName = 'slide-left'
+      }
+      this.$router.fallback = false;
     }
-  }　　　
+  }
+
 }
 </script>
 
@@ -34,7 +40,8 @@ export default {
     margin: 0;
     padding: 0;
     font-size: 16px;
-    color: #222;
+    color: #222;]
+    font-family: 'Arial','helvetica';
   }
   i {
     font-style: normal;
@@ -136,13 +143,13 @@ export default {
   }
   .slide-left-enter, .slide-right-leave-active {
     opacity: 0;
-    -webkit-transform: translate(50px, 0);
-    transform: translate(50px, 0);
+    -webkit-transform: translate(30px, 0);
+    transform: translate(30px, 0);
   }
   .slide-left-leave-active, .slide-right-enter {
     opacity: 0;
-    -webkit-transform: translate(-50px, 0);
-    transform: translate(-50px, 0);
+    -webkit-transform: translate(-30px, 0);
+    transform: translate(-30px, 0);
   }
   .more-icon {
     padding: 10px;

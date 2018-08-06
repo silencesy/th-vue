@@ -3,9 +3,12 @@
 		<swiper :options="swiperOption"  ref="baseSwiper">
 			<swiper-slide v-for="(item,index) in swiperData" :key="index">
 				<div v-if="item.url">
-					<router-link :to='item.url'>
+					<!-- <router-link :to='item.url'> -->
+					<a :href="[item.url]">
 						<img :src="item.pic" alt="">
-					</router-link>
+					</a>
+						
+					<!-- </router-link> -->
 				</div>
 				<div v-if="!item.url">
 					<img :src="item" alt="">

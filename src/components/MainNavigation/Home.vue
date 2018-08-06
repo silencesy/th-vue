@@ -14,25 +14,25 @@
       <BaseSwiper :swiperData="homeData.figure" />
     </div>
     <!-- deal -->
-    <HomeSection :sectionData="homeData.deal"/>
+    <HomeSection :sectionData="homeData.deal" bannerId='17'/>
     <!-- shop -->
     <HomeSection :sectionData="homeData.shop" shop="shop"/>
     <!-- ticketing -->
-    <HomeSection :sectionData="homeData.ticketing"/>
+    <HomeSection :sectionData="homeData.ticketing" bannerId='1' :Categories="Categories"/>
     <!-- flowers -->
-    <HomeSection :sectionData="homeData.flowers"/>
+    <HomeSection :sectionData="homeData.flowers" bannerId='30' :Categories="Categories"/>
     <!-- thDispatcher -->
-    <HomeSection :sectionData="homeData.thDispatcher"/>
+    <HomeSection :sectionData="homeData.thDispatcher" bannerId='34'/>
     <!-- homeWare -->
-    <HomeSection :sectionData="homeData.homeWare"/>
+    <HomeSection :sectionData="homeData.homeWare" bannerId='19' :Categories="Categories"/>
     <!-- babyProduct -->
-    <HomeSection :sectionData="homeData.babyProduct"/>
+    <HomeSection :sectionData="homeData.babyProduct" bannerId='16' :Categories="Categories"/>
     <!-- toys -->
-    <HomeSection :sectionData="homeData.toys"/>
+    <HomeSection :sectionData="homeData.toys" bannerId='31' :Categories="Categories"/>
     <!-- coupon -->
-    <HomeSection :sectionData="homeData.coupon"/>
+    <HomeSection :sectionData="homeData.coupon" bannerId='2' :Categories="Categories"/>
     <!-- electronic -->
-    <HomeSection :sectionData="homeData.electronic"/>
+    <HomeSection :sectionData="homeData.electronic" bannerId='11' :Categories="Categories"/>
     <!-- article -->
     <BaseArticle :articleData="homeData.article"></BaseArticle>
     <!-- hotProduct -->
@@ -72,7 +72,7 @@ export default {
         id: 12,
         pageSize: 6,
         page: 0,
-        order: 'order_asc'
+        sort: 'order_asc'
       },
       // hotgoods
       hotData: [],
@@ -80,7 +80,10 @@ export default {
       totalPages: -1,
       // 搜索渐变颜色
       backgroundColor: 'rgba(246,67,44,0)',
-      shop: true
+      // 是否是商户
+      shop: true,
+      // 是否是分类
+      Categories: true
     };  
   },
   components: {

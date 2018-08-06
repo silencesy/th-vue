@@ -1,15 +1,9 @@
 <template>  
   <div class="Categories">
-    <div class="search">
-      <router-link to="/home/HomeSearch">
-        <span class="search-placeholder">Search</span>
-        <div class="search-input"></div>
-        <i class="iconfont icon-sousuo"></i>
-      </router-link>
-    </div>
+    <SearchTop />
     <div class="container">
       <div class="left" :style="{width:'100%',height:height+'px'}">
-        <ScrollView :height="height" :loadding="loadding" color="#eee">
+        <ScrollView :height="height" :loadding="loadding" :isshowgoback="isshowgoback" color="#eee">
           <ul class="category-container">
             <li class="category-item line1" :class="item.id==categoryActive?'active':''" v-for="(item,index) in categoryList" @click="checkCategroy(item.id)">{{item.title}}</li>
           </ul>
@@ -37,6 +31,7 @@ export default {
       pageSize: 8,
       pullup: true,
       loadding: false,
+      isshowgoback: false,
       categoryList: [],
       categoryActive: 1,
       goodsList: [],
@@ -47,11 +42,12 @@ export default {
   components: {
     GoodsRow: r => { require.ensure([], () => r(require('../BaseComponents/GoodsRow')), 'GoodsRow') },
     ScrollView: r => { require.ensure([], () => r(require('../BaseComponents/ScrollView')), 'ScrollView') },
+    SearchTop: r => { require.ensure([], () => r(require('../BaseComponents/SearchTop')), 'SearchTop') },
     Sort: r => { require.ensure([], () => r(require('../BaseComponents/Sort')), 'Sort') }
   },
   mounted() {
     var that = this;
-    
+    localStorage.setItem("classFlag",false);
     that.$nextTick(() => {
       setTimeout(function(){
         that.height = document.documentElement.clientHeight-55-50;
@@ -71,6 +67,7 @@ export default {
       var that = this;
       that.$http.post(this.urls.categoryList,{fname: '0'})
       .then(function (response) {
+        console.log(response);
         that.categoryList = response.data.data;
       });
     },
@@ -78,8 +75,8 @@ export default {
     getActiveCategory() {
       var that = this;
       console.log(that.$route.query.id)
-      if (that.$route.params.id) {
-        that.categoryActive = that.$route.params.id;
+      if (that.$route.query.id) {
+        that.categoryActive = that.$route.query.id;
       } else {
         that.categoryActive = 0;
       }
@@ -137,37 +134,7 @@ export default {
 </script>  
   
 <style scoped>
-  .search {
-    height: 50px;
-    max-width: 750px;
-    background-color: #fff;
-    z-index: 10;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-  .search-placeholder {
-    color: #999;
-    position: absolute;
-    left: 24px;
-    top: 16px;
-  }
-  .search .search-input {
-    box-sizing: border-box;
-    width: 100%;
-    height: 30px;
-    border-width: 0;
-    border-radius: 16px;
-    background-color: #eee;
-    padding-left: 20px;
-    color: #999;
-    outline: none;
-  }
-  .iconfont.icon-sousuo {
-    color: #999;
-    position: absolute;
-    right: 24px;
-    top: 16px;
-  }
+  
   .container {
     display: flex;
   }

@@ -1,30 +1,31 @@
-<template>
-	<div class="ShopHome">
+<template> 
+	<div class="ShopHome" v-if="shopData.pic">
 		<div class="header">
 			<div>
-				<img src="static/images/common/169.jpg" alt="">
-				<span>Amor flora</span>
+				<img :src="shopData.pic" alt="">
+				<span>{{shopData.name}}</span>
 			</div>
 			<div>
 				<span class="iconfont icon-shoucang"></span>
-				<router-link to="/" class="iconfont icon-sousuo"> </router-link>
+				<router-link :to="{name: 'ShopSearch', params: {id:shopData.id}}" class="iconfont icon-sousuo"> </router-link>
 			</div>
 		</div>
 		<div class="nav">
 			<router-link to="/">Home</router-link>
-			<router-link to="/">All</router-link>
-			<router-link to="/">New Arrivals</router-link>
+			<router-link :to="{name: 'ShopGoodsList', params: {id:shopData.id,flag: 'all'}}">All</router-link>
+			<router-link :to="{name: 'ShopGoodsList', params: {id:shopData.id,flag: 'new'}}">New Arrivals</router-link>
 		</div>
 		<!-- 轮播开始 -->
-		<BaseSwiper>
+		<BaseSwiper :swiperData="shopData.figure">
 
 		</BaseSwiper>
 		<!-- 轮播结束 -->
 		<div class="content">
-			<img src="static/images/common/shop.png" alt="">
-			<img src="static/images/common/shop.png" alt="">
-			<img src="static/images/common/shop.png" alt="">
+			<div v-for="(item,index) in shopData.content">
+				<img :src="item.pic" alt="">
+			</div>
 		</div>
+		<BackToTop />
 		<div class="bottom">
 			<router-link to="/"><i class="iconfont icon-shanghu1"></i>thMart-Home</router-link>
 			<router-link to="/"><i class="iconfont icon-kefu"></i>Chat</router-link>
@@ -36,18 +37,34 @@
 		name: '',
 		data () {
 			return {
-
+				shopData: {}
 			}
 		},
 		components: {
-			BaseSwiper: r => { require.ensure([], () => r(require('../../BaseComponents/BaseSwiper')), 'BaseSwiper') }
+			BaseSwiper: r => { require.ensure([], () => r(require('../../BaseComponents/BaseSwiper')), 'BaseSwiper') },
+			BackToTop: r => { require.ensure([], () => r(require('../../BaseComponents/BackToTop')), 'BackToTop') }
 		},
 		mounted () {
-			
+			console.log(this.$route.params.id)
+			this.getData();
+		},
+		methods: {
+			getData() {
+				var that = this;
+				that.$http.post(this.urls.shopDetail,{id: that.$route.params.id})
+				.then(function (response) {
+					// that.categoryList = response.data.data;
+					console.log(response)
+					that.shopData = response.data.data;
+				});
+			}
 		}
 	}
 </script>
 <style scoped>
+	.ShopHome {
+		padding-bottom: 41px;
+	}
 	.header {
 		width: 100%;
 		height: 60px;
@@ -57,7 +74,7 @@
 		align-content: center;
 		background: #F9421E;
 		padding: 0 10px;
-    box-sizing: border-box;
+    	box-sizing: border-box;
 	}
 	.header div span {
 		color: #fff;
@@ -86,12 +103,12 @@
 		text-align: center;
 	}
  	.nav a:after {
-    content: '|';
-    float: right;
-    color: #dfdfdf;
+	    content: '|';
+	    float: right;
+	    color: #dfdfdf;
 	}
 	.nav a:last-child:after {
-    content: ' ';
+    	content: ' ';
 	}
 	.content img {
 		width: 100%;
@@ -117,9 +134,9 @@
 		padding-right: 10px;
 	}
 	.bottom a:first-child:after {
-    content: '|';
-    float: right;
-    color: #dfdfdf;
+	    content: '|';
+	    float: right;
+	    color: #dfdfdf;
 	}
 	.bottom .icon-kefu {
 		font-size: 20px;

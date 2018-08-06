@@ -14,8 +14,6 @@ import utils from "./utils/utils"
 // api地统一址入口
 import urls from "./utils/interface"
 Vue.use(urls);
-
-console.log(router);
 Vue.use(Vuex);
 Vue.use(http);
 Vue.use(utils);
@@ -27,6 +25,12 @@ if ('addEventListener' in document) {
 		FastClick.attach(document.body);
 	}, false);
 }
+
+// 监听浏览器后退
+window.addEventListener("popstate", function(e) {
+  router.fallback = true;
+}, false);
+
 
 // 轮播
 import VueAwesomeSwiper from 'vue-awesome-swiper'

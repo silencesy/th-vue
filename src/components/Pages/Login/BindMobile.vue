@@ -4,8 +4,8 @@
 			<div slot="info">
 				<div class="content"> 
 					<SendCode @numberChange="numberChange"/>
-					<div class="contentInfo"><input type="password" v-model='code' placeholder="Enter verification code"></div>
-					<div class="contentInfo"><button class="btn" @click="Btn">Next step</button></div>
+					<div class="contentInfo"><input type="text" v-model='code' placeholder="Enter verification code"></div>
+					<div class="contentInfo"><button class="btn" @click="Btn">Done</button></div>
 				</div>
 			</div>
 		</LoginSystem>
@@ -42,18 +42,34 @@
 					return false;
 				}
 				// 表单提交
-				that.$http.post(this.urls.checkMobileAndCode,{
+				that.$http.post(this.urls.wxBindMobile,{
 			    	mobile: that.number,
 			    	code: that.code,
+			    	openid: this.$route.query.openid,
+			    	nickname: this.$route.query.nickname,
+			    	sex: this.$route.query.sex,
+			    	city: this.$route.query.city,
+			    	province: this.$route.query.province,
+			    	country: this.$route.query.country,
+			    	headimgurl: this.$route.query.headimgurl,
+			    	unionid: this.$route.query.unionid,
 			    })
 				.then(function (response) {
-					if (response.data.data.id) {
-						that.$router.push({path: "/RePassword",query: {id: response.data.data.id}});
-					}
+					this.loginCallBack(response);
 				});
 			},
 			numberChange(data) {
 				this.number = data;
+			},
+			loginCallBack(response) {
+				console.log(response);
+				localStorage.setItem('token',response.data.data.token);
+				if (localStorage.getItem("goback")) {
+					window.location.href = localStorage.getItem("goback");
+					localStorage.removeItem("goback");
+				} else {
+					this.$router.push('/');
+				}
 			}
 		}
 	}
@@ -72,19 +88,19 @@
 		padding: 0 5px;
 		box-sizing: border-box;
 		background-color: #eee;
-    outline: 0;
-    border: none;
-    border-bottom: 1px solid #dfdfdf;
+	    outline: 0;
+	    border: none;
+	    border-bottom: 1px solid #dfdfdf;
 	}
 	.contentInfo .btn {
 		width: 160px;
-    background-color: #f6442b;
-    color: #fff;
-    border-width: 0;
-    height: 36px;
-    line-height: 36px;
-    margin-top: 25px;
-    border-radius: 30px;
+	    background-color: #f6442b;
+	    color: #fff;
+	    border-width: 0;
+	    height: 36px;
+	    line-height: 36px;
+	    margin-top: 25px;
+	    border-radius: 30px;
 	}
 
 	.contentInfo {

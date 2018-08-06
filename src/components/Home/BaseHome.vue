@@ -11,7 +11,7 @@
         Home
       </mt-tab-item>
       <mt-tab-item id="Categories">  
-        <img slot="icon" :src="selected=='Categories'?'static/images/common/category-cover.png':'static/images/common/Category.png'">  
+        <img slot="icon" :src="selected=='Categories'?'static/images/common/category-cover.png':'static/images/common/Category.png'">
         Categories
       </mt-tab-item>
       <mt-tab-item id="Guide">  
@@ -41,14 +41,22 @@ export default {
     };  
   },
   watch: {
+    // 当选中值改变触发路由
     selected: function (nowVal, oldVal) {
+      // 如果新的值为'home'则重改为‘/’与路由中的首页对应
       if (nowVal == 'Home') {
         nowVal = '/'
       }
-      this.$router.push(nowVal); 
+      // 当路由改变的时候触发selected改变 selected改变又会触发路由改变 （注意 当首页跳分类页时会改变路由，路由改变又会触发selected改变，selected改变又会触发路由改变。为了解决这个问题我们在localStorage设置一个classFlag来防止路由跳转两次，当进入分类之前设置为true，进去之后设置为false,这样不会影响其他页面的跳转）
+      if (!(localStorage.getItem("classFlag")=='true')) {
+        this.$router.push(nowVal);
+      } 
     },
     '$route' (to, from) {
-      this.selected = to.name;
+      if (this.selected!=to.name) {
+        // 当路由改变的时候触发底部选中的改变，从而实现底部高亮
+        this.selected = to.name;
+      }
     }
   },
   mounted() {
