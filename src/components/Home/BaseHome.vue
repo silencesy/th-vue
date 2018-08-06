@@ -47,17 +47,16 @@ export default {
       if (nowVal == 'Home') {
         nowVal = '/'
       }
-      // 如果是分类页则需要传递参数
-      if (nowVal == 'Categories') {
-        this.$router.push({ path: nowVal, query: { id: this.classId }})
-      } else {
-      // 其他页面不需要传递参数
+      // 当路由改变的时候触发selected改变 selected改变又会触发路由改变 （注意 当首页跳分类页时会改变路由，路由改变又会触发selected改变，selected改变又会触发路由改变。为了解决这个问题我们在localStorage设置一个classFlag来防止路由跳转两次，当进入分类之前设置为true，进去之后设置为false,这样不会影响其他页面的跳转）
+      if (!(localStorage.getItem("classFlag")=='true')) {
         this.$router.push(nowVal);
-      }
-      
+      } 
     },
     '$route' (to, from) {
-      this.selected = to.name;
+      if (this.selected!=to.name) {
+        // 当路由改变的时候触发底部选中的改变，从而实现底部高亮
+        this.selected = to.name;
+      }
     }
   },
   mounted() {

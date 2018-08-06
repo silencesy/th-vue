@@ -98,14 +98,14 @@
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
 			</router-link>
 			<router-link to='/Contact'>
-				<div><i class="iconfont icon-duihua"></i>Customer Service</div>
+				<div><i class="iconfont icon-shouhou"></i>Customer Service</div>
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
 			</router-link>
 			<router-link to='/'>
 				<div><i class="iconfont icon-shezhi"></i>Setting</div>
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
 			</router-link>
-
+			<div @click="cleartoken">123123</div>
 		</div>
   </div>  
 </template>  
@@ -117,7 +117,12 @@
 	    return {  
 	       
 	    };  
-	  }  
+	  },
+	  methods: {
+	  	cleartoken() {
+	  		localStorage.removeItem("token");
+	  	}
+	  }
 	};  
 </script>  
   

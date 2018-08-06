@@ -39,4 +39,8 @@ exports.install = function (Vue, options) {
 	    return item;
 	  }, []);
 	}
+
+	// Vue.prototype.getCode = function (arr, name) {
+	// 	alert(1)
+	// }
 };

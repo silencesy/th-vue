@@ -20,7 +20,7 @@
 						</div>
 					</router-link>
 					<!-- 商户区块 -->
-					<router-link :to="{name: 'GoodsDetails', params: {id:item.id}}" v-if="shop">
+					<router-link :to="{name: 'ShopHome', params: {id:item.id}}" v-if="shop">
 						<div class="img-box">
 							<img v-lazy="item.pic" alt="">
 						</div>
@@ -48,6 +48,14 @@ import { mapState } from 'vuex'
 			    }  
 			},
 			shop: {
+				type: Boolean,
+				default: false
+			},
+			bannerId: {
+				type: [Number,String],
+				default: 1
+			},
+			Categories: {
 				type: Boolean,
 				default: false
 			}
@@ -84,9 +92,15 @@ import { mapState } from 'vuex'
 	},
   	methods: {
   		goClassList() {
-  			// console.log(this.$router);
-  			this.$router.push('GoodsList');
-  			// this.$router.push({ path: '/Categories', query: { id: 1 }})
+  			if(this.shop) {
+  				this.$router.push('ShopList');
+  			} else if (this.Categories) {
+  				localStorage.setItem("classFlag",true);
+  				this.$router.push({ path: 'Categories', query: { id: this.bannerId }})
+  			} else {
+  				this.$router.push({path: 'GoodsList',query: { id: this.bannerId }});
+  			}
+  			
   		}
   	}
 	}

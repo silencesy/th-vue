@@ -1,6 +1,12 @@
 <template>
 	<div class="search">
-      <router-link to="/home/HomeSearch">
+
+      <router-link v-if="!searchShop" to="/home/HomeSearch">
+        <span class="search-placeholder">Search</span>
+        <div class="search-input"></div>
+        <i class="iconfont icon-sousuo"></i>
+      </router-link>
+      <router-link v-if="searchShop" :to="{path:'/home/HomeSearch',query:{shop:1}}">
         <span class="search-placeholder">Search</span>
         <div class="search-input"></div>
         <i class="iconfont icon-sousuo"></i>
@@ -9,7 +15,13 @@
 </template>
 <script>
 	export default {
-		name: 'search'
+		name: 'search',
+    props: {
+      searchShop: {
+        type: Boolean,
+        deafult: false
+      }
+    }
 	}
 </script>
 <style scoped>

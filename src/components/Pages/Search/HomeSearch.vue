@@ -61,12 +61,21 @@
     },
     mounted() {
       var that = this;
+      
+      // 设置请求地址
       that.apiUrl = that.urls.goodsList;
       that.$nextTick(() => {
         setTimeout(function(){
           that.height = document.documentElement.clientHeight - 119;
         },20);
       });
+      // 当从商户列表页进入搜索 默认商户搜索
+      if (that.$route.query.shop) {
+        that.selected = '2';
+        setTimeout(function(){
+          that.height = document.documentElement.clientHeight - 79;
+        },40);
+      }
     },
     components: {
       GoodsRow: r => { require.ensure([], () => r(require('../../BaseComponents/GoodsRow')), 'GoodsRow') },
@@ -129,7 +138,7 @@
     watch: {
       selected: function(newVal,oldVal) {
         var that = this;
-        that.$refs.textcontent.refresh();
+        // that.$refs.textcontent.refresh();
         if (newVal == 2) {
           that.apiUrl = that.urls.hotGoods;
           that.goodsData=[];

@@ -3,7 +3,7 @@
     <SearchTop />
     <div class="container">
       <div class="left" :style="{width:'100%',height:height+'px'}">
-        <ScrollView :height="height" :loadding="loadding" color="#eee">
+        <ScrollView :height="height" :loadding="loadding" :isshowgoback="isshowgoback" color="#eee">
           <ul class="category-container">
             <li class="category-item line1" :class="item.id==categoryActive?'active':''" v-for="(item,index) in categoryList" @click="checkCategroy(item.id)">{{item.title}}</li>
           </ul>
@@ -31,6 +31,7 @@ export default {
       pageSize: 8,
       pullup: true,
       loadding: false,
+      isshowgoback: false,
       categoryList: [],
       categoryActive: 1,
       goodsList: [],
@@ -46,7 +47,7 @@ export default {
   },
   mounted() {
     var that = this;
-    
+    localStorage.setItem("classFlag",false);
     that.$nextTick(() => {
       setTimeout(function(){
         that.height = document.documentElement.clientHeight-55-50;
@@ -66,6 +67,7 @@ export default {
       var that = this;
       that.$http.post(this.urls.categoryList,{fname: '0'})
       .then(function (response) {
+        console.log(response);
         that.categoryList = response.data.data;
       });
     },

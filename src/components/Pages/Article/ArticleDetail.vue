@@ -29,6 +29,7 @@
 				
 			</BaseArticle> -->
 		</div>
+		<BackToTop />
 	</div>
 </template>
 <script>
@@ -39,9 +40,10 @@
 				articleData: {},
 			}
 		},
-		// components: {
-		// 	BaseArticle: r => { require.ensure([], () => r(require('../../BaseComponents/BaseArticle')), 'BaseArticle') }
-		// },
+		components: {
+			BaseArticle: r => { require.ensure([], () => r(require('../../BaseComponents/BaseArticle')), 'BaseArticle') },
+			BackToTop: r => { require.ensure([], () => r(require('../../BaseComponents/BackToTop')), 'BackToTop') }
+		},
 		mounted () {
 			this.getData();
 		},

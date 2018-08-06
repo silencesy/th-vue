@@ -16,7 +16,7 @@
 				goodsList: [],
 				pullup: true,
 				parameter: {
-					id: 12,
+					id: this.$route.query.id,
 					page: 0,
 					pageSize: 10,
 					sort: 'order_asc'

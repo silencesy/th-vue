@@ -7,6 +7,7 @@
             </div>
             <div v-show="isShow" class="promptText">{{promptText2}}</div>
         </div>
+        <i class="iconfont icon-fanhuidingbu" v-show="goBack" @click="goBackFun"></i>
     </div>
 </template>
 <script>
@@ -87,7 +88,7 @@
         */
         listenScroll: {
           type: Boolean,
-          default: false
+          default: true
         },
         /**
         * 是否派发滚动到底部的事件，用于上拉加载
@@ -137,6 +138,10 @@
         LessThanNumber: {
           type: Number,
           default: 6
+        },
+        isshowgoback: {
+          type: Boolean,
+          default: true
         }
       },
       data () {
@@ -146,7 +151,8 @@
           // 数据全部请求完成或者没有数据时提示用户
           promptText2: this.promptText,
           // 是否显示promptText
-          isShow: false
+          isShow: false,
+          goBack: false
         }
       },
       mounted() {
@@ -177,9 +183,10 @@
           // 是否派发滚动事件
           if(that.listenScroll){
             that.scroll.on('scroll',(pos) => {
-              console.log(pos);
-              if(that.listenScroll){
-                that.$emit('scroll',pos)
+              if (pos.y<-250 && that.isshowgoback) {
+                that.goBack = true;
+              } else {
+                that.goBack = false;
               }
             })
             
@@ -255,7 +262,13 @@
         startup() {
           this.loadding2 = true;
           this.isShow = false;
+          this.goBack = false;
           this.promptText2 = this.promptText;
+        },
+        // 返回顶部
+        goBackFun() {
+          this.scroll.scrollTo(0, 0, 0, "easing");
+          this.goBack = false;
         }
       },
       watch: {
@@ -271,7 +284,7 @@
           setTimeout(() => {
             this.refresh();
             // this.finishPullUp();
-          }, 50);
+          }, 20);
         }
       }
     }
@@ -288,5 +301,12 @@
       text-align: center;
       padding-bottom: 15px;
       color: #999; 
+    }
+    .iconfont.icon-fanhuidingbu {
+      position: fixed;
+      right: 15px;
+      bottom: 70px;
+      font-size: 30px;
+      opacity: 0.8;
     }
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<div class="BaseArticle">
 		<div class="banner-img-box" v-show="articleDataInfo.pic">
-			<img class="banner-img" :src="articleDataInfo.pic" alt="">
+			<img class="banner-img" @click="goList" :src="articleDataInfo.pic" alt="">
 		</div>
 		<div class="article-content" :style="{backgroundColor:articleContentBg}">
 			<div class="article-item" v-for="(item,index) in articleDataInfo.data" :key="index" :style="articleItemStyleObj" @click="goDetails(item.id)">
@@ -61,6 +61,9 @@
   	methods: {
   		goDetails(id) {
   			this.$router.push({ name: 'ArticleDetail', params: { id: id}})
+  		},
+  		goList() {
+  			this.$router.push('Guide');
   		}
   	}
 	}
