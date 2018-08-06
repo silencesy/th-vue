@@ -277,7 +277,6 @@ var router = new Router({
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopHome')), 'ShopHome')
       }
-<<<<<<< HEAD
     },
     {
       path: "/Invest",
@@ -387,8 +386,8 @@ var router = new Router({
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Address/AddressTest')), 'AddressTest')
-=======
-    }, 
+      }
+    },
     {
       path: "/ShopGoodsList/:id/:flag",
       name: "ShopGoodsList",
@@ -417,7 +416,6 @@ var router = new Router({
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopList')), 'ShopList')
->>>>>>> 7c911fe95ed31879b03844d6279a2af4bec086d7
       }
     }
   ]
