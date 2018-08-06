@@ -260,6 +260,116 @@ export default new Router({
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopHome')), 'ShopHome')
       }
+    },
+    {
+      path: "/Invest",
+      name: "Invest",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/Invest')), 'Invest')
+      }
+    },
+    {
+      path: "/InvestEn",
+      name: "InvestEn",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/InvestEn')), 'InvestEn')
+      }
+    },
+    {
+      path: "/Cost",
+      name: "Cost",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/Cost')), 'Cost')
+      }
+    },
+    {
+      path: "/CostEn",
+      name: "CostEn",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/CostEn')), 'CostEn')
+      }
+    },
+    {
+      path: "/CaseFirst",
+      name: "CaseFirst",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/CaseFirst')), 'CaseFirst')
+      }
+    },
+    {
+      path: "/CaseSecond",
+      name: "CaseSecond",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/CaseSecond')), 'CaseSecond')
+      }
+    },
+    {
+      path: "/CaseThird",
+      name: "CaseThird",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/CaseThird')), 'CaseThird')
+      }
+    },
+    {
+      path: "/CaseFirstEn",
+      name: "CaseFirstEn",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/CaseFirstEn')), 'CaseFirstEn')
+      }
+    },
+    {
+      path: "/CaseSecondEn",
+      name: "CaseSecondEn",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/CaseSecondEn')), 'CaseSecondEn')
+      }
+    },
+    {
+      path: "/CaseThirdEn",
+      name: "CaseThirdEn",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Invest/CaseThirdEn')), 'CaseThirdEn')
+      }
+    },
+    {
+      path: "/AddressTest",
+      name: "AddressTest",
+      meta: {
+        keepAlive: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Address/AddressTest')), 'AddressTest')
+      }
     }
   ]
 })
