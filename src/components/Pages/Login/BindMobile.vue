@@ -26,7 +26,7 @@
 			SendCode: r => { require.ensure([], () => r(require('../../BaseComponents/SendCode')), 'SendCode') }
 		},
 		mounted () {
-			
+			console.log(this.$route.query.openid);
 		},
 		methods: {
 			Btn() {
@@ -42,20 +42,21 @@
 					return false;
 				}
 				// 表单提交
-				that.$http.post(this.urls.wxBindMobile,{
+				that.$http.post(that.urls.wxBindMobile,{
 			    	mobile: that.number,
 			    	code: that.code,
-			    	openid: this.$route.query.openid,
-			    	nickname: this.$route.query.nickname,
-			    	sex: this.$route.query.sex,
-			    	city: this.$route.query.city,
-			    	province: this.$route.query.province,
-			    	country: this.$route.query.country,
-			    	headimgurl: this.$route.query.headimgurl,
-			    	unionid: this.$route.query.unionid,
+			    	openid: that.$route.query.openid,
+			    	nickname: that.$route.query.nickname,
+			    	sex: that.$route.query.sex,
+			    	city: that.$route.query.city,
+			    	province: that.$route.query.province,
+			    	country: that.$route.query.country,
+			    	headimgurl: that.$route.query.headimgurl,
+			    	unionid: that.$route.query.unionid,
 			    })
 				.then(function (response) {
-					this.loginCallBack(response);
+					// that.loginCallBack(response);
+					that.loginCallBack(response);
 				});
 			},
 			numberChange(data) {
