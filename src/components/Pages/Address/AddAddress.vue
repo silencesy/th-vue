@@ -8,7 +8,7 @@
 						<input type="text" v-model='name' id="name">					
 					</div>
 					<div>
-						<label for="number"><i>*</i> Phone nunber :</label> 
+						<label for="number"><i>*</i> Phone :</label> 
 						<input type="text" v-model='number' id="number">
 					</div>
 					<div>
@@ -16,7 +16,7 @@
 						<input type="text" v-model='email' id="email">
 					</div>
 					<div>
-						<label for="add"><i>*</i> 选择地址：</label> 
+						<label for="add"><i>*</i> Address : </label> 
 						<span>{{myAddressProvince}} {{myAddressCity}}</span>
 					</div>
 					<div>
