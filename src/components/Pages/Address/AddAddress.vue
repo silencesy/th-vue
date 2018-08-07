@@ -38,7 +38,7 @@
 </template>
 <script>
 	import { Picker } from 'mint-ui';
-  	import myaddress from './address.json';
+  import myaddress from './address.json';
 	export default {
 		name: 'AddAdress',
 		components: {
