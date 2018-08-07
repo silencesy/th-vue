@@ -94,24 +94,6 @@ export default {
     max-width: 750px;
     margin: 0 auto;
   }
-  .line2 {
-    display:-webkit-box;
-    overflow:hidden;
-    white-space:normal!important;
-    text-overflow:ellipsis;
-    word-wrap:break-word;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-  }
-  .line3 {
-    display:-webkit-box;
-    overflow:hidden;
-    white-space:normal!important;
-    text-overflow:ellipsis;
-    word-wrap:break-word;
-    -webkit-line-clamp:3;
-    -webkit-box-orient:vertical;
-  }
   .swiper-pagination-bullet {
     width: 10px !important;
     height: 2px !important;
@@ -305,6 +287,9 @@ export default {
     left: 0;
     margin: auto;
     position: absolute;
+  }
+  button{
+    outline: none;
   }
   input {
     -webkit-appearance: none;

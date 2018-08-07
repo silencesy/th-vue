@@ -4,17 +4,24 @@
 			<div class="info">
 				<div class="baseInfo">
 					<div>
-						<span><i>*</i> Full Name :</span>
-						<input type="text" v-model='name'>
+						<label for="name"><i>*</i> Full Name :</label> 
+						<input type="text" v-model='name' id="name">					
 					</div>
 					<div>
-						<span><i>*</i> Phone nunber :</span>
-						<input type="text" v-model='number'>
+						<label for="number"><i>*</i> Phone nunber :</label> 
+						<input type="text" v-model='number' id="number">
 					</div>
 					<div>
-						<span><i>*</i> Email :</span>
-						<input type="text" v-model='email'>
+						<label for="email"><i>*</i> Email :</label>
+						<input type="text" v-model='email' id="email">
 					</div>
+					<div>
+						<label for="add"><i>*</i> 选择地址：</label> 
+						<span>{{myAddressProvince}} {{myAddressCity}} <!-- {{myAddresscounty}} --></span>
+					</div>
+					<div>
+		        <mt-picker :slots="myAddressSlots" @change="onMyAddressChange"></mt-picker>
+		      </div>
 				</div>
 				<div class="address">
 					<textarea rows="5" v-model='address' placeholder="* Please write down your detailed address in Chinese(city name is required)"> </textarea>
@@ -25,40 +32,71 @@
 	       	<label for="item">Default</label>
 				</div>
 			</div>
-			<div class="bottom" @click="AddAdress">Submit</div>
+			<div class="bottom">Submit</div>
 		</div>
 	</div>
 </template>
 <script>
-	import { Toast } from 'mint-ui'
+	import { Picker } from 'mint-ui';
+  import myaddress from './address.json';
+	// import { Toast } from 'mint-ui';
 	export default {
 		name: 'AddAdress',
+		components: {
+      'mt-picker': Picker
+    },
 		data () {
 			return {
-				name: "",
-				number: "",
-				email: "",
-				address: ""
+       	myAddressSlots: [
+          {
+            flex: 1,
+            defaultIndex: 1,    
+            values: Object.keys(myaddress),  //省份数组
+            className: 'slot1',
+            textAlign: 'center'
+          }, {
+            divider: true,
+            content: '-',
+            className: 'slot2'
+          }, {
+            flex: 1,
+            values: [],
+            className: 'slot3',
+            textAlign: 'center'
+          },
+          {
+            divider: true,
+            content: '-',
+            className: 'slot4'
+          },
+          {
+            flex: 1,
+            values: [],
+            className: 'slot5',
+            textAlign: 'center'
+          }
+        ],
+        myAddressProvince:'省',
+        myAddressCity:'市',
+        myAddresscounty:'区/县',
 			}
 		},
 		mounted () {
-			
+			this.$nextTick(() => {
+        this.myAddressSlots[0].defaultIndex = 0    
+      });
 		},
 		methods: {
-			AddAdress() {
-				if(!this.name) {
-					Toast('Please enter your name!');
-				}
-				else if(!this.number) {
-					Toast('Please enter your number!');
-				}
-				else if(!this.email) {
-					Toast('Please enter your email!');
-				}
-				else if(!this.email) {
-					Toast('Please enter your email!');
-				}
-			}
+			onMyAddressChange(picker, values) {
+       if(myaddress[values[0]]){  //这个判断类似于v-if的效果（可以不加，但是vue会报错，很不爽）
+          picker.setSlotValues(1,Object.keys(myaddress[values[0]])); // Object.keys()会返回一个数组，当前省的数组
+          picker.setSlotValues(2,myaddress[values[0]][values[1]]); // 区/县数据就是一个数组
+          this.myAddressProvince = values[0];
+          this.myAddressCity = values[1];
+          this.myAddresscounty = values[2];
+        }
+      },
+
 		}
 	}
 </script>
@@ -71,23 +109,50 @@
 		margin-bottom: 56px;
 	}
 	.info input {
-	    border: none;
-	    outline: none;
-	    color: #999;
-	    padding-left: 8px;
+    border: none;
+    outline: none;
+    color: #999;
 	}
 	.baseInfo > div {
-		height: 60px;
-		line-height: 60px;
 		padding: 10px;
 		box-sizing: border-box;
 		border-bottom: 1px solid #dfdfdf;
+		overflow: hidden;
 	}
-	.info i {
+	.baseInfo i {
 		color: #F9421E;
 	}
-	.info span {
+	.baseInfo label {
 		color: #666;
+		line-height: 40px;
+		float: left;
+	}
+	.baseInfo input {
+		height: 40px;
+		float: left;
+	}
+	.baseInfo div:first-child label {
+		width: 36%;
+	}
+	.baseInfo div:first-child input {
+		width: 64%;
+	}
+	.baseInfo div:nth-child(2) label {
+		width: 47%;
+	}
+	.baseInfo div:nth-child(2) input {
+		width: 53%;
+	}
+	.baseInfo div:nth-child(3) label {
+		width: 27%;
+	}
+	.baseInfo div:nth-child(3) input {
+		width: 73%;
+	}
+	.baseInfo span {
+		display: inline-block;
+    line-height: 40px;
+    color: #999;
 	}
 	.address {
 		margin: 0 10px;
