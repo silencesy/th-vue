@@ -285,6 +285,18 @@
             this.refresh();
             // this.finishPullUp();
           }, 20);
+          setTimeout(() => {
+            this.refresh();
+            // this.finishPullUp();
+          }, 80);
+          setTimeout(() => {
+            this.refresh();
+            // this.finishPullUp();
+          }, 140);
+          setTimeout(() => {
+            this.refresh();
+            // this.finishPullUp();
+          }, 400);
         }
       }
     }

@@ -34,7 +34,7 @@
 				if(!that.number) {
 					Toast('Please enter your number!');
 					return false;
-				} else if (!(/^1[34578]\d{9}$/.test(that.number))) {
+				} else if (!(/^1[345789]\d{9}$/.test(that.number))) {
 					Toast('Please enter a 11-digit valid number!');
 					return false;
 				} else if(!that.code) {
@@ -55,22 +55,11 @@
 			    	unionid: that.$route.query.unionid,
 			    })
 				.then(function (response) {
-					// that.loginCallBack(response);
 					that.loginCallBack(response);
 				});
 			},
 			numberChange(data) {
 				this.number = data;
-			},
-			loginCallBack(response) {
-				console.log(response);
-				localStorage.setItem('token',response.data.data.token);
-				if (localStorage.getItem("goback")) {
-					window.location.href = localStorage.getItem("goback");
-					localStorage.removeItem("goback");
-				} else {
-					this.$router.push('/');
-				}
 			}
 		}
 	}

@@ -122,8 +122,7 @@ export default {
         that.showMoreIcon = false;
       } else {
         that.pagePara.page++;
-        that.$http.post(that.urls.hotGoods,that.pagePara
-        )
+        that.$http.post(that.urls.hotGoods,that.pagePara)
         .then(function (response) {
           console.log(response);
           that.hotData = that.hotData.concat(response.data.data.data);

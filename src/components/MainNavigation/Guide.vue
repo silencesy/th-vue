@@ -37,7 +37,8 @@ export default {
       open: false,
       articleItemStyleObj: {
         'border': '1px solid #dfdfdf',
-        'paddingLeft': '10px'
+        'paddingLeft': '10px',
+        'paddingRight': '10px',
       },
       articleListData1: {
         data:[]

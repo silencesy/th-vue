@@ -86,6 +86,7 @@
 	}
 	.article-content {
 		padding: 10px 15px;
+		box-sizing: border-box;
 	}
 	.article-item {
 		box-sizing: border-box;
@@ -93,6 +94,7 @@
 		border-radius: 4px;
 		margin-bottom: 10px;
 		background-color: #fff;
+		box-sizing: border-box;
 
 	}
 	.article-item:last-child {

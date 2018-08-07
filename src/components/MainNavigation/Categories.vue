@@ -74,7 +74,6 @@ export default {
     //获取当前类别
     getActiveCategory() {
       var that = this;
-      console.log(that.$route.query.id)
       if (that.$route.query.id) {
         that.categoryActive = that.$route.query.id;
       } else {
@@ -103,6 +102,7 @@ export default {
         sort: that.sort
       })
       .then(function (response) {
+        console.log(response);
         that.goodsList = that.goodsList.concat(response.data.data.data);
         if (response.data.data.totalPage == 0 || that.page >= response.data.data.totalPage) {
           that.$refs.ScrollView.endup();

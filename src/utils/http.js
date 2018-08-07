@@ -39,9 +39,9 @@ Axios.interceptors.request.use(
 
     // 若是有做鉴权token , 就给头部带上token
     // 若是需要跨站点,存放到 cookie 会好一点,限制也没那么多,有些浏览环境限制了 localstorage 的使用
-    // if (localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       config.headers.TOKEN = 'abf7896ab115f2935676f1175518e399MTUzMTc5NjA5NzE1NDE1';
-    // }
+    }
     return config;
   },
   error => {
@@ -61,8 +61,11 @@ Axios.interceptors.response.use(
   res => {
     // 对响应的状态吗做统一处理
     if (res.data) {
-      if (res.data.code == 102) {
-
+      // 未传token
+      if (res.data.code == 100 || res.data.code == 101 || res.data.code == 102 || res.data.code == 103) {
+          router.push({
+            path: "/Login"
+          });
       }
       // 手机号已被注册
       if (res.data.code == 104) {
@@ -88,8 +91,13 @@ Axios.interceptors.response.use(
       if (res.data.code == 110) {
         Toast('The password is incorrect!');
       }
+      // 如果返回token就设置token
+      if (res.data.data.token) {
+        localStorage.setItem('token',res.data.data.token);
+      }
     }
-    return res;
+
+      return res;
   },
   error => {
     // 用户登录的时候会拿到一个基础信息,比如用户名,token,过期时间戳
@@ -143,9 +151,11 @@ Axios.interceptors.response.use(
     // }
     // // 返回 response 里的错误信息
     // let errorInfo =  error.data.error ? error.data.error.message : error.data;
+
     return Promise.reject(error);
   }
 );
+
 
 // 对axios的实例重新封装成一个plugin ,方便 Vue.use(xxxx)
 export default {

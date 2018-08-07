@@ -79,6 +79,12 @@ Vue.mixin({
     toHome() {
       router.goBack("/")
     }
+  },
+  created() {
+    var token = this.$route.query.token || null;
+    if (token) {
+      this.setToken(token);
+    }
   }
 })
 

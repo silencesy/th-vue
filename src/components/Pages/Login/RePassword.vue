@@ -48,8 +48,7 @@
 			    	id: that.$route.query.id
 			    })
 				.then(function (response) {
-					localStorage.setItem('token',response.data.data.token);
-					that.$router.push('/');
+					that.loginCallBack(response);
 				});
 			}
 		}

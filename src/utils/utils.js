@@ -38,8 +38,31 @@ exports.install = function (Vue, options) {
 	    hash[next[name]] ? '' : hash[next[name]] = true && item.push(next);
 	    return item;
 	  }, []);
+	},
+	// 设置token
+	Vue.prototype.setToken = function (token) {
+	  	localStorage.setItem('token',token);
+	},
+	// 删除token
+	Vue.prototype.removeToken = function () {
+	  	localStorage.removeItem('token');
+	},
+	// 获取token
+	Vue.prototype.getToken = function () {
+		var token = localStorage.getItem('token',token) || null;
+	 	return token;
 	}
-
+	// 获取token
+	Vue.prototype.loginCallBack = function (response) {
+		if (response.data.data.token) {
+			if (localStorage.getItem("goback")) {
+				window.location.href = localStorage.getItem("goback");
+				localStorage.removeItem("goback");
+			} else {
+				this.$router.push('/');
+			}
+		}
+	}
 	// Vue.prototype.getCode = function (arr, name) {
 	// 	alert(1)
 	// }
