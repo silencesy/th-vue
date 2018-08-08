@@ -407,6 +407,7 @@
 		color: #fff;
 		text-align: center;
 		font-size: 20px;
+		margin-right: 10px;
 	}
 	.join > div:nth-child(2) {
 		flex: 1;
@@ -422,7 +423,7 @@
 		color: #Eb4606;
 		text-decoration: underline;
 	}
-	.joinP {
+	.join > div {
 		text-indent: -13px;
 		padding-left: 11px;
 	}

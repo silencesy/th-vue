@@ -149,7 +149,7 @@ export default {
   }
    .mint-navbar .mint-tab-item.is-selected:after {
     content: ' ';
-    width: 60px;
+    width: 154px;
     height: 2px;
     background-color: #f24827;
     position: absolute;
