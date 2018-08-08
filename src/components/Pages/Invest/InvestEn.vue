@@ -388,6 +388,7 @@
 	.goodsTable td {
 		padding: 5px 0;
 	}
+	
 	.join {
 		background: #fff;
 		margin-bottom: 20px;
