@@ -1,26 +1,26 @@
 <template>
 	<div class="AddressBook">
 		<div class="fix">
-			<div v-for="(item,index) in idArr" class="addressPer">
+			<div v-for="(item,index) in dataList" class="addressPer">
 				<div class="addList">
-					<p>Amanda</p>
-					<p>15637849685</p>
-					<p>154520620@qq.com</p>
-					<p>上海市黄浦区蒙自路169号</p>
+					<p>{{item.fullName}}</p>
+					<p>{{item.phone}}</p>
+					<p>{{item.email}}</p>
+					<p>{{item.province}} {{item.city}} {{item.regionDetail}}</p>
 				</div>		
 		    <div class="addBottom">
 					<div class="addDefault">
-						<input class="defaultRadio" type="radio" :id="item" :value="item" v-model="picked" @change="setDefault(item)">
-		       			<label :for="item">Default</label>
+						<input class="defaultRadio" type="radio" :id="index" name="defaultaddr" :value="item.id" v-model="picked" @change="setDefault(item.id)">
+		       			<label :for="index">Default</label>
 					</div>
 					<div class="addChange">
-						<span><i class="iconfont icon-bianji">Edit</i></span>
-						<span @click="setDelete(item)"><i class="iconfont icon-shanchu">Delete</i></span>
+						<span @click="changeAddr(item.id)"><i class="iconfont icon-bianji">Edit</i></span>
+						<span @click="setDelete(item.id,index)"><i class="iconfont icon-shanchu">Delete</i></span>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="bottom">
+		<div class="bottom" :class="{top0: dataList.length == 0}">
 			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
 		</div>
 	</div>
@@ -37,22 +37,59 @@
 		data () {
 			return {
 				picked: '',
-				idArr: [1,2,3,4,5,6]
+				page: 0,
+				pageSize: 10,
+				dataList: []
 			}
 		},
 		mounted () {
-			this.picked=2;
+			this.getList();
 		},
 		methods:{
 			setDefault(id) {
-				// console.log(id)
-
+				var that = this;
+				that.$http.post(that.urls.changeDefault,{
+					id: id
+				})
+				.then(function (response) {
+					console.log(response);
+				});
 			},
-			setDelete(id) {
-				this.idArr.remove(id);
-			}
+			setDelete(id,index) {
+				console.log(index);
+				var that = this;
+				that.$http.post(that.urls.addressDelete,{
+					id: id
+				})
+				.then(function (response) {
+					if (response.data.message == 'success') {
+						that.dataList.splice(index,1);
+					}
+				});
+			},
+			getList() {
+				var that = this;
+				that.$http.post(that.urls.addressList,{
+					pageSize: that.pageSize,
+					page: that.page
+				})
+				.then(function (response) {
+					console.log(response);
+					if (response.data.code == 1) {
+						for (var i = 0; i < response.data.data.data.length; i++) {
+							if (response.data.data.data[i].isDefault==1) {
+								that.picked = response.data.data.data[i].id;
+							}
+						}
+						that.dataList = that.dataList.concat(response.data.data.data);
+					}
 
-	  }
+				});
+			},
+			changeAddr(id) {
+				this.$router.push({path: '/AddAddress',query: {id: id}})
+			}
+	  	}
 
 	}
 </script>
@@ -140,6 +177,7 @@
   }
   .bottom {
   	position: fixed;
+  	top: auto;
   	bottom: 0;
   	left: 0;
   	right: 0;
@@ -147,13 +185,21 @@
   	line-height: 40px;
   	text-align: center;
   	background: #f9421e;
-  	margin: 0 10px 10px 10px;
     border-radius: 23px;
+    max-width: 730px;
+    width: 95%;
+    margin: auto;
   }
   .bottom a {
     color: #fff;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
   }
   .fix .addressPer:last-child {
 		margin-bottom: 60px;
+  }
+  .top0 {
+  	top: 0;
   }
 </style>

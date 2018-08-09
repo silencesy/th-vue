@@ -95,7 +95,7 @@
 			    	password: that.passwordPassword
 			    })
 				.then(function (response) {
-					console.log(response);
+					console.log(response);			
 					that.loginCallBack(response);
 				});
 			},

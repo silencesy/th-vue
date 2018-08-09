@@ -40,7 +40,7 @@ Axios.interceptors.request.use(
     // 若是有做鉴权token , 就给头部带上token
     // 若是需要跨站点,存放到 cookie 会好一点,限制也没那么多,有些浏览环境限制了 localstorage 的使用
     if (localStorage.getItem('token')) {
-      config.headers.TOKEN = 'abf7896ab115f2935676f1175518e399MTUzMTc5NjA5NzE1NDE1';
+      config.headers.TOKEN = localStorage.getItem('token');
     }
     return config;
   },
@@ -92,11 +92,10 @@ Axios.interceptors.response.use(
         Toast('The password is incorrect!');
       }
       // 如果返回token就设置token
-      if (res.data.data.token) {
+      if (res.data.data && res.data.data.token) {
         localStorage.setItem('token',res.data.data.token);
       }
     }
-
       return res;
   },
   error => {

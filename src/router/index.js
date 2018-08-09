@@ -121,7 +121,7 @@ var router = new Router({
       path: "/AddressBook",
       name: "AddressBook",
       meta: {
-        keepAlive: true,
+        keepAlive: false,
         MustLogin: true
       },
       component(resolve) {
@@ -212,7 +212,7 @@ var router = new Router({
       path: "/AddAddress",
       name: "AddAddress",
       meta: {
-        keepAlive: true
+        keepAlive: false
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Address/AddAddress')), 'AddAddress')
@@ -421,6 +421,7 @@ var router = new Router({
   ]
 })
 
+// 如果去的页面必须登录
 router.beforeEach((to, from, next) => {
   if (to.meta.MustLogin) {
     var token = localStorage.getItem("token") || null;

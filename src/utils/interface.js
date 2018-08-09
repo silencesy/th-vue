@@ -14,7 +14,11 @@ exports.install = function (Vue, options) {
          checkMobileAndCode: 'User/checkMobileAndCode',
          resetPassword: 'User/resetPassword',
          wxBindMobile: 'User/Wx/wxBindMobile',
-
+         address: '/User/Address/edit',
+         addressList: '/User/Address/list',
+         addressDelete: "/User/Address/delete",
+         changeDefault: '/User/Address/changeDefault',
+         oneAddress: '/User/Address/detail',
          // 微信登录地址
          formal: 'http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_userinfo&state=http%3A%2F%2Fv.thatsmags.com%2Fth%2F%23%2FBindMobile%3Ahttp%3A%2F%2Fv.thatsmags.com%2Fth&redirect_uri=http%3A%2F%2Fproj6.thatsmags.com%2FthmartApi%2FUser%2FWx%2Flogin',
          // http://v.thatsmags.com/th/#/Categories
