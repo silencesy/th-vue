@@ -190,10 +190,10 @@
 		width: 64%;
 	}
 	.baseInfo div:nth-child(2) label {
-		width: 47%;
+		width: 26%;
 	}
 	.baseInfo div:nth-child(2) input {
-		width: 53%;
+		width: 74%;
 	}
 	.baseInfo div:nth-child(3) label {
 		width: 27%;
@@ -205,6 +205,7 @@
 		display: inline-block;
 		line-height: 40px;
 		color: #999;
+		padding-left: 10px;
 	}
 	.address {
 		margin: 0 10px;
