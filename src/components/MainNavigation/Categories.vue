@@ -47,7 +47,7 @@ export default {
   },
   mounted() {
     var that = this;
-    localStorage.setItem("classFlag",false);
+    localStorage.removeItem("classFlag");
     that.$nextTick(() => {
       setTimeout(function(){
         that.height = document.documentElement.clientHeight-55-50;

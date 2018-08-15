@@ -67,13 +67,13 @@
 	}
 	.header {
 		width: 100%;
-		height: 60px;
-		line-height: 60px;
+		height: 80px;
+		line-height: 80px;
 		display: flex;
 		justify-content: space-between;
 		align-content: center;
 		background: #F9421E;
-		padding: 0 10px;
+		padding: 9px 10px;
     	box-sizing: border-box;
 	}
 	.header div span {

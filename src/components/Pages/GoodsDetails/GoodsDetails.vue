@@ -48,7 +48,7 @@
 						<i class="iconfont icon-guanbi" @click="close"></i>
 					</div>
 				</div>
-				<ScrollView ref="ScrollView" height="155" :loadding="loadding" :open="open">
+				<ScrollView ref="ScrollView" height="290" :loadding="loadding" :open="open">
 					<div class="choose-sku">
 						<div class="classification" v-for="(value, key, index) in selectArr">
 							<div class="title">{{key}}</div>
@@ -360,7 +360,7 @@
 	}
 	.buy-goods-info {
 		position: fixed;
-		height: 345px;
+		height: 480px;
 		max-width: 750px;
 		background-color: #fff;
 		left: 0;

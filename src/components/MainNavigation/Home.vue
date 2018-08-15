@@ -124,7 +124,7 @@ export default {
         that.pagePara.page++;
         that.$http.post(that.urls.hotGoods,that.pagePara)
         .then(function (response) {
-          console.log(response);
+          // console.log(response);
           that.hotData = that.hotData.concat(response.data.data.data);
           that.totalPages = response.data.data.totalPage;
           if (that.totalPages == that.pagePara.page || that.totalPages==0) {

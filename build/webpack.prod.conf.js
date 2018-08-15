@@ -115,7 +115,18 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          warnings: false,
+          drop_console: true,//console
+          pure_funcs: ['console.log']//移除console
+        }
+      },
+      sourceMap: config.build.productionSourceMap,
+      parallel: true
+    })
   ]
 })
 

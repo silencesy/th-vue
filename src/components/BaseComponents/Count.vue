@@ -14,7 +14,7 @@
 				dafualt: 1
 	        },
 	        yanse: {
-	            type: Boolean,
+	            type: [Boolean,String],
 	            default: true
 	        }
 		},
@@ -37,22 +37,22 @@
 		background-color: #dfdfdf;
 	}
 	.Count .add {
-		width: 34px;
-		height: 34px;
-		line-height: 34px;
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
 		text-align: center;
 	}
 	.Count .number {
-		height: 34px;
-		line-height: 34px;
-		width: 80px;
+		height: 32px;
+		line-height: 32px;
+		width: 60px;
 		text-align: center;
 		margin: 0 5px;
 	}
 	.Count .less {
-		width: 34px;
-		height: 34px;
-		line-height: 34px;
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
 		text-align: center;
 	}
 	.color {

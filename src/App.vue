@@ -21,7 +21,7 @@ export default {
   },
   watch: {
   '$route' (to, from) {
-      console.log(this.$router.fallback);
+      // console.log(this.$router.fallback);
       let isBack = this.$router.fallback  //  监听路由变化时的状态为前进还是后退
       if(isBack) {
         this.transitionName = 'slide-right'

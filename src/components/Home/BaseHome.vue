@@ -38,6 +38,7 @@ export default {
     return {  
       selected: 'Home',
       show: "Home"
+      // keepAlive: true
     };  
   },
   watch: {
@@ -53,6 +54,8 @@ export default {
       } 
     },
     '$route' (to, from) {
+      // 设置页面缓存 初始值是缓存
+      // this.keepAlive = to.meta.keepAlive;
       if (this.selected!=to.name) {
         // 当路由改变的时候触发底部选中的改变，从而实现底部高亮
         this.selected = to.name;
@@ -60,6 +63,7 @@ export default {
     }
   },
   mounted() {
+    // 设置选中的标题
     var that = this;
     that.selected = that.$route.name;
   }

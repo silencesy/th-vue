@@ -60,7 +60,7 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
   res => {
     // 对响应的状态吗做统一处理
-    if (res.data) {
+    if (res.status === 200) {
       // 未传token
       if (res.data.code == 100 || res.data.code == 101 || res.data.code == 102 || res.data.code == 103) {
           router.push({
@@ -95,8 +95,16 @@ Axios.interceptors.response.use(
       if (res.data.data && res.data.data.token) {
         localStorage.setItem('token',res.data.data.token);
       }
+      if (res.data.code === 1) {
+        return Promise.resolve(res);
+      } else {
+        return Promise.reject(res);
+      }
+      
+    } else {
+      // return res;
+      return Promise.reject(res);
     }
-      return res;
   },
   error => {
     // 用户登录的时候会拿到一个基础信息,比如用户名,token,过期时间戳

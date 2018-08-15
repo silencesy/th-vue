@@ -42,7 +42,7 @@ var router = new Router({
           path: '/',
           name: 'Home',
           // meta: {
-          //   keepAlive: true
+          //   keepAlive: false
           // },
           component: () => import('@/components/MainNavigation/Home')
         },
@@ -50,18 +50,15 @@ var router = new Router({
           path: 'Categories',
           name: 'Categories',
           // meta: {
-          //   keepAlive: true
+          //   keepAlive: false
           // },
-          // component(resolve) {
-          //   require.ensure([], () => resolve(require('@/components/MainNavigation/Categories')), 'Categories')
-          // }
           component: () => import('@/components/MainNavigation/Categories')
         },
         {
           path: 'Guide',
           name: 'Guide',
           // meta: {
-          //   keepAlive: true
+          //   keepAlive: false
           // },
           component: () => import('@/components/MainNavigation/Guide')
         },

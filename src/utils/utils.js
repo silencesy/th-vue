@@ -49,7 +49,7 @@ exports.install = function (Vue, options) {
 	},
 	// 获取token
 	Vue.prototype.getToken = function () {
-		var token = localStorage.getItem('token',token) || null;
+		var token = localStorage.getItem('token') || null;
 	 	return token;
 	}
 	// 获取token
@@ -63,6 +63,10 @@ exports.install = function (Vue, options) {
 				this.$router.push('/');
 			}
 		}
+	},
+	// 设置token
+	Vue.prototype.setlocalStorage = function (key,value) {
+	  	localStorage.setItem(key,value);
 	}
 	// Vue.prototype.getCode = function (arr, name) {
 	// 	alert(1)

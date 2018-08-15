@@ -20,7 +20,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="bottom" :class="{top0: dataList.length == 0}">
+		<!-- <div class="bottom" v-if="dataList.length>0" :class="{dispalyblock: dataList.length>0}">
+			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
+		</div> -->
+		<div class="bottom" :class="{top0: dataList.length==0}" v-show="showHide">
 			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
 		</div>
 	</div>
@@ -39,7 +42,8 @@
 				picked: '',
 				page: 0,
 				pageSize: 10,
-				dataList: []
+				dataList: [],
+				showHide: false
 			}
 		},
 		mounted () {
@@ -56,14 +60,16 @@
 				});
 			},
 			setDelete(id,index) {
-				console.log(index);
+				console.log(id);
 				var that = this;
 				that.$http.post(that.urls.addressDelete,{
 					id: id
 				})
 				.then(function (response) {
+					console.log(response);
 					if (response.data.message == 'success') {
 						that.dataList.splice(index,1);
+
 					}
 				});
 			},
@@ -82,6 +88,7 @@
 							}
 						}
 						that.dataList = that.dataList.concat(response.data.data.data);
+						that.showHide = true;
 					}
 
 				});
@@ -189,6 +196,7 @@
     max-width: 730px;
     width: 95%;
     margin: auto;
+    /*display: none;*/
   }
   .bottom a {
     color: #fff;
@@ -198,6 +206,9 @@
   }
   .fix .addressPer:last-child {
 		margin-bottom: 60px;
+  }
+  .dispalyblock {
+  	display: block;
   }
   .top0 {
   	top: 0;
