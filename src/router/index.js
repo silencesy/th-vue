@@ -417,6 +417,56 @@ var router = new Router({
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Shop/ShopList')), 'ShopList')
       }
+    },
+    {
+      path: "/PersonalInfo",
+      name: "PersonalInfo",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/PersonalInfo/PersonalInfo')), 'PersonalInfo')
+      }
+    },
+    {
+      path: "/OrderDetailsPaid",
+      name: "OrderDetailsPaid",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Order/OrderDetailsPaid')), 'OrderDetailsPaid')
+      }
+    },
+    {
+      path: "/OrderDetailsUnpaid",
+      name: "OrderDetailsUnpaid",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Order/OrderDetailsUnpaid')), 'OrderDetailsUnpaid')
+      }
+    },
+    {
+      path: "/OrderDetailsDelivered",
+      name: "OrderDetailsDelivered",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Order/OrderDetailsDelivered')), 'OrderDetailsDelivered')
+      }
+    },
+    {
+      path: "/OrderList",
+      name: "OrderList",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Order/OrderList')), 'OrderList')
+      }
     }
   ]
 })
