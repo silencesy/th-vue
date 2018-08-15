@@ -300,4 +300,46 @@ export default {
     -webkit-appearance: none;
     appearance: none;
   }
+  .inputBox {
+    padding-bottom: 15px;
+  }
+  .inputBox input {
+    width: 100%;
+    color: #666;
+    outline: none;
+    border-style: none;
+    border-bottom: 1px solid #dfdfdf;
+    height: 50px;
+    line-height: 50px;
+  }
+  .mint-msgbox-confirm {
+    color: #f6442b;
+  }
+  .mint-msgbox  .mint-msgbox-content {
+     border-bottom: none; 
+  }
+  .mint-msgbox-btns .mint-msgbox-cancel {
+    border-right: 1px solid #ddd;
+    z-index: 99;
+    color: #f6442b;
+  }
+  .mint-msgbox-btns {
+    padding-bottom: 20px;
+    height: inherit;
+    line-height: inherit;
+  }
+  .mint-msgbox-btn {
+    line-height: inherit;
+  }
+  .mint-cell-title {
+    display: none;
+  }
+  .mint-cell-allow-right , .mint-cell-mask , .mint-cell-left {
+    display: none;
+  }
+  .mint-cell-value {
+    width: 100%;
+    justify-content: space-between;
+    margin-right: 0;
+  }
 </style>

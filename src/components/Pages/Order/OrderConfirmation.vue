@@ -15,16 +15,16 @@
 				<i class="iconfont icon-combinedshapefuben" slot="titleRight"></i>
 				<div slot="bottom" class="bottom">
 					<p>
-						<span>th-Coupons</span>
+						<span>Shipping fee</span>
+						<span class="fee">¥ 10</span>
+					</p>
+					<p>
+						<span>thMart-Coupons</span>
 						<span>- ¥ 10<i class="iconfont icon-combinedshapefuben"></i></span>
 					</p>
 					<p>
 						<span>Quantity Discount</span>
-						<span>- ¥ 10<i class="iconfont icon-combinedshapefuben"></i></span>
-					</p>
-					<p>
-						<span>Invoice type</span>
-						<span>personal<i class="iconfont icon-combinedshapefuben"></i></span>
+						<span class="discount">- ¥ 10</span>
 					</p>
 					<p>
 						<span>Remark</span>
@@ -32,7 +32,7 @@
 					</p>
 					<p>
 						<span>&nbsp;</span>
-						<span><i>Total：</i>¥ 316</span>
+						<span><i>Total：</i>¥316</span>
 					</p>
 				</div>
 			</ShopGoodsItem>
@@ -98,9 +98,6 @@
 		color: #F9421E;
 		font-size: 14px;
 	}
-	.bottom > p:nth-child(3) span:nth-child(2) {
-		color: #999;
-	}
 	.bottom > p i {
 		padding-left: 10px;
 	}
@@ -144,5 +141,11 @@
 	}
 	.container {
 		margin-bottom: 55px;
+	}
+	.fee {
+		padding-right: 27px;
+	}
+	.discount {
+		padding-right: 27px;
 	}
 </style>
