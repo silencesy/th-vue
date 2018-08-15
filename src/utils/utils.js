@@ -55,6 +55,7 @@ exports.install = function (Vue, options) {
 	// 获取token
 	Vue.prototype.loginCallBack = function (response) {
 		if (response.data.data.token) {
+			// this.setToken(response.data.data.token);
 			if (localStorage.getItem("goback")) {
 				window.location.href = localStorage.getItem("goback");
 				localStorage.removeItem("goback");

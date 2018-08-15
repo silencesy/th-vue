@@ -17,7 +17,7 @@
 					</div>
 					<div>
 						<label for="add"><i>*</i> Address : </label> 
-						<span>{{myAddressProvince}} {{myAddressCity}}</span>
+						<span> {{myAddressProvince}} {{myAddressCity}}</span>
 					</div>
 					<div>
 		        <mt-picker :slots="myAddressSlots" @change="onMyAddressChange"></mt-picker>
@@ -32,13 +32,13 @@
 	       			<label for="item">Default</label>
 				</div>
 			</div>
-			<div class="bottom">Submit</div>
+			<div class="bottom" @click="submitAddr">Submit</div>
 		</div>
 	</div>
 </template>
 <script>
-	import { Picker } from 'mint-ui';
-  import myaddress from './address.json';
+	import { Toast,Picker } from 'mint-ui';
+  	import myaddress from './address.json';
 	export default {
 		name: 'AddAdress',
 		components: {
@@ -47,7 +47,7 @@
 		data () {
 			return {
 				name: '',
-				number: null,
+				number: '',
 				email: '',
 				address: '',
 				defaultBtn: false,
@@ -69,11 +69,16 @@
 						textAlign: 'center'
 					}
 		        ],
-		        myAddressProvince:'省',
-		        myAddressCity:'市',
+		        myAddressProvince:'',
+		        myAddressCity:'',
+		        addrId: ''
 			}
 		},
 		mounted () {
+			if (this.$route.query.id) {
+				this.getOneInfo(this.$route.query.id);
+				this.addrId = this.$route.query.id;
+			}
 			this.$nextTick(() => {
         		this.myAddressSlots[0].defaultIndex = 0    
       		});
@@ -87,6 +92,62 @@
 		          this.myAddressCity = values[1];
 		          // this.myAddresscounty = values[2];
 		        }
+      		},
+      		submitAddr() {
+      			var that = this;
+      			if (!that.name) {
+      				Toast('Please enter your name!');
+      				return false;
+      			}
+      			 else if (!that.number) {
+      				Toast('Please enter your number!');
+      				return false;
+      			} else if (!(/^1[345789]\d{9}$/.test(that.number))) {
+	      			Toast('Please enter a 11-digit valid number!');
+	      			return false;
+      			} else if (!(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(that.email))) {
+      				Toast('Please enter a valid email address!');
+      				return false;
+      			} else if (!that.myAddressProvince || !that.myAddressCity) {
+      				Toast('请选择城市！');
+      				return false;
+      			} else if (!that.address) {
+      				Toast('Please write down your detailed address in Chinese!');
+      				return false;
+      			}
+				that.$http.post(that.urls.address,{
+					fullName: that.name,
+					phone: that.number,
+					province: that.myAddressProvince,
+					city: that.myAddressCity,
+					isDefault: that.defaultBtn?1:0,
+					email: that.email,
+					regionDetail: that.address,
+					id: that.addrId
+				})
+				.then(function (response) {
+					if (response.data.code == 1) {
+						that.$router.go(-1);
+					}
+				});
+      		},
+      		getOneInfo(id) {
+      			var that = this;
+      			that.$http.post(that.urls.oneAddress,{
+					id: id
+				})
+				.then(function (response) {
+					console.log(response)
+					if (response.data.code == 1) {
+						that.name = response.data.data.fullName;
+						that.number = response.data.data.phone
+						that.email = response.data.data.email
+						that.myAddressProvince = response.data.data.province
+						that.myAddressCity = response.data.data.city
+						that.address = response.data.data.regionDetail
+						that.defaultBtn = response.data.data.isDefault==1?true:false
+					}
+				});
       		}
 		}
 	}
@@ -175,11 +236,14 @@
 	    height: 36px;
 	    line-height: 36px;
 	    background: #F9421E;
-	    bottom: 0;
+	    top: auto;
+	    bottom: 10px;
 	    left: 0;
 	    right: 0;
-	    margin: 0 10px 10px 10px;
+	    margin: auto;
 	    color: #fff;
+	    max-width: 730px;
+	    width: 95%;
 	    text-align: center;
 	    border-radius: 23px;
 	}

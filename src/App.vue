@@ -119,7 +119,8 @@ export default {
     top: 0;
     left: 0;
     right: 0;
-    bottom: auto;
+    bottom: 0;
+    height: 100%;
     margin: auto;
     transition: all .4s cubic-bezier(.55,0,.1,1);
   }
