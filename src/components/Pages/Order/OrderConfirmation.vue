@@ -11,31 +11,53 @@
 			<img src="static/images/common/letter.jpg" alt="">
 		</router-link>
 		<div class="container">
-			<ShopGoodsItem>
-				<i class="iconfont icon-combinedshapefuben" slot="titleRight"></i>
-				<div slot="bottom" class="bottom">
-					<p>
-						<span>Shipping fee</span>
-						<span class="fee">¥ 10</span>
-					</p>
-					<p>
-						<span>thMart-Coupons</span>
-						<span>- ¥ 10<i class="iconfont icon-combinedshapefuben"></i></span>
-					</p>
-					<p>
-						<span>Quantity Discount</span>
-						<span class="discount">- ¥ 10</span>
-					</p>
-					<p>
-						<span>Remark</span>
-						<input type="text" value="" name="">
-					</p>
-					<p>
-						<span>&nbsp;</span>
-						<span><i>Total：</i>¥316</span>
-					</p>
-				</div>
-			</ShopGoodsItem>
+			<div class="confirmBox">
+				<ShopGoodsItem>
+					<i class="iconfont icon-combinedshapefuben" slot="titleRight"></i>
+				</ShopGoodsItem>
+				<ShopGoodsItem>
+					<i class="iconfont icon-combinedshapefuben" slot="titleRight"></i>
+					<div slot="bottom" class="bottom">
+						<p>
+							<span>Quantity Discount</span>
+							<span>- ¥ 10</span>
+						</p>
+						<p>
+							<span>Remark</span>
+							<input type="text" value="" name="">
+						</p>
+						<p>
+							<span>&nbsp;</span>
+							<span><i>Total：</i>¥316</span>
+						</p>
+					</div>
+				</ShopGoodsItem>
+			</div>
+			<div class="confirmBox">
+				<ShopGoodsItem>
+					<i class="iconfont icon-combinedshapefuben" slot="titleRight"></i>
+					<div slot="bottom" class="bottom">
+						<p>
+							<span>Remark</span>
+							<input type="text" value="" name="">
+						</p>
+						<p>
+							<span>&nbsp;</span>
+							<span><i>Total：</i>¥316</span>
+						</p>
+					</div>					
+				</ShopGoodsItem>
+			</div>
+			<div class="fee">
+				<p>
+					<span>Shipping fee</span>
+					<span>¥ 10</span>
+				</p>
+				<router-link to="/">
+					<span>thMart-Coupons</span>
+					<span>- ¥ 10<i class="iconfont icon-combinedshapefuben"></i></span>
+				</router-link>				
+			</div>
 		</div>
 		<div class="fix">
 			<div>Final Price：<span>¥ 652</span></div>
@@ -82,6 +104,9 @@
 	.info p:nth-child(1) span:nth-child(1) {
 		padding-right: 20px;
 	}
+	.confirmBox {
+		margin-bottom: 10px;
+	}
 	.bottom {
 		background: #fff;
 	}	
@@ -91,7 +116,7 @@
 		display: flex;
 		justify-content: space-between;
 		border-bottom: 1px solid #dfdfdf;
-		padding: 0 10px;
+		margin: 0 10px;
 		box-sizing: border-box;
 	}
 	.bottom > p span:nth-child(2) {
@@ -100,9 +125,6 @@
 	}
 	.bottom > p i {
 		padding-left: 10px;
-	}
-	.bottom > p:nth-child(4) span {
-		width: 25%;
 	}
 	.bottom input {
 		border: none;
@@ -142,10 +164,39 @@
 	.container {
 		margin-bottom: 55px;
 	}
-	.fee {
-		padding-right: 27px;
+	.OrderConfirmation .ShopGoodsItem {
+		margin: 0 10px;
+		border: none;
 	}
-	.discount {
-		padding-right: 27px;
+	.fee {
+		/*padding-top: 15px;*/
+		background: #fff;
+		margin: 0 10px;
+	}
+	.fee p {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px 0;
+		margin: 0 10px;
+	}
+	.fee a {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px 0;
+		margin: 0 10px;
+	}
+	.fee p {
+		border-bottom: 1px solid #dfdfdf;
+	}
+	.fee p span:nth-child(2) , .fee a span:nth-child(2) {
+		color: #F9421E;
+	}
+	.fee p span:nth-child(2) {
+		padding-right: 20px;
+	}
+	.fee a .iconfont {
+		padding-left: 5px;
 	}
 </style>

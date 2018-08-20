@@ -34,7 +34,7 @@
 </template>
 <script>
 	export default {
-		name: '',
+		name: 'ArticleDetail',
 		data () {
 			return {
 				articleData: {},

@@ -150,7 +150,7 @@ export default {
   }
    .mint-navbar .mint-tab-item.is-selected:after {
     content: ' ';
-    width: 154px;
+    width: 75px;
     height: 2px;
     background-color: #f24827;
     position: absolute;
@@ -274,12 +274,12 @@ export default {
     width: 100px;
     position: relative;
   }
-  .nav > .nav-item.active .mint-button-text {
+  .nav-item.active .mint-button-text {
     color: #F9421E;
   }
-  .nav > .nav-item.active .mint-button-text::after {
+  .nav-item.active .mint-button-text::after {
     background-color: #F9421E;
-    width: 55px;
+    width: 80px;
     height: 2px;
     content: " ";
     top: auto;
