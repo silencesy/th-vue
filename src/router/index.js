@@ -9,11 +9,11 @@ import BaseHome from '@/components/Home/BaseHome'
 
 
 // 主页tab栏
-// import Home from '@/components/MainNavigation/Home'
-// import Categories from '@/components/MainNavigation/Categories'
-// import Guide from '@/components/MainNavigation/Guide'
-// import Cart from '@/components/MainNavigation/Cart'
-// import MyAccount from '@/components/MainNavigation/MyAccount'
+import Home from '@/components/MainNavigation/Home'
+import Categories from '@/components/MainNavigation/Categories'
+import Guide from '@/components/MainNavigation/Guide'
+import Cart from '@/components/MainNavigation/Cart'
+import MyAccount from '@/components/MainNavigation/MyAccount'
 // Router.prototype.goBack = function () { 
 // 　　this.isBack = true
 // 　　window.history.go(-1)
@@ -41,49 +41,66 @@ var router = new Router({
         { 
           path: '/',
           name: 'Home',
+          component: Home
           // meta: {
-          //   keepAlive: false
+          //   keepAlive: true
           // },
-          component: () => import('@/components/MainNavigation/Home')
+          // component(resolve) {
+          //   require.ensure([], () => resolve(require('@/components/MainNavigation/Home')), 'Home')
+          // }
         },
         {
-          path: 'Categories',
+          path: '/Categories',
           name: 'Categories',
           // meta: {
           //   keepAlive: false
           // },
-          component: () => import('@/components/MainNavigation/Categories')
+          component: Categories
+          // component(resolve) {
+          //   require.ensure([], () => resolve(require('@/components/MainNavigation/Categories')), 'Categories')
+          // }
         },
         {
-          path: 'Guide',
+          path: '/Guide',
           name: 'Guide',
           // meta: {
           //   keepAlive: false
           // },
-          component: () => import('@/components/MainNavigation/Guide')
+          component: Guide
+          // component(resolve) {
+          //   require.ensure([], () => resolve(require('@/components/MainNavigation/Guide')), 'Guide')
+          // }
         },
         {
-          path: 'Cart',
+          path: '/Cart',
           name: 'Cart',
           // meta: {
           //   keepAlive: false
           // },
-          component: () => import('@/components/MainNavigation/Cart')
+          component: Cart
+          // component(resolve) {
+          //   require.ensure([], () => resolve(require('@/components/MainNavigation/Cart')), 'Cart')
+          // }
         },
         {
-          path: 'MyAccount',
+          path: '/MyAccount',
           name: 'MyAccount',
           // meta: {
           //   keepAlive: false
           // },
-          component: () => import('@/components/MainNavigation/MyAccount')
+          component: MyAccount
+          // component(resolve) {
+          //   require.ensure([], () => resolve(require('@/components/MainNavigation/MyAccount')), 'MyAccount')
+          // }
         }
       ]
     },
     {
       path: "/home/HomeSearch",
       name: "HomeSearch",
-      component: () => import('@/components/Pages/Search/HomeSearch')
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Search/HomeSearch')), 'HomeSearch')
+      }
     },
     {
     	path: "/GoodsDetails/:id",
@@ -91,7 +108,9 @@ var router = new Router({
       meta: {
         keepAlive: false
       },
-    	component: () => import('@/components/Pages/GoodsDetails/GoodsDetails')
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/GoodsDetails/GoodsDetails')), 'GoodsDetails')
+      }
     },
     {
       path: "/CouponsList",

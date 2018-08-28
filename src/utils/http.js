@@ -16,7 +16,7 @@ const Axios = axios.create({
     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
   }
 });
-
+let showLoading;
 //当请求异常，网络异常,返回异常时候进行提示
 // function showError() {
 //   Toast({
@@ -28,7 +28,10 @@ const Axios = axios.create({
 Axios.interceptors.request.use(
   config => {
     // 在发送请求之前做某件事
-    // Indicator.open();
+    showLoading = setTimeout(function(){
+      Indicator.open();
+    },2000);
+    
     if (
       config.method === "post"
     ) {
@@ -46,12 +49,8 @@ Axios.interceptors.request.use(
   },
   error => {
     // error 的回调信息,看贵公司的定义
-    Message({
-      //  饿了么的消息弹窗组件,类似toast
-      showClose: true,
-      message: error,
-      type: "error.data.error.message"
-    });
+    clearTimeout(showLoading);
+    Indicator.close();
     return Promise.reject(error);
   }
 );
@@ -61,6 +60,7 @@ Axios.interceptors.response.use(
   res => {
     // 对响应的状态吗做统一处理
     if (res.status === 200) {
+      // Indicator.close();
       // 未传token
       if (res.data.code == 100 || res.data.code == 101 || res.data.code == 102 || res.data.code == 103) {
           router.push({
@@ -91,18 +91,34 @@ Axios.interceptors.response.use(
       if (res.data.code == 110) {
         Toast('The password is incorrect!');
       }
+      // 手机号登录密码错误
+      if (res.data.code == 114) {
+        Toast('库存不足');
+      }
       // 如果返回token就设置token
       if (res.data.data && res.data.data.token) {
         localStorage.setItem('token',res.data.data.token);
       }
       if (res.data.code === 1) {
+        clearTimeout(showLoading);
+        Indicator.close();
         return Promise.resolve(res);
+
       } else {
+        clearTimeout(showLoading);
+        Indicator.close();
         return Promise.reject(res);
       }
       
     } else {
       // return res;
+      // Indicator.close();
+      clearTimeout(showLoading);
+      Indicator.close();
+      Toast({
+        message: 'err',
+        iconClass: 'icon icon-success'
+      });
       return Promise.reject(res);
     }
   },
@@ -158,7 +174,9 @@ Axios.interceptors.response.use(
     // }
     // // 返回 response 里的错误信息
     // let errorInfo =  error.data.error ? error.data.error.message : error.data;
-
+    // Indicator.close();
+    clearTimeout(showLoading);
+    Indicator.close();
     return Promise.reject(error);
   }
 );

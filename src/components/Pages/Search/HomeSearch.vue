@@ -9,7 +9,7 @@
     <mt-navbar v-model="selected">
       <mt-tab-item id="1">Products</mt-tab-item>
       <mt-tab-item id="2">Shops</mt-tab-item>
-      <mt-tab-item id="3">Articles</mt-tab-item>
+      <mt-tab-item id="3">Editor’s Pick</mt-tab-item>
     </mt-navbar>
 
     <!-- tab-container -->

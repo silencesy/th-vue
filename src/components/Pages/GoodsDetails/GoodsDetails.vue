@@ -88,7 +88,8 @@
 				// 购买弹出框
 				layerBox: false,
 				// 基于定位实现动画
-				bottom: "-700px",
+				// bottom: "-700px",
+				bottom: "0",
 				// 滑动区块的高度
 				scrollViewHeight: 100,
 				// 不需要加载
@@ -204,45 +205,72 @@
   				}
    			}
   			this.selectArr = option;
-
   		},
   		optionClick(item,key) {
-  			// console.log(item);
-  			// console.log(key);
+  			// console.log(this.selectArr);
+  			// console.log(item.val)
+  			// console.log(key)
+  			// for (var selectArrkey in this.selectArr) {
+  				// console.log(key)
+  				// console.log(selectArrkey);
+  				// if (key!==selectArrkey) {
+  					// console.log(item);
+  					var arrr = [];
+  					for (var i = 0; i < this.goodsData.skuList.length; i++) {
+  						// console.log(this.goodsData.skuList[i].propName[key]);
+  						// console.log(item.val);
+  						if (this.goodsData.skuList[i].propName[key][0] == item.val) {
+  							// console.log(this.goodsData.skuList[i])
+  							arrr.push(this.goodsData.skuList[i]);
+  							// console.log(this.goodsData.skuList[i]);
+  							// for (var j = 0; j < this.goodsData.skuList[i].length; j++) {
+  							// 	console.log(this.goodsData.skuList[i][j]);
+  							// }
+  							// if (true) {}
+  						}
+  					}
+  					this.getCheckedVal(arrr);
+  				// }
+  			// }
   			var list = [];
-  			// 选中控制样式
+  			// // 选中控制样式
   			for (var k = 0; k < this.selectArr[key].length; k++) {
   				if (this.selectArr[key][k].val == item.val) {
-  					console.log(item.val);
-  					console.log(this.selectArr[key][k].selected);
+					// 一个都没有选中就选中当前或者取消所有选择 然后选中当前
+					for (var i = 0; i < this.selectArr[key].length; i++) {
+		  				this.selectArr[key][i].selected = false;
+		  			}
+		  			this.selectArr[key][k].selected = true;
+  				}
+  			}
+  			
+  			
+
+  			// for (var j = 0; j < this.goodsData.skuList.length; j++) {
+  			// 	if (item.val == this.goodsData.skuList[j].propName[key][0]) {
+  			// 		list.push(this.goodsData.skuList[j]);
+  			// 	}
+  			// }
+  			
+  		},
+  		getCheckedVal(data) {
+  			// console.log(data);
+  			var goodsType = [];
+  			for (var i = 0; i < data.length; i++) {
+  				// // // console.log(data[i]);
+  				for (var key in data[i].propName) {
+  					// for (var i = 0; i < this.selectArr.length; i++) {
+  				// 	// 	if (this.selectArr[i][key].val == data[i].propName[key][0]) {
+  				// 	// 		this.selectArr[i][key].selected = true;
+  				// 	// 	} else {
+  				// 	// 		this.selectArr[i][key].selected = false;
+  				// 	// 	}
+  				// 	// }
+  					// console.log(this.selectArr[key][0].val);
   					
-  					// if (this.selectArr[key][k].selected) {
-  					// 	// 如果点击的是选中的按钮 就取消选中的按钮
-  					// 	console.log(1)
-  					// 	// this.selectArr[key][k].selected = false;
-  					// } else {
-  					// 	console.log(2)
-  						// 一个都没有选中就选中当前或者取消所有选择 然后选中当前
-  						for (var i = 0; i < this.selectArr[key].length; i++) {
-
-			  				this.selectArr[key][i].selected = false;
-			  			}
-			  			this.selectArr[key][k].selected = true;
-  					// }
   				}
   			}
   			
-  			
-
-  			for (var j = 0; j < this.goodsData.skuList.length; j++) {
-  				if (item.val == this.goodsData.skuList[j].propName[key][0]) {
-  					list.push(this.goodsData.skuList[j]);
-  				}
-  			}
-  			for (var l = 0; l < list.length; l++) {
-  				// console.log(list[l]);
-  			}
-
   		}
   	}
 	}

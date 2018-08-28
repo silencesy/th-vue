@@ -35,24 +35,25 @@
 	}
 	.Count > div {
 		background-color: #dfdfdf;
+		font-size: 14px;
 	}
 	.Count .add {
-		width: 32px;
-		height: 32px;
-		line-height: 32px;
+		width: 26px;
+		height: 26px;
+		line-height: 26px;
 		text-align: center;
 	}
 	.Count .number {
-		height: 32px;
-		line-height: 32px;
-		width: 60px;
+		height: 26px;
+		line-height: 26px;
+		width: 40px;
 		text-align: center;
 		margin: 0 5px;
 	}
 	.Count .less {
-		width: 32px;
-		height: 32px;
-		line-height: 32px;
+		width: 26px;
+		height: 26px;
+		line-height: 26px;
 		text-align: center;
 	}
 	.color {
