@@ -1,38 +1,27 @@
 <template>
 	<div class="ShopGoodsItem">
 		<div class="title">
-			<router-link to="/">
+			<a>
 				<i class="iconfont icon-shanghu1"></i>
-				<span>thmart</span>
-			</router-link>
+				<span>{{shopData.brandName}}</span>
+			</a>
 			<div>
 				<slot name="titleRight"></slot>
 			</div>
 		</div>
 		<div class="content">
-			<div class="goods">
+			<div class="goods" v-for="(item,index) in shopData.data">
 				<div>
-					<img src="static/images/common/169.jpg" alt="">
+					<img :src="item.pic" alt="">
 				</div>
 				<div class="goodsRight">
-					<p class="line2">EMSA FLOW Slim Frien EMSA FLOW Slim Frien FLOW Slim Frien</p>
-					<p>180ml,Green</p>
+					<p class="line2">{{item.goodsName}}</p>
 					<p>
-						<span>¥168</span>
-						<i>x2</i>
+						<span v-for="(item2,index) in item.prop">{{item2[0]}}</span>
 					</p>
-				</div>
-			</div>
-			<div class="goods">
-				<div>
-					<img src="static/images/common/169.jpg" alt="">
-				</div>
-				<div class="goodsRight">
-					<p class="line2">EMSA FLOW Slim Frien EMSA FLOW Slim Frien FLOW Slim Frien</p>
-					<p>180ml,Green</p>
 					<p>
-						<span>¥168</span>
-						<i>x2</i>
+						<span>¥{{item.price}}</span>
+						<i>x{{item.number}}</i>
 					</p>
 				</div>
 			</div>
@@ -43,6 +32,14 @@
 <script>
 	export default {
 		name: 'ShopGoodsItem',
+		props: {
+			shopData: {
+				type: Object,
+				default: function() {
+					return {}
+				}
+			}
+		},
 		data() {
 			return {
 
@@ -88,14 +85,16 @@
 		padding-bottom: 15px;
 	}
 	.goods > div:first-child {
-		width: 30%;
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
 	}
 	.goods > div:nth-child(2) {
-		width: 70%;
+		flex: 1;
 	}
 	.goods > div:first-child img {
 		width: 100%;
-		max-height: 99px;
+		height: auto;
 	}
 	.goodsRight p {
 		line-height: 25px;
@@ -104,9 +103,10 @@
 	.goodsRight p:nth-child(1) {
 		min-height: 50px;
 	}
-	.goodsRight p:nth-child(2) {
+	.goodsRight p:nth-child(2) span {
 		color: #999;
 		font-size: 14px;
+		margin-right: 5px;
 	}
 	.goodsRight p:nth-child(3) i , .goodsRight p:nth-child(3) span {
 		font-size: 14px;

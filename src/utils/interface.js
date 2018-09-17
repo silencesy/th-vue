@@ -46,6 +46,16 @@ exports.install = function (Vue, options) {
          // 修改购物车数量
          CartEditNumber: 'Cart/editNumber',
          // 修改选中状态和数量
-         CartChangeSelectAndTotalPrice: 'Cart/changeSelectAndTotalPrice'
+         CartChangeSelectAndTotalPrice: 'Cart/changeSelectAndTotalPrice',
+         // 获取单个sku
+         Skudetail: 'Sku/detail',
+         // 添加购物车
+         addCart: 'Cart/edit',
+         // 订单确认页
+         OrderPrepareOrder: 'Order/prepareOrder',
+         // 下单进入支付页面
+         placeOrder :'Order/placeOrder',
+         // 支付详情页
+         payOrderDetail: 'Order/payOrderDetail'
    }
 };

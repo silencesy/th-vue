@@ -1,19 +1,58 @@
 <template>
-	<div class="OrderConfirmation">
-		<router-link to="/" class="address">
+	<div class="OrderConfirmation" v-if="orderConfirmData">
+		<router-link :to="{name:'AddressBook',query:{flag: 'OrderConfirmation'}}" class="address" v-if="!addrList.length==0">
 			<div class="info">
 				<div>
-					<p><span>Amanda</span><span>136****3567</span></p>
-					<p>上海市黄浦区蒙自路169号2号楼305室</p>
+					<p><span>{{addrList[0].fullName}}</span><span>{{addrList[0].phone}}</span></p>
+					<p>{{addrList[0].email}}</p>
+					<p>{{addrList[0].province}} {{addrList[0].city}} {{addrList[0].regionDetail}} </p>
 				</div>
 				<div class="iconfont icon-combinedshapefuben"></div>
 			</div>
 			<img src="static/images/common/letter.jpg" alt="">
 		</router-link>
+		<router-link :to="{name:'AddAddress'}" class="address" v-if="addrList.length==0">
+			<div class="info">
+				<div class="info">
+					<div>
+						<p>设置收货地址</p>
+					</div>
+				</div>
+				<div class="iconfont icon-combinedshapefuben"></div>
+			</div>
+			<img src="static/images/common/letter.jpg" alt="">
+		</router-link>
+			
 		<div class="container">
-			<ShopGoodsItem>
-				<i class="iconfont icon-combinedshapefuben" slot="titleRight"></i>
-				<div slot="bottom" class="bottom">
+			<div v-for="(item,index) in orderConfirmData.overReduceArray">
+				<FullReductionSection :shopData="item" :key="index">
+					<!-- <i class="iconfont icon-combinedshapefuben" slot="titleRight"></i> -->
+					<div slot="bottom" class="bottom">
+						<p>
+							<span>Quantity Discount</span>
+							<span class="discount">- ¥ {{item.reduce}}</span>
+						</p>
+						<p>
+							<span>&nbsp;</span>
+							<span><i>Total：</i>¥{{item.total}}</span>
+						</p>
+					</div>
+				</FullReductionSection>
+			</div>
+			<div v-for="(item,index) in orderConfirmData.brandArray">
+				<ShopGoodsItem :shopData="item" :key="index">
+					<!-- <i class="iconfont icon-combinedshapefuben" slot="titleRight"></i> -->
+					<div slot="bottom" class="bottom">
+						<p>
+							<span>&nbsp;</span>
+							<span><i>Total：</i>¥{{item.total}}</span>
+						</p>
+					</div>
+				</ShopGoodsItem>
+			</div>
+			
+				<!-- <i class="iconfont icon-combinedshapefuben" slot="titleRight"></i> -->
+				<!-- <div slot="bottom" class="bottom">
 					<p>
 						<span>Shipping fee</span>
 						<span class="fee">¥ 10</span>
@@ -34,26 +73,235 @@
 						<span>&nbsp;</span>
 						<span><i>Total：</i>¥316</span>
 					</p>
+				</div> -->
+			<div class="bottom-box">
+				<div class="bottom">
+					<p v-show="orderConfirmData.feeTotal">
+						<span>Shipping fee</span>
+						<span class="fee">¥ {{orderConfirmData.feeTotal}}</span>
+					</p>
+					<p v-show="orderConfirmData.couponReduce!=0" @click="showCoupons">
+						<span>thMart-Coupons</span>
+						<span v-if=finallyFullReduction.couponId>- ¥ {{finallyFullReduction.reduce}}<i class="iconfont icon-combinedshapefuben"></i></span>
+						<span v-if=!finallyFullReduction.couponId>你有{{orderConfirmData.userCouponList.length}}张满减券可以选择<i class="iconfont icon-combinedshapefuben"></i></span>
+					</p>
 				</div>
-			</ShopGoodsItem>
+			</div>
 		</div>
+		<!-- 底部总价 -->
 		<div class="fix">
-			<div>Final Price：<span>¥ 652</span></div>
-			<div><router-link to="/">Place Your Order</router-link></div>
+			<div>Final Price：<span>¥ {{finalPrice}}</span></div>
+			<div @click="placeOrder"><a>Place Your Order</a></div>
 		</div>
+		<!-- 选择满减组件 -->
+		<mt-popup
+		  v-model="popupVisible"
+		  position="bottom">
+		  	<div class="thmart-coupons-list">
+		  		<div class="coupons-content">
+		  			<div class="title">thMart-Coupons</div>
+		  			<div class="list">
+		  				<div class="list-item" v-for="item in orderConfirmData.userCouponList" @click="changeChooseCoupons(item.couponId)">
+		  					<div class="Coupons-name">{{item.name}}</div>
+		  					<div class="Coupons-input" v-if="!item.checked">
+		  						<i></i>
+		  					</div>
+		  					<div class="Coupons-input" v-if="item.checked">
+		  						<img src="@/assets/images/check.png" alt="">
+		  					</div>
+		  					<div class="Coupons-price">reduce: {{item.reduce}}</div>
+		  				</div>
+		  			</div>
+		  		</div>
+		  		<div class="coupons-bottom" @click="confirm">
+		  			确定
+		  		</div>
+		  	</div>
+		</mt-popup>
 	</div>
 </template>
-<script>	
+<script>
+	import { MessageBox,Popup } from 'mint-ui';
 	export default {
 		name: 'OrderConfirmation',
 		data() {
 			return {
-
+				addrList: [],
+				orderConfirmData: null,
+				popupVisible: false,
+				finalPrice: 0
 			}
 		},
 		components: {
-			ShopGoodsItem: r => { require.ensure([], () => r(require('../../BaseComponents/ShopGoodsItem')), 'ShopGoodsItem') }
+			ShopGoodsItem: r => { require.ensure([], () => r(require('../../BaseComponents/ShopGoodsItem')), 'ShopGoodsItem') },
+			FullReductionSection: r => { require.ensure([], () => r(require('../../BaseComponents/FullReductionSection')), 'FullReductionSection') }
+		},
+		mounted() {
+			// 获取地址
+			this.getAddr();
+			// 获取详情
+			this.getOrderConfirmData();
+		},
+		computed: {
+			finallyFullReduction: function() {
+				var fullReduction = {};
+				for (var i = 0; i < this.orderConfirmData.userCouponList.length; i++) {
+					if (this.orderConfirmData.userCouponList[i].checked == true) {
+						fullReduction['reduce'] = this.orderConfirmData.userCouponList[i].reduce;
+						fullReduction['couponId'] = this.orderConfirmData.userCouponList[i].couponId;
+					}
+				}
+				this.chooseCouponsGetPice(fullReduction);
+				return fullReduction;
+			}
+		},
+		methods: {
+			// 获取地址
+			getAddr() {
+				if (this.$store.state.oneAddress) {
+					this.getSingleAddr();
+				} else {
+					this.getDeaflutAddr();
+				}
+			},
+			// 如果没有选则就获取地址列表页的地址（第一条地址就是默认地址）
+			getDeaflutAddr() {
+				var that = this;
+				that.$http.post(this.urls.addressList,{
+					page: 1,
+					pageSize: 1000
+				})
+				.then(function (response) {
+					console.log(response)
+					if (response.data.data.data.length==0) {
+						that.layer();
+					} else {
+						that.addrList.push(response.data.data.data[0])
+					}
+				});
+			},
+			// 获取单条地址
+			getSingleAddr() {
+				var that = this;
+				that.$http.post(this.urls.oneAddress,{
+					id: this.$store.state.oneAddress
+				})
+				.then(function (response) {
+					// that.$store.commit('changeOneAddress',null)
+					that.addrList.push(response.data.data)
+				});
+			},
+			// 获取订单详情
+			getOrderConfirmData() {
+				var that = this;
+				that.$http.post(this.urls.OrderPrepareOrder,{
+					skuId: this.$route.query.skuId || '',
+					number: this.$route.query.number || ''
+				})
+				.then(function (response) {
+					// console.log(response)
+					// 给满减添加选择属性
+					for (var i = 0; i < response.data.data.userCouponList.length; i++) {
+						if (i == 0) {
+							response.data.data.userCouponList[i]['checked'] = true;
+						} else {
+							response.data.data.userCouponList[i]['checked'] = false;
+						}
+						console.log();
+					}
+					that.orderConfirmData = response.data.data;
+				});
+			},
+			// 下单
+			placeOrder() {
+				var that = this;
+				// 如果没有地址不能下单
+				if (that.addrList.length==0) {
+					that.layer();
+					return false;
+				}
+				
+				that.$http.post(that.urls.placeOrder,{
+					couponId: that.finallyFullReduction.couponId?that.finallyFullReduction.couponId:0,
+					addressId: that.addrList[0].id
+				})
+				.then(function (response) {
+					// http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_base&state=STATE&redirect_uri=http%3A%2F%2F'+ csOrzs2 +'%2FApi%2FCommon%2Findex%3Forderid='+ orderid
+					console.log(response)
+					if (response.data.code==1) {
+						// 回调后端控制器地址
+						var apiAddr = that.formalTest();
+						var orderNumber = response.data.data.orderNumber;
+						var callbackAddress = window.location.origin + '/pay';
+						console.log(window.location)
+						console.log(apiAddr);
+						console.log(orderNumber);
+						if (that.isWeiXin()) {
+							window.location.href = 'http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_base&state=STATE&redirect_uri=http%3A%2F%2F'+ apiAddr +'Wx%2FopenidPayPage%3ForderNumber='+ orderNumber + '%26callbackAddress=' + callbackAddress;
+						} else {
+							that.$router.push({name: 'Pay', query: {orderNumber: orderNumber}})
+						}
+						
+						// var aaa = 'http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_base&state=STATE&redirect_uri=http%3A%2F%2F'+ apiAddr +'Wx%2FopenidPayPage%3ForderNumber='+ orderNumber + '%26callbackAddress=' + callbackAddress;
+						// console.log(aaa);
+					}
+				});
+			},
+			// 没有地址弹出框
+			layer() {
+				var that = this;
+				MessageBox({
+				  title: '',
+				  message: '你还未设置收货地址，请设置',
+				  confirmButtonText: "设置地址",
+				  cancelButtonText: 'Cancel',
+				  showCancelButton: true
+				}).then(action=>{
+					if (action == 'confirm') {
+						that.$router.push("AddAddress");
+					}		
+				})
+			},
+			showCoupons() {
+				// alert(0);
+				this.popupVisible = true;
+			},
+			confirm() {
+				this.popupVisible = false;
+			},
+			// 修改选择满减券
+			changeChooseCoupons(id) {
+				// console.log(id);
+				for (var i = 0; i < this.orderConfirmData.userCouponList.length; i++) {
+					// console.log(this.orderConfirmData.userCouponList[i]);
+					// 如果选择的选中的选项就把选中的取消
+					if (this.orderConfirmData.userCouponList[i].couponId == id && this.orderConfirmData.userCouponList[i].checked == true) {
+						this.orderConfirmData.userCouponList[i].checked = false;
+					} else {
+						// 把其他全部取消选择  把当前选中
+						this.orderConfirmData.userCouponList[i].checked = false;
+						if (this.orderConfirmData.userCouponList[i].couponId == id) {
+							this.orderConfirmData.userCouponList[i].checked = true;
+						}
+					}
+				}
+			},
+			// 计算属性中改变满减回调获取价格
+			chooseCouponsGetPice(fullReduction) {
+				var that = this;
+				that.$http.post(this.urls.OrderPrepareOrder,{
+					skuId: this.$route.query.skuId || '',
+					number: this.$route.query.number || '',
+					couponId: fullReduction.couponId?fullReduction.couponId:0
+				})
+				.then(function (response) {
+					console.log(response)
+					that.finalPrice = response.data.data.total;
+				});
+			}
+			
 		}
+
 	}
 </script>
 <style scoped>
@@ -79,6 +327,10 @@
 		color: #999;
 		font-size: 14px;
 	}
+	.info p:nth-child(3) {
+		color: #999;
+		font-size: 14px;
+	}
 	.info p:nth-child(1) span:nth-child(1) {
 		padding-right: 20px;
 	}
@@ -93,6 +345,9 @@
 		border-bottom: 1px solid #dfdfdf;
 		padding: 0 10px;
 		box-sizing: border-box;
+	}
+	.bottom > p:last-child {
+		border-bottom: none;
 	}
 	.bottom > p span:nth-child(2) {
 		color: #F9421E;
@@ -147,5 +402,74 @@
 	}
 	.discount {
 		padding-right: 27px;
+	}
+	.bottom-box {
+		padding: 0 10px;
+	}
+	.mint-popup-bottom {
+		width: 100%;
+	}
+	.thmart-coupons-list {
+		width: 100%;
+		background-color: #000;
+		opacity: 0.5;
+		box-sizing: border-box;
+		padding: 0 10px 10px 10px;
+	}
+	.thmart-coupons-list .coupons-content {
+		background-color: #fff;
+		margin-bottom: 10px;
+		box-sizing: border-box;
+		padding: 0 10px;
+		border-radius: 8px;
+	}
+	.thmart-coupons-list .coupons-content .title {
+		text-align: center;
+		padding: 10px 0;
+		border-bottom: 1px solid #dfdfdf;
+		color: #222;
+	}
+	.list .list-item {
+		border-bottom: 1px solid #dfdfdf;
+		overflow: hidden;
+	}
+	.list .list-item > div {
+		padding: 10px 0;
+	}
+	.list .list-item > div:nth-child(1) {
+		float: left;
+	}
+	.list .list-item > div:nth-child(2) {
+		float: right;
+		text-align: left;
+	}
+	.list .list-item > div:nth-child(3) {
+		float: right;
+		margin-right: 5px;
+		width: 100px;
+	}
+	.list .list-item:last-child {
+		border-bottom: none;
+		border-width: 0px;
+	}
+	.thmart-coupons-list .coupons-bottom {
+		background-color: #fff;
+		text-align: center;
+		color: #222;
+		padding: 10px 0;
+		border-radius: 8px;
+	}
+	.Coupons-input i {
+		display: inline-block;
+		width: 18px;
+		height: 18px;
+		border: 1px solid #dfdfdf;
+		border-radius: 50%;
+	}
+	.Coupons-input img {
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
 	}
 </style>

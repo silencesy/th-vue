@@ -60,7 +60,7 @@
   	},
   	methods: {
   		goDetails(id) {
-  			this.$router.push({ name: 'ArticleDetail', params: { id: id}})
+  			this.$router.push({ path: '/ArticleDetail', query: { id: id}})
   		},
   		goList() {
   			this.$router.push('Guide');
@@ -101,7 +101,9 @@
 		margin-bottom: 0px;
 	}
 	.article-item .img-box {
-		flex: 1;
+		width: 115px;
+		height: 76px;
+		overflow: hidden;
 	}
 	.article-item .img-box img {
 		width: 100%;

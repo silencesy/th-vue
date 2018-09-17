@@ -29,7 +29,7 @@ Axios.interceptors.request.use(
   config => {
     // 在发送请求之前做某件事
     showLoading = setTimeout(function(){
-      Indicator.open();
+      // Indicator.open();
     },2000);
     
     if (

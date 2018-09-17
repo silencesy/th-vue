@@ -30,7 +30,7 @@
 		},
 		methods: {
 			goShop(item) {
-				this.$router.push({name: 'ShopHome',params: {id: item.id}})
+				this.$router.push({path: '/ShopHome',query: {id: item.id}})
 			}
 		}
 	}

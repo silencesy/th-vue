@@ -1,12 +1,12 @@
 <template>
 	<div class="search">
 
-      <router-link v-if="!searchShop" to="/home/HomeSearch">
+      <router-link v-if="!searchShop" to="/HomeSearch">
         <span class="search-placeholder">Search</span>
         <div class="search-input"></div>
         <i class="iconfont icon-sousuo"></i>
       </router-link>
-      <router-link v-if="searchShop" :to="{path:'/home/HomeSearch',query:{shop:1}}">
+      <router-link v-if="searchShop" :to="{path:'/HomeSearch',query:{shop:1}}">
         <span class="search-placeholder">Search</span>
         <div class="search-input"></div>
         <i class="iconfont icon-sousuo"></i>

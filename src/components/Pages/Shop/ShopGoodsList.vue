@@ -37,12 +37,12 @@
 					page: 0,
 					pageSize: 10,
 					sort: 'createTime_desc',
-					brandId: this.$route.params.id
+					brandId: this.$route.query.id
 				}
 			}
 		},
 		mounted(){
-			var active = this.$route.params.flag;
+			var active = this.$route.query.flag;
 			console.log(active)
 			for (var i = 0; i < this.titleArr.length; i++) {
 				if (this.titleArr[i].flag == active) {

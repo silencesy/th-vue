@@ -3,7 +3,7 @@
   infinite-scroll-distance="0" infinite-scroll-immediate-check="false">
     <!-- Search -->
     <div class="search" :style="{backgroundColor: backgroundColor}">
-      <router-link to="/home/HomeSearch">
+      <router-link to="/HomeSearch">
         <span class="search-placeholder">Search</span>
         <div class="search-input"></div>
         <i class="iconfont icon-sousuo"></i>

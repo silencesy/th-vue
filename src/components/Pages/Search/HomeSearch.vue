@@ -172,6 +172,9 @@
   }
 </script>
 <style scoped>
+  .mint-navbar .mint-tab-item.is-selected:after {
+    width: 60px;
+  }
   .mint-tab-container-item {
     margin-top: 1px;
   }

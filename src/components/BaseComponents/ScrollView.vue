@@ -200,7 +200,7 @@
             // })
             that.scroll.on('scrollEnd', () => {
               // 滚动到底部
-              if (that.scroll.y <= (that.scroll.maxScrollY + 50)) {
+              if (that.scroll.y <= (that.scroll.maxScrollY + 200)) {
                 that.$emit('pullingUp')
               }
             })

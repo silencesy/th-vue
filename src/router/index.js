@@ -29,7 +29,7 @@ var router = new Router({
   scrollBehavior (to, from, savedPosition) {
     return { x: 0, y: 0 }
   },
-  // mode: 'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -96,14 +96,14 @@ var router = new Router({
       ]
     },
     {
-      path: "/home/HomeSearch",
+      path: "/HomeSearch",
       name: "HomeSearch",
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Search/HomeSearch')), 'HomeSearch')
       }
     },
     {
-    	path: "/GoodsDetails/:id",
+    	path: "/GoodsDetails",
     	name: "GoodsDetails",
       meta: {
         keepAlive: false
@@ -178,7 +178,8 @@ var router = new Router({
       path: "/OrderConfirmation",
       name: "OrderConfirmation",
       meta: {
-        keepAlive: true
+        keepAlive: false,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Order/OrderConfirmation')), 'OrderConfirmation')
@@ -215,7 +216,7 @@ var router = new Router({
       }
     },
     {
-      path: "/ArticleDetail/:id",
+      path: "/ArticleDetail",
       name: "ArticleDetail",
       meta: {
         keepAlive: false
@@ -285,7 +286,7 @@ var router = new Router({
       }
     },
     {
-      path: "/ShopHome/:id",
+      path: "/ShopHome",
       name: "ShopHome",
       meta: {
         keepAlive: false
@@ -405,7 +406,7 @@ var router = new Router({
       }
     },
     {
-      path: "/ShopGoodsList/:id/:flag",
+      path: "/ShopGoodsList",
       name: "ShopGoodsList",
       meta: {
         keepAlive: false
@@ -415,7 +416,7 @@ var router = new Router({
       }
     },
     {
-      path: "/ShopSearch/:id",
+      path: "/ShopSearch",
       name: "ShopSearch",
       meta: {
         keepAlive: false
@@ -482,6 +483,16 @@ var router = new Router({
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Order/OrderList')), 'OrderList')
+      }
+    },
+    {
+      path: "/alipay",
+      name: "alipay",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Pay/Alipay')), 'alipay')
       }
     }
   ]

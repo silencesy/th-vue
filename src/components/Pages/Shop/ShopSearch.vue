@@ -23,7 +23,7 @@
 					pageSize: 10,
 					sort: "createTime_desc",
 					search: '',
-					brandId: this.$route.params.id
+					brandId: this.$route.query.id
 				},
 				goodsList: [],
 				pullup: true,

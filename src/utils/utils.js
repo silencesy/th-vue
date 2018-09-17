@@ -68,7 +68,26 @@ exports.install = function (Vue, options) {
 	Vue.prototype.setlocalStorage = function (key,value) {
 	  	localStorage.setItem(key,value);
 	}
-	// Vue.prototype.getCode = function (arr, name) {
-	// 	alert(1)
-	// }
+	// 判断正服务器或者测试服务器
+	Vue.prototype.formalTest = function (arr, name) {
+		var url = window.location.href;
+		var apiAddr;
+		// console.log(url.indexOf('http://mob.thmart.com.cn/'));
+		if (url.indexOf('http://mob.thmart.com.cn/') == -1) {
+			apiAddr = 'proj6.thatsmags.com/thmartApi/';
+		} else {
+			apiAddr = 'api.mall.thatsmags.com/thmartApi/';
+		}
+		return apiAddr;
+	}
+
+	// 是否为微信浏览器
+	Vue.prototype.isWeiXin = function () {
+		var ua = window.navigator.userAgent.toLowerCase();
+		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+			return true;
+		} else {
+			return false;
+		}
+	}
 };

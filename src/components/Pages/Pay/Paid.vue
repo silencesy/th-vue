@@ -6,23 +6,23 @@
 			<div class="info">
 				<div class="payList">
 					<span>Order No. :</span>
-					<span>2017121245326</span>
+					<span>{{detailData.orderNumber}}</span>
 				</div>
 				<div class="payList">
 					<span>Ordered:</span>
-					<span>2018-07-04 12:00:03</span>
+					<span>{{detailData.orderTime}}</span>
 				</div>
 				<div class="payList">
 					<span>Receiver:</span>
-					<span>Amanda &nbsp;136****3567</span>
+					<span>Amanda &nbsp;{{detailData.phone}}</span>
 				</div>
 				<div class="payList">
 					<span>Address:</span>
-					<span>中国上海市黄浦区蒙自路169号2号楼305室<br>Room 305-306, 169 Mengzi Lu, Huangpu District, Shanghai</span>
+					<span>{{detailData.province}}{{detailData.city}}{{detailData.regionDetail}}</span>
 				</div>
 				<div class="payList">
 					<span>Final Price：</span>
-					<span>¥ 652</span>
+					<span>¥ {{detailData.priceTotal}}</span>
 				</div>		
 			</div>
 			<div class="btnList">
@@ -37,11 +37,21 @@
 		name: '',
 		data () {
 			return {
-
+				detailData: null
 			}
 		},
 		mounted () {
 			
+		},
+		methods: {
+			getData() {
+				var that = this;
+				that.$http.post(that.urls.payOrderDetail,{
+					orderNumber: that.$route.query.orderNumber
+				}).then(function(response) {
+					that.detailData = response.data.data
+				})
+			}
 		}
 	}
 </script>

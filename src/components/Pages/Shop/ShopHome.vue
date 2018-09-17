@@ -7,13 +7,13 @@
 			</div>
 			<div>
 				<span class="iconfont icon-shoucang"></span>
-				<router-link :to="{name: 'ShopSearch', params: {id:shopData.id}}" class="iconfont icon-sousuo"> </router-link>
+				<router-link :to="{path: '/ShopSearch', query: {id:shopData.id}}" class="iconfont icon-sousuo"> </router-link>
 			</div>
 		</div>
 		<div class="nav">
 			<router-link to="/">Home</router-link>
-			<router-link :to="{name: 'ShopGoodsList', params: {id:shopData.id,flag: 'all'}}">All</router-link>
-			<router-link :to="{name: 'ShopGoodsList', params: {id:shopData.id,flag: 'new'}}">New Arrivals</router-link>
+			<router-link :to="{path: '/ShopGoodsList', query: {id:shopData.id,flag: 'all'}}">All</router-link>
+			<router-link :to="{path: '/ShopGoodsList', query: {id:shopData.id,flag: 'new'}}">New Arrivals</router-link>
 		</div>
 		<!-- 轮播开始 -->
 		<BaseSwiper :swiperData="shopData.figure">
@@ -45,13 +45,13 @@
 			BackToTop: r => { require.ensure([], () => r(require('../../BaseComponents/BackToTop')), 'BackToTop') }
 		},
 		mounted () {
-			console.log(this.$route.params.id)
+			console.log(this.$route.query.id)
 			this.getData();
 		},
 		methods: {
 			getData() {
 				var that = this;
-				that.$http.post(this.urls.shopDetail,{id: that.$route.params.id})
+				that.$http.post(this.urls.shopDetail,{id: that.$route.query.id})
 				.then(function (response) {
 					// that.categoryList = response.data.data;
 					console.log(response)

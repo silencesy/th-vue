@@ -51,7 +51,7 @@
 			getData() {
 				var that = this;
 				that.$http.post(that.urls.articleDetail,{
-					id: that.$route.params.id
+					id: that.$route.query.id
 				})
 				.then(function (response) {
 					that.articleData = response.data.data;

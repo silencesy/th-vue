@@ -23,12 +23,12 @@
 						<i class="not-select" v-show="!goodsval.isSelect"></i>
 			    	</div>
     				<div class="img-box">
-    					<router-link :to="{name: 'GoodsDetails', params: {id:goodsval.goodsId}}">
+    					<router-link :to="{path: 'GoodsDetails', query: {id:goodsval.goodsId}}">
     						<img :src="goodsval.pic" height="200" width="200" alt="">
     					</router-link>
     				</div>
     				<div class="info">
-    					<router-link :to="{name: 'GoodsDetails', params: {id:goodsval.goodsId}}">
+    					<router-link :to="{path: 'GoodsDetails', query: {id:goodsval.goodsId}}">
 	    					<div class="name">{{goodsval.goodsName}}</div>
 	    					<div class="flag">
 	    						<span v-for="(val,key) in goodsval.prop">{{val[0]}}</span>
@@ -74,7 +74,7 @@
     				<div class="offer theme_color">优惠 ¥ {{couponPrice}}</div>
     			</div>
     		</div>
-    		<div class="buy-btn">
+    		<div class="buy-btn" @click="buy">
     			<span>Checkout Now</span>
     		</div>
     	</div>
@@ -100,6 +100,7 @@
   
 <script> 
 import Count from '@/components/BaseComponents/Count'
+import { Toast } from 'mint-ui';
 export default {
   name: 'Cart',  
   data() {  
@@ -480,6 +481,15 @@ export default {
 		if (this.dataList.length == 0) {
 			this.isEmpty = true;
 			this.showGoods = false;
+		}
+	},
+	// 购买btn
+	buy() {
+		// 提示用户勾选商品
+		if (this.total == 0) {
+			Toast('Please select at least one goods before the payment.');
+		} else {
+			this.$router.push('OrderConfirmation');
 		}
 	}
   }

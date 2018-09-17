@@ -2,7 +2,7 @@
 	<div class="AddressBook">
 		<div class="fix">
 			<div v-for="(item,index) in dataList" class="addressPer">
-				<div class="addList">
+				<div class="addList" @click="chooseAddr(item.id)">
 					<p>{{item.fullName}}</p>
 					<p>{{item.phone}}</p>
 					<p>{{item.email}}</p>
@@ -24,6 +24,7 @@
 			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
 		</div> -->
 		<div class="bottom" :class="{top0: dataList.length==0}" v-show="showHide">
+			<!-- <router-link to='/AddAddress'>+Add New Shipping Address</router-link> -->
 			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
 		</div>
 	</div>
@@ -94,7 +95,14 @@
 				});
 			},
 			changeAddr(id) {
-				this.$router.push({path: '/AddAddress',query: {id: id}})
+				this.$router.push({path: '/AddAddress',query: {id: id,flag: 'OrderConfirmation'}})
+			},
+			chooseAddr(id) {
+				if (this.$route.query.flag=='OrderConfirmation') {
+					// 设置地址
+					this.$store.commit('changeOneAddress',id)
+					this.$router.go(-1);
+				}
 			}
 	  	}
 

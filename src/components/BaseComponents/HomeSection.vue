@@ -7,7 +7,7 @@
 			<swiper :options="swiperOption"  ref="baseSwiper">
 				<swiper-slide class="goods-item" v-for="(item,index) in sectionData.data" :key="index">
 					<!-- 商品区块 -->
-					<router-link :to="{name: 'GoodsDetails', params: {id:item.id}}" v-if="!shop">
+					<router-link :to="{path: '/GoodsDetails', query: {id:item.id}}" v-if="!shop">
 						<div class="img-box">
 							<img v-lazy="item.pic" alt="">
 						</div>
@@ -20,7 +20,7 @@
 						</div>
 					</router-link>
 					<!-- 商户区块 -->
-					<router-link :to="{name: 'ShopHome', params: {id:item.id}}" v-if="shop">
+					<router-link :to="{path: '/ShopHome', query: {id:item.id}}" v-if="shop">
 						<div class="img-box">
 							<img v-lazy="item.pic" alt="">
 						</div>
