@@ -65,7 +65,7 @@ export default {
     };  
   },
   components: {
-    BaseArticle: r => { require.ensure([], () => r(require('@/components/BaseComponents/BaseArticle')), 'BaseArticle') },
+    // BaseArticle: r => { require.ensure([], () => r(require('@/components/BaseComponents/BaseArticle')), 'BaseArticle') },
     ScrollView: r => { require.ensure([], () => r(require('@/components/BaseComponents/ScrollView')), 'ScrollView') }
   },
   mounted() {

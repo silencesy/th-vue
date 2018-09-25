@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<div class="goods" v-if="articleData.itemList.length > 0">
-				<router-link v-for="item in articleData.itemList" :to="{path: '/GoodsDetails', query: {id: item.itemId}}">
+				<router-link v-for="item in articleData.itemList" :key="item.itemId" :to="{path: '/GoodsDetails', query: {id: item.itemId}}">
 					<div><img :src="item.pic" alt=""></div>
 					<div>
 						<p class="line2">{{item.title}}</p>
