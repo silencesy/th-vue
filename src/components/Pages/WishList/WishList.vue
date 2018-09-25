@@ -1,86 +1,155 @@
-<template>
-	<div class="WishList">
-		<div class="nav">
-			<mt-button class="nav-item" size="small" @click.native.prevent="active = 'tab-container1'">Goods</mt-button>  
-      	<mt-button class="nav-item" size="small" @click.native.prevent="active = 'tab-container2'">Shops</mt-button>
-		</div>
-		<div class="page-tab-container">
-      <mt-tab-container class="page-tabbar-tab-container" v-model="active" swipeable>
+<template>  
+  <div>  
+    <div class="nav">  
+      <mt-button class="nav-item" :class="{active: active == 'product'}" size="small" @click.native.prevent="active = 'product'">Products</mt-button>  
+      <mt-button class="nav-item" :class="{active: active == 'shop'}" size="small" @click.native.prevent="active = 'shop'">Shops</mt-button>  
+    </div>  
       
-        <mt-tab-container-item id="tab-container1">
-        	<div class="wishGoods">
-							<div class="goodsLeft">
-								<img src="static/images/common/169.jpg" alt="">
-							</div>
-							<div class="goodsRight">
-								<p>An Affectionate Encounter Bouquet / Flowers</p>
-								<div class="rightContent">
-									<div>
-										<span>￥169</span>
-										<del>￥199</del>
-									</div>
-									<div class="iconfont icon-shanchu"></div>
-								</div>
-							</div>
-        	</div>
-
-        	<div class="wishGoods">
-							<div class="goodsLeft">
-								<img src="static/images/common/169.jpg" alt="">
-							</div>
-							<div class="goodsRight">
-								<p>An Affectionate Encounter Bouquet / Flowers</p>
-								<div class="rightContent">
-									<div>
-										<span>￥169</span>
-										<del>￥199</del>
-									</div>
-									<div class="iconfont icon-shanchu"></div>
-								</div>
-							</div>
-        	</div>
-        </mt-tab-container-item>
-
-        <mt-tab-container-item id="tab-container2">
-        	<div class="wishShops">
-							<div>
-								<img src="static/images/common/169.jpg" alt="">
-							</div>
-							<div>An Affectionate Encounter</div>
-							<div class="iconfont icon-shanchu"></div>
-        	</div>
-
-					<div class="wishShops">
-							<div>
-								<img src="static/images/common/169.jpg" alt="">
-							</div>
-							<div>An Affectionate Encounter</div>
-							<div class="iconfont icon-shanchu"></div>
-        	</div>
-
-        </mt-tab-container-item>
+    <div class="page-tab-container">  
+      <mt-tab-container class="page-tabbar-tab-container" v-model="active" swipeable>  
+        <mt-tab-container-item class="item-container wrapper" id="product">
+          <div :style="{width:'100%',height:height+'px'}">
+            <ScrollView ref="ScrollView" :height="height" color="#eee" :pullup="pullup" :data="goodsListData.data"  @pullingUp="getData">
+              <div class="goods-container">
+                <div class="wishGoods" v-for="item in goodsListData.data" :key="item.id">
+                  <div class="goodsLeft" @click="goGoodsDetails(item.id)">
+                    <img :src="item.pic" alt="">
+                  </div>
+                  <div class="goodsRight">
+                    <p @click="goGoodsDetails(item.id)">{{item.title}}</p>
+                    <div class="rightContent">
+                      <div @click="goGoodsDetails(item.id)">
+                        <span>￥{{item.price}}</span>
+                      </div>
+                      <div class="iconfont icon-shoucang1"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ScrollView>
+          </div>
+          
+        </mt-tab-container-item>  
+        <mt-tab-container-item class="item-container" id="shop">
+          <div :style="{width:'100%',height:height+'px'}">
+            <ScrollView ref="ScrollView2" :open="open" :height="height" color="#eee" :pullup="pullup" :data="shopListData.data"  @pullingUp="getData2">
+              <div class="shop-container">
+                <div class="wishShops" v-for="item in shopListData.data" :key="item.contentId">
+                    <div @click="goShopDetails(item.contentId)">
+                      <img :src="item.pic" alt="">
+                    </div>
+                    <div  @click="goShopDetails(item.contentId)">{{item.name}}</div>
+                    <div class="iconfont icon-shoucang1"></div>
+                </div>
+              </div>
+            </ScrollView>
+          </div>
+        </mt-tab-container-item>   
+      </mt-tab-container>   
+    </div>  
+  </div>  
+</template>    
   
-      </mt-tab-container>
-	  </div>		
-	</div>
-</template>
+<script>  
+export default {  
+  name: 'page-tab-container',  
+  data() {  
+    return {  
+      active: 'product',
+      height: 0,
+      open: false,
+      goodsListData: {
+        data:[]
+      },
+      shopListData: {
+        data:[]
+      },
+      pullup: true,
+      param1: {
+        type: 1,
+        page: 0,
+        pageSize: 8,
+        totalPage: -1
+      },
+      param2: {
+        type: 2,
+        page: 0,
+        pageSize: 8,
+        totalPage: -1
+      }
+    };  
+  },
+  components: {
+    BaseArticle: r => { require.ensure([], () => r(require('@/components/BaseComponents/BaseArticle')), 'BaseArticle') },
+    ScrollView: r => { require.ensure([], () => r(require('@/components/BaseComponents/ScrollView')), 'ScrollView') }
+  },
+  mounted() {
+    var that = this;
+    that.$nextTick(() => {
+      setTimeout(function(){
+        that.height = document.documentElement.clientHeight-41;
+      },20);
+    });
+    that.getData();
+  },
+  watch: {
+    active: function(newVal,oldVal) {
+      if (newVal == 'shop') {
+        if (!this.open) {
+          console.log(123);
+          this.open = true;
+          this.getData2();
+        }
+      }
+    }
+  },
+  methods: {
+    // 获取商品列表
+    getData() {
+      var that = this;
+      that.param1.page++;
+      that.$http.post(that.urls.collectList,that.param1)
+      .then(function (response) {
+        if (response.data.data.totalPage == 0 || that.param1.page >= response.data.data.totalPage) {
+          that.$refs.ScrollView.endup();
+        }
+        that.goodsListData.data=that.goodsListData.data.concat(response.data.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    // 获取商户列表
+    getData2() {
+      var that = this;
+      that.param2.page++;
+      that.$http.post(that.urls.collectList,that.param2)
+      .then(function (response) {
+        if (response.data.data.totalPage == 0 || that.param2.page >= response.data.data.totalPage) {
+          that.$refs.ScrollView2.endup();
+        }
+        that.shopListData.data=that.shopListData.data.concat(response.data.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    },
+    // 跳转商品详情页
+    goGoodsDetails(id) {
+      this.$router.push({path: "/GoodsDetails", query:{ id: id }})
+    },
+    // 跳转商户详情页
+    goShopDetails(id) {
+      this.$router.push({path: "/ShopHome", query:{ id: id }})
+    }
+  }
+};  
+</script>  
 
-<script>
-	export default {
-	  name: 'WishList',
-	  data() {
-	    return {
-	      active: 'tab-container1'
-	    };
-	  }
-	};
-</script>
-
-<style scoped>
-	.nav {
+<style scoped>  
+  .nav {
     display: flex;
     border-bottom: 1px solid #dfdfdf;
-    margin-bottom: 10px;
   }
   .nav > .nav-item {
     flex: 1;
@@ -92,91 +161,86 @@
     border-width: 0;
     box-shadow: none;
   }
-  .item-container {
-    background-color: #fff;
+  .mint-button::after {
+    background-color: transparent;
   }
-  .active-bttom {
-    border-bottom: 1px solid #f6442b;
+  .goods-container {
+    padding: 10px;
   }
-	.mint-button--default {
-		box-shadow: none;
-		flex: 1;
-		box-sizing: border-box;
-		font-size: 16px;
-	}	
-	.mint-button::after {
-		background: rgba(0,0,0,0);
-		border-bottom: 2px solid #f6442b; 
-	}	
-	.wishGoods {
-		display: flex;
-		background: #fff;
-		padding: 10px;
-		margin-bottom: 10px;
-	}
-	.goodsLeft {
-		flex: 0.5;
-	}
-	.goodsRight {
-		flex: 1;
-		position: relative;
-	}
-	.goodsLeft img {
-		width: 115px;
-		height: 115px;
-	}
-	.goodsRight > p {
-		word-break: break-all;
+  .shop-container {
+    padding: 10px;
+  }
+  .wishGoods {
+    display: flex;
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .goodsLeft {
+    flex: 0.5;
+  }
+  .goodsRight {
+    flex: 1;
+    position: relative;
+  }
+  .goodsLeft img {
+    width: 115px;
+    height: 115px;
+    border-radius: 4px;
+    float: left;
+  }
+  .goodsRight > p {
+    word-break: break-all;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-	}
-	.rightContent {
-		width: 100%;
-		position: absolute;
-		bottom: 0;
-		display: flex;
-		justify-content: space-between;
-	}
-	.rightContent .icon-shanchu {
-		float: right;
-	}
-	.rightContent > div {
-		display: inline-block;
-		color: #f6442b;
-	}
-	.rightContent > div span {
-		color: #f6442b;
-	}
-	.rightContent del {
-		font-size: 14px;
-		color: #222;
-	}
-	.wishShops {
-		display: flex;
-		background: #fff;
-		margin-bottom: 10px;
-		height: 70px;
-		line-height: 70px;
-		padding: 10px;
-	}
-	.wishShops > div:first-child {
-		flex: 0.5;
-	}
-	.wishShops > div:nth-child(2) {
-		flex: 1.3;
-		color: #666;
-	}
-	.wishShops > div:nth-child(3) {
-		flex: 0.2;
-		color: #f6442b;
-	}
-	.wishShops > div:first-child img {
-		width: 110px;
-		height: 70px;
-	}
-
-
-</style>
+  }
+  .rightContent {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .rightContent .icon-shoucang1 {
+    float: right;
+  }
+  .rightContent > div {
+    display: inline-block;
+    color: #f6442b;
+  }
+  .rightContent > div span {
+    color: #f6442b;
+  }
+  .rightContent del {
+    font-size: 14px;
+    color: #222;
+  }
+  .wishShops {
+    display: flex;
+    background: #fff;
+    margin-bottom: 10px;
+    line-height: 115px;
+    padding: 10px;
+  }
+  .wishShops > div:first-child {
+    flex: 0.5;
+  }
+  .wishShops > div:nth-child(2) {
+    flex: 1.3;
+    color: #666;
+    padding-left: 10px;
+  }
+  .wishShops > div:nth-child(3) {
+    flex: 0.2;
+    color: #f6442b;
+  }
+  .wishShops > div:first-child img {
+    width: 115px;
+    height: 115px;
+    border-radius: 4px;
+    float: left;
+  }
+</style> 

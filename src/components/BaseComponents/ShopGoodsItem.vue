@@ -2,27 +2,34 @@
 	<div class="ShopGoodsItem">
 		<div class="title">
 			<a>
-				<i class="iconfont icon-shanghu1"></i>
+				<i class="iconfont" :class="iconfontName"></i>
 				<span>{{shopData.brandName}}</span>
+				<slot name="orderNumber"></slot>
 			</a>
 			<div>
 				<slot name="titleRight"></slot>
 			</div>
 		</div>
 		<div class="content">
-			<div class="goods" v-for="(item,index) in shopData.data">
-				<div>
-					<img :src="item.pic" alt="">
+			<slot name="content"></slot>
+			<div v-for="(item,index) in shopData.data">
+				<div class="goods">
+					<div>
+						<img :src="item.pic" alt="">
+					</div>
+					<div class="goodsRight">
+						<p class="line2">{{item.goodsName}}</p>
+						<p>
+							<span v-for="(item2,index) in item.prop">{{item2[0]}}</span>
+						</p>
+						<p>
+							<span>¥{{item.price}}</span>
+							<i>x{{item.number}}</i>
+						</p>
+					</div>
 				</div>
-				<div class="goodsRight">
-					<p class="line2">{{item.goodsName}}</p>
-					<p>
-						<span v-for="(item2,index) in item.prop">{{item2[0]}}</span>
-					</p>
-					<p>
-						<span>¥{{item.price}}</span>
-						<i>x{{item.number}}</i>
-					</p>
+				<div v-if="showLogistics" class="logistics-box">
+					<span class="logistics">Tracking your order</span>
 				</div>
 			</div>
 		</div>
@@ -30,6 +37,11 @@
 	</div>
 </template>
 <script>
+	/**
+	 * iconfontName 头部左边的iconfont
+	 * shopData 数据
+	 * showLogistics 是否显示物流
+	 */
 	export default {
 		name: 'ShopGoodsItem',
 		props: {
@@ -38,6 +50,14 @@
 				default: function() {
 					return {}
 				}
+			},
+			iconfontName: {
+				type: String,
+				default: 'icon-shanghu1'
+			},
+			showLogistics: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -52,6 +72,7 @@
 		margin: 0 10px 10px 10px;
 		border: 1px solid #dfdfdf;
 		border-radius: 4px;
+		overflow: hidden;
 	}
 	.title {
 		display: flex;
@@ -121,6 +142,18 @@
 	.goodsRight p i {
 		font-size: 14px;
 	}
-
+	.logistics-box {
+		height: 30px;
+		line-height: 30px;
+		padding-bottom: 10px;
+	}
+	.logistics {
+		float: right;
+		border: 1px solid #dfdfdf;
+    	border-radius: 30px;
+    	color: #666;
+    	font-size: 14px;
+    	padding: 0 10px;
+	}
 
 </style>

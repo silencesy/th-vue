@@ -223,7 +223,9 @@
 				
 				that.$http.post(that.urls.placeOrder,{
 					couponId: that.finallyFullReduction.couponId?that.finallyFullReduction.couponId:0,
-					addressId: that.addrList[0].id
+					addressId: that.addrList[0].id,
+					skuId: this.$route.query.skuId || '',
+					number: this.$route.query.number || ''
 				})
 				.then(function (response) {
 					// http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_base&state=STATE&redirect_uri=http%3A%2F%2F'+ csOrzs2 +'%2FApi%2FCommon%2Findex%3Forderid='+ orderid
@@ -239,7 +241,7 @@
 						if (that.isWeiXin()) {
 							window.location.href = 'http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_base&state=STATE&redirect_uri=http%3A%2F%2F'+ apiAddr +'Wx%2FopenidPayPage%3ForderNumber='+ orderNumber + '%26callbackAddress=' + callbackAddress;
 						} else {
-							that.$router.push({name: 'Pay', query: {orderNumber: orderNumber}})
+							window.location.href = window.location.origin + '/Pay?orderNumber=' + orderNumber;
 						}
 						
 						// var aaa = 'http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_base&state=STATE&redirect_uri=http%3A%2F%2F'+ apiAddr +'Wx%2FopenidPayPage%3ForderNumber='+ orderNumber + '%26callbackAddress=' + callbackAddress;

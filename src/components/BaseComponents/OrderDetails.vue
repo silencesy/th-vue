@@ -1,5 +1,5 @@
 <template>
-	<div class="OrderDetails">
+	<div class="OrderDetails" :style="styleObj">
 		<div class="notice">
 			<p><i class="iconfont icon-xinxi"></i>Notice</p>
 			<p>If you need after-sales service, please contact us within 7 days after you receive the parcel. We will not accept the request if overdue. Thanks for your cooperation and understanding.</p>
@@ -7,27 +7,20 @@
 		<div to="/" class="address">
 			<div class="info">
 				<p><i class="iconfont icon-shouhuodizhi"></i>Address</p>
-				<p><span>Amanda</span><span>136****3567</span></p>
-				<p>上海市黄浦区蒙自路169号2号楼305室</p>
+				<p><span>{{OrderDetailsData.fullName}}</span><span>{{OrderDetailsData.phone}}</span></p>
+				<p>{{OrderDetailsData.province}}{{OrderDetailsData.city}}{{OrderDetailsData.regionDetail}}</p>
 			</div>
 		</div>
 		<div class="container">
-			<ShopGoodsItem>
-				<div slot="bottom" class="bottom">
-					<p>
-						<span>&nbsp;</span>
-						<span><i>Total：</i>¥316 <b>(Shipping:¥5)</b></span>
-					</p>
-				</div>
+			<ShopGoodsItem v-for="(item,index) in OrderDetailsData.data.brand" :key="index" :shopData="item" :showLogistics="showLogistics">
+				
 			</ShopGoodsItem>
-			<ShopGoodsItem>
-				<div slot="bottom" class="bottom">
-					<p>
-						<span>&nbsp;</span>
-						<span><i>Total：</i>¥316 <b>(Shipping:¥5)</b></span>
-					</p>
-				</div>
-			</ShopGoodsItem>
+			<div class="bottom">
+				<p>
+					<span>&nbsp;</span>
+					<span><i>Total：</i>¥{{OrderDetailsData.priceTotal}} <b v-if="OrderDetailsData.feeTotal != 0">(Shipping: ¥{{OrderDetailsData.feeTotal}})</b></span>
+				</p>
+			</div>
 		</div>
 		<slot name="date"></slot>
 		<slot name="distance"></slot>
@@ -35,8 +28,32 @@
 	</div>
 </template>
 <script>	
+	/**
+	 * styleObj 控制最大盒子的底部margin
+	 * showLogistics 控制子组件ShopGoodsItem 是否显示物流
+	 */
 	export default {
 		name: 'OrderDetails',
+		props: {
+			OrderDetailsData: {
+				type: Object,
+				default: function() {
+					return {}
+				}
+			},
+			styleObj: {
+				type: Object,
+				default: function() {
+					return {
+						'margin-bottom': '55px'
+					}
+				}
+			},
+			showLogistics: {
+				type: Boolean,
+				default: false
+			}
+		},
 		data() {
 			return {
 
@@ -48,6 +65,7 @@
 	}
 </script>
 <style scoped>
+
 	.notice {
 		margin: 10px;
 		padding: 10px;
@@ -101,15 +119,19 @@
 	}
 	.bottom {
 		background: #fff;
+		margin: 0 10px;
+		border-radius: 4px;
+		overflow: hidden;
 	}	
 	.bottom > p {
 		height: 50px;
 		line-height: 50px;
 		display: flex;
 		justify-content: space-between;
-		border-bottom: 1px solid #dfdfdf;
+		border: 1px solid #dfdfdf;
 		padding: 0 10px;
 		box-sizing: border-box;
+		border-radius: 4px;
 	}
 	.bottom > p span:nth-child(2) {
 		color: #F9421E;

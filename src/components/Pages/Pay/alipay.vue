@@ -10,14 +10,33 @@
 	export default {
 		mounted() {
 			this.pay();
+			this.listenWechatPay();
 		},
 		methods: {
 			pay() {
 				// 不是微信执行
 				if (!this.isWeiXin()) {
-					console.log(123);
 					window.location.href = 'https://' + this.formalTest() + 'Alipay/alipayapi?orderNumber=' + this.$route.query.orderNumber;
 				}
+			},
+			// 监听支付宝支付成功
+			listenWechatPay() {
+				var that = this;
+				that.weChatTimer = setInterval(that.listenWechatPayFun,3000);
+			},
+			listenWechatPayFun() {
+				var that = this;
+				that.$http.post(that.urls.AlipayOrderQuery,{
+					out_trade_no: that.$route.query.orderNumber
+				}).then(function(response) {
+					// that.detailData = response.data.data
+					if (response.data.code == 1 && response.data.message == 'success' ) {
+						clearInterval(that.weChatTimer);
+						that.$router.push({path: '/Paid', query: {orderNumber: that.$route.query.orderNumber}})
+					}
+				}).catch(function() {
+
+				});
 			}
 		}
 	}

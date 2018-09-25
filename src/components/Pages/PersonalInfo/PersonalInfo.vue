@@ -14,7 +14,7 @@
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
 			</mt-cell>
 		</div>
-		<div class="signOut"><button class="btn">Sign out</button></div>
+		<div class="signOut"><button @click="signOut" class="btn">Sign out</button></div>
 		
 	</div>
 </template>
@@ -33,35 +33,39 @@
 		},
 		methods: {
 			unbind: function () {
-        const htmls = `
-           <div class="box">
-            <div class="isunbind">Change the password</div>
-            <div class="inputBox"> 
-							<input type="text" placeholder="Current password">
-							<input type="text" placeholder="New password">
-							<input type="text" placeholder="Please re-enter your password">
-            </div>
-          </div>
-        `;
-        MessageBox.confirm('', {
-          message: htmls,
-          title: '',
-          showConfirmButton:true,
-          showCancelButton:true,
-          cancelButtonClass:'cancelButton',
-          confirmButtonClass:'confirmButton',
-          confirmButtonText:'Done',
-          cancelButtonText:'Cancel'
-        }).then(action => {
-          if (action == 'confirm') {
-            console.log('abc');
-          }
-        }).catch(err => {
-          if (err == 'cancel') {
-            console.log('123');
-          }
-        });
-      }
+		        const htmls = `
+		           <div class="box">
+		            <div class="isunbind">Change the password</div>
+		            <div class="inputBox"> 
+									<input type="text" placeholder="Current password">
+									<input type="text" placeholder="New password">
+									<input type="text" placeholder="Please re-enter your password">
+		            </div>
+		          </div>
+		        `;
+		        MessageBox.confirm('', {
+		          message: htmls,
+		          title: '',
+		          showConfirmButton:true,
+		          showCancelButton:true,
+		          cancelButtonClass:'cancelButton',
+		          confirmButtonClass:'confirmButton',
+		          confirmButtonText:'Done',
+		          cancelButtonText:'Cancel'
+		        }).then(action => {
+		          if (action == 'confirm') {
+		            console.log('abc');
+		          }
+		        }).catch(err => {
+		          if (err == 'cancel') {
+		            console.log('123');
+		          }
+		        });
+		    },
+		    signOut() {
+		  		localStorage.removeItem("token");
+		  		this.$router.push("/Login");
+		  	}
 
 		}
 	}

@@ -1,5 +1,5 @@
 <template>
-	<div class="Paid">
+	<div class="Paid" v-if="detailData">
 		<p class="iconfont icon-duihao"></p>
 		<p>Payment Success</p>
 		<div class="paidBox">
@@ -27,7 +27,7 @@
 			</div>
 			<div class="btnList">
 				<router-link to='/' class="btn">Order List</router-link>
-				<router-link to='/home' class="btn">Home</router-link>
+				<router-link to='/' class="btn">Home</router-link>
 			</div>
 		</div>
 	</div>
@@ -41,7 +41,7 @@
 			}
 		},
 		mounted () {
-			
+			this.getData();
 		},
 		methods: {
 			getData() {

@@ -116,17 +116,17 @@ var router = new Router({
       path: "/CouponsList",
       name: "CouponsList",
       meta: {
-        keepAlive: true
+        keepAlive: false,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsList')), 'CouponsList')
       }
     },
     {
-      path: "/WishList/:GoodsId",
+      path: "/WishList",
       name: "WishList",
       meta: {
-        keepAlive: true,
         MustLogin: true
       },
       component(resolve) {
@@ -155,10 +155,11 @@ var router = new Router({
       }
     },
     {
-      path: "/CouponsGoods/:CouponsId",
+      path: "/CouponsGoods",
       name: "CouponsGoods",
       meta: {
-        keepAlive: true
+        keepAlive: false,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Coupons/CouponsGoods')), 'CouponsGoods')
@@ -189,7 +190,7 @@ var router = new Router({
       path: "/Pay",
       name: "Pay",
       meta: {
-        keepAlive: true
+        keepAlive: false
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Pay/Pay')), 'Pay')
@@ -439,7 +440,8 @@ var router = new Router({
       path: "/PersonalInfo",
       name: "PersonalInfo",
       meta: {
-        keepAlive: false
+        keepAlive: false,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/PersonalInfo/PersonalInfo')), 'PersonalInfo')
@@ -449,7 +451,8 @@ var router = new Router({
       path: "/OrderDetailsPaid",
       name: "OrderDetailsPaid",
       meta: {
-        keepAlive: false
+        keepAlive: false,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Order/OrderDetailsPaid')), 'OrderDetailsPaid')
@@ -459,17 +462,30 @@ var router = new Router({
       path: "/OrderDetailsUnpaid",
       name: "OrderDetailsUnpaid",
       meta: {
-        keepAlive: false
+        keepAlive: false,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Order/OrderDetailsUnpaid')), 'OrderDetailsUnpaid')
       }
     },
     {
+      path: "/OrderDetailsInProress",
+      name: "OrderDetailsInProress",
+      meta: {
+        keepAlive: false,
+        MustLogin: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Order/OrderDetailsInProress')), 'OrderDetailsInProress')
+      }
+    },
+    {
       path: "/OrderDetailsDelivered",
       name: "OrderDetailsDelivered",
       meta: {
-        keepAlive: false
+        keepAlive: false,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Order/OrderDetailsDelivered')), 'OrderDetailsDelivered')
@@ -479,7 +495,8 @@ var router = new Router({
       path: "/OrderList",
       name: "OrderList",
       meta: {
-        keepAlive: false
+        keepAlive: false,
+        MustLogin: true
       },
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Order/OrderList')), 'OrderList')
@@ -492,7 +509,7 @@ var router = new Router({
         keepAlive: false
       },
       component(resolve) {
-        require.ensure([], () => resolve(require('@/components/Pages/Pay/Alipay')), 'alipay')
+        require.ensure([], () => resolve(require('@/components/Pages/Pay/alipay')), 'alipay')
       }
     }
   ]

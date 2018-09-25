@@ -39,15 +39,25 @@
 			return {
 				detailData: null,
 				// 微信是否显示
-				isWeiXinShow: true
+				isWeiXinShow: true,
+				weChatTimer: null
 			}
 		},
 		mounted () {
+			this.listenGoBack();
 			this.getData();
 			// 不是微信浏览器则隐藏微信支付
 			this.isShowWechatPay();
+			// 监听微信支付成功
+			this.listenWechatPay();
 		},
 		methods: {
+			// 监听浏览器后退事件
+			listenGoBack() {
+				window.addEventListener("popstate", function(e) {
+					alert(123);
+				}, true);
+			},
 			getData() {
 				var that = this;
 				that.$http.post(that.urls.payOrderDetail,{
@@ -66,7 +76,8 @@
 				if (!this.isWeiXin()) {
 					window.location.href = 'https://' + this.formalTest() + 'Alipay/alipayapi?orderNumber=' + this.$route.query.orderNumber;
 				} else {
-					this.$router.push({path: '/alipay', query: {orderNumber: this.$route.query.orderNumber}})
+					// this.$router.push({path: '/alipay', query: {orderNumber: this.$route.query.orderNumber}})
+					window.location.href = window.location.origin + '/alipay?orderNumber=' + this.$route.query.orderNumber;
 				}
 			},
 			// 微信支付
@@ -102,6 +113,25 @@
 				}else{
 				    that.jsApiCall();
 				}
+			},
+			// 监听微信支付成功
+			listenWechatPay() {
+				var that = this;
+				that.weChatTimer = setInterval(that.listenWechatPayFun,3000);
+			},
+			listenWechatPayFun() {
+				var that = this;
+				that.$http.post(that.urls.WxOrderQuery,{
+					trade_no: that.$route.query.orderNumber
+				}).then(function(response) {
+					// that.detailData = response.data.data
+					if (response.data.code == 1 && response.data.message == 'success' ) {
+						clearInterval(that.weChatTimer);
+						that.$router.push({path: '/Paid', query: {orderNumber: that.$route.query.orderNumber}})
+					}
+				}).catch(function() {
+
+				});
 			}
 		}
 	}

@@ -24,8 +24,8 @@
 					<i class="iconfont icon-kefu"></i>
 					<div>Chat</div>
 				</div>
-				<div class="icon-box">
-					<i class="iconfont icon-shoucang1"></i>
+				<div class="icon-box" @click="save">
+					<i class="iconfont icon-shoucang1" :class="{theme_color: goodsData.isCollect==1}"></i>
 					<div>Save</div>
 				</div>
 			</div>
@@ -600,6 +600,25 @@
 
                     this.message = s.join('-');
                 }
+            },
+            // 收藏商品
+            save() {
+            	let that = this;
+            	let params = {
+            		type: 1,
+            		contentId: 4,
+            		isCollect: that.goodsData.isCollect==1?0:1
+            	}
+	  			// 如果没有登录则跳转登录并且设置回跳地址
+	  			that.isLogin();
+	  			that.$http.post(that.urls.collect,params)
+		        .then(function (response) {
+		        	that.goodsData.isCollect = that.goodsData.isCollect==1?0:1;
+		        })
+		        .catch(function (error) {
+		          console.log(error);
+		        });
+
             }
 
 	  	},

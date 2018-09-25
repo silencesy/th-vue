@@ -57,7 +57,7 @@ export default {
     font-size: 16px;
   }
   .theme_color {
-    color: #f24827;
+    color: #f24827 !important;
   }
   .line1 {
     display:-webkit-box;

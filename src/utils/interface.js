@@ -2,6 +2,10 @@ exports.install = function (Vue, options) {
    Vue.prototype.urls = {
          // 商品详情
    		productDetails: 'Item/detail',
+         // 收藏
+         collect: 'Collect/collect',
+         // 收藏列表
+         collectList: 'Collect/list',
          // 首页配置
    		home: 'Ads/Home/list',
          // 配置列表
@@ -56,6 +60,20 @@ exports.install = function (Vue, options) {
          // 下单进入支付页面
          placeOrder :'Order/placeOrder',
          // 支付详情页
-         payOrderDetail: 'Order/payOrderDetail'
+         payOrderDetail: 'Order/payOrderDetail',
+         // 监听微信支付成功接口
+         WxOrderQuery: 'Wx/orderQuery',
+         // 监听支付宝支付成功
+         AlipayOrderQuery: 'Alipay/orderQuery',
+         // 订单列表页
+         OrderList: 'Order/list',
+         // 订单详情页
+         OrderDetail: 'Order/detail',
+         // 优惠券列表页
+         couponList: 'Coupon/list',
+         // 优惠券商品列表页
+         couponItemList: 'Coupon/itemList'
+
+
    }
 };

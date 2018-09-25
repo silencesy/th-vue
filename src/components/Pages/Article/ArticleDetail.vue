@@ -10,25 +10,25 @@
 					
 				</div>
 			</div>
-			<div class="goods">
-				<router-link to="/">
-					<div><img src="static/images/common/169.jpg" alt=""></div>
+			<div class="goods" v-if="articleData.itemList.length > 0">
+				<router-link v-for="item in articleData.itemList" :to="{path: '/GoodsDetails', query: {id: item.itemId}}">
+					<div><img :src="item.pic" alt=""></div>
 					<div>
-						<p class="line2">EMSA FLOW Slim Friends Carafe with Cooling Station</p>
+						<p class="line2">{{item.title}}</p>
 						<p>
-							<span class="price">¥ 168</span>
+							<span class="price">¥ {{item.price}}</span>
 							<span class="buy">Buy</span>
 						</p>
 					</div>
 				</router-link>
 			</div>
 		</div>
-		<p class="morePick"><span>More Editor's Pick</span></p>
+		<!-- <p class="morePick"><span>More Editor's Pick</span></p>
 		<div class="articlePick">
-			<!-- <BaseArticle>
+			<BaseArticle :articleData='articleListData' articleContentBg="#eee">
 				
-			</BaseArticle> -->
-		</div>
+			</BaseArticle>
+		</div> -->
 		<BackToTop />
 	</div>
 </template>
@@ -38,6 +38,14 @@
 		data () {
 			return {
 				articleData: {},
+				articleListData: {
+			        data:[]
+			    },
+				param1: {
+			        page: 1,
+			        pageSize: 8,
+			        sort: 'createTime_desc'
+			    }
 			}
 		},
 		components: {
@@ -46,6 +54,7 @@
 		},
 		mounted () {
 			this.getData();
+			// this.getDataMore();
 		},
 		methods: {
 			getData() {
@@ -60,7 +69,21 @@
 				.catch(function (error) {
 					console.log(error);
 				});
-			}
+			},
+			// getDataMore() {
+		 //      var that = this;
+		 //      that.param1.page++;
+		 //      that.$http.post(that.urls.articleList,that.param1)
+		 //      .then(function (response) {
+		 //        if (response.data.data.totalPage == 0 || that.param1.page >= response.data.data.totalPage) {
+		 //          that.$refs.ScrollView.endup();
+		 //        }
+		 //        that.articleListData.data=that.articleListData.data.concat(response.data.data.data);
+		 //      })
+		 //      .catch(function (error) {
+		 //        console.log(error);
+		 //      });
+		 //    },
 		}
 	}
 </script>
@@ -69,7 +92,7 @@
 		background: #fff;
 		padding: 10px;
 		box-sizing: border-box;
-		margin-bottom: 20px;
+		/*margin-bottom: 20px;*/
 	}
 	.content {
 		line-height: 24px;
@@ -99,15 +122,21 @@
 	.goods > a {
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 8px;
 
+	}
+	.goods > a > div:nth-child(1) {
+		width: 80px;
+		height: 80px;
 	}
 	.goods > a img {
 		width: 80px;
 		height: 80px;
-		padding-right: 10px;
 	}
 	.goods > a > div:nth-child(2) {
 		line-height: 24px;
+		flex: 1;
+		padding-left: 10px;
 	}
 	.goods > a > div:nth-child(2) p:first-child {
 		min-height: 53px;

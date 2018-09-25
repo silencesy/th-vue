@@ -6,7 +6,7 @@
 				<span>{{shopData.name}}</span>
 			</div>
 			<div>
-				<span class="iconfont icon-shoucang"></span>
+				<span class="iconfont" :class="{ 'icon-shoucang': shopData.isCollect == 0, 'icon-shoucang1': shopData.isCollect == 1 }" @click="save"></span>
 				<router-link :to="{path: '/ShopSearch', query: {id:shopData.id}}" class="iconfont icon-sousuo"> </router-link>
 			</div>
 		</div>
@@ -57,7 +57,26 @@
 					console.log(response)
 					that.shopData = response.data.data;
 				});
-			}
+			},
+			 // 收藏商品
+            save() {
+            	let that = this;
+            	let params = {
+            		type: 2,
+            		contentId: that.$route.query.id,
+            		isCollect: that.shopData.isCollect==1?0:1
+            	}
+	  			// 如果没有登录则跳转登录并且设置回跳地址
+	  			// that.isLogin();
+	  			that.$http.post(that.urls.collect,params)
+		        .then(function (response) {
+		        	that.shopData.isCollect = that.shopData.isCollect==1?0:1;
+		        })
+		        .catch(function (error) {
+		          console.log(error);
+		        });
+
+            }
 		}
 	}
 </script>
@@ -140,5 +159,8 @@
 	}
 	.bottom .icon-kefu {
 		font-size: 20px;
+	}
+	.iconfont.icon-icon-shoucang1 {
+		color: #fff;
 	}
 </style>

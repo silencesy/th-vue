@@ -127,6 +127,7 @@
 	}
 	.addBottom .addDefault {
 		float: left;
+		height: 22px;
 	}
 	.addBottom .addChange {
 		float: right;

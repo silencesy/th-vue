@@ -1,29 +1,51 @@
 <template>
-	<div class="OrderDetailsPaid">
-		<OrderDetails >
+	<div class="OrderDetailsUnpaid" v-if="OrderDetailsData">
+		<OrderDetails :OrderDetailsData= 'OrderDetailsData' :styleObj="styleObj">
 			<div class="date" slot="date">
 				<div>
-					<p>Order No. :<span>1234567890123456</span></p>
-					<p>Ordered :<span>2018-06-26 20:23:10</span></p>
+					<p>Order No. :<span>{{OrderDetailsData.orderNumber}}</span></p>
+					<p>Ordered :<span>{{OrderDetailsData.orderTime}}</span></p>
 				</div>
 				<div>Copy</div>
 			</div>
 		</OrderDetails>
+
 	</div>
 </template>
 <script>	
 	export default {
-		name: 'OrderDetailsPaid',
+		name: 'OrderDetailsUnpaid',
 		data() {
 			return {
-
+				OrderDetailsData: null,
+				styleObj: {
+					'margin-bottom': '10px'
+				}
 			}
 		},
 		components: {
 			OrderDetails: r => { require.ensure([], () => r(require('../../BaseComponents/OrderDetails')), 'OrderDetails') }
+		},
+		created() {
+			this.getData();
+		},
+		methods: {
+			getData() {
+				var that = this;
+		        that.$http.post(that.urls.OrderDetail,{orderNumber: that.$route.query.orderNumber})
+		        .then(function (response) {
+		          console.log(response.data.data);
+		          that.OrderDetailsData = response.data.data;
+		        })
+		        .catch(function (error) {
+		          console.log(error);
+		        });
+			}
 		}
 	}
 </script>
-
+<style scoped>
+	
+</style>
 
 

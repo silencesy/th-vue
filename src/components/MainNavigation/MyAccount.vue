@@ -55,26 +55,26 @@
 		</div>
 		<div class="accountCenter">
 			<div class="order">
-				<router-link to='/'>
+				<router-link to='/OrderList'>
 					<div>My Orders</div>
 					<div>All <i class="iconfont icon-combinedshapefuben"></i></div>
 				</router-link>
 			</div>
 			<div class="status">
-				<router-link to='/'>
+				<router-link :to="{path: '/OrderList', query: {status: 'Unpaid'}}">
 					<span class="iconfont icon-daifukuan"></span>
 					<span>Unpaid</span> 
 				</router-link>
-				<router-link to='/'>
+				<router-link :to="{path: '/OrderList', query: {status: 'Unshipped'}}">
 					<span class="iconfont icon-fahuo"></span>
 					<span>Unshipped</span> 
 				</router-link>
-				<router-link to='/'>
+				<router-link :to="{path: '/OrderList', query: {status: 'Progress'}}">
 					<span class="iconfont icon-shouhuodizhi"></span>
 					<span>In Progress</span> 
 					<span class="number">5</span>
 				</router-link>
-				<router-link to='/'>
+				<router-link :to="{path: '/OrderList', query: {status: 'Shipped'}}">
 					<span class="iconfont icon-daishouhuo"></span>
 					<span>Shipped</span>	
 				</router-link>
@@ -85,14 +85,14 @@
 				<div><i class="iconfont icon-shouhuodizhi"></i>Address Book</div>
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
 			</router-link>
-			<router-link :to="{name: 'WishList',params: {GoodsId:'123123'}}">
+			<router-link to="/WishList">
 				<div><i class="iconfont icon-shoucang"></i>Wishlist</div>
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
 			</router-link>
-			<router-link to='/'>
+			<!-- <router-link to='/'>
 				<div><i class="iconfont icon-fapiao"></i>Invoice Info</div>
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
-			</router-link>
+			</router-link> -->
 			<router-link to='/CouponsList'>
 				<div><i class="iconfont icon-youhuiquan"></i>thMart-Coupons</div>
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
@@ -101,11 +101,10 @@
 				<div><i class="iconfont icon-shouhou"></i>Customer Service</div>
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
 			</router-link>
-			<router-link to='/'>
+			<router-link to='/PersonalInfo'>
 				<div><i class="iconfont icon-shezhi"></i>Setting</div>
 				<div><i class="iconfont icon-combinedshapefuben"></i></div>
 			</router-link>
-			<div @click="cleartoken">123123</div>
 		</div>
   </div>  
 </template>  
@@ -119,9 +118,7 @@
 	    };  
 	  },
 	  methods: {
-	  	cleartoken() {
-	  		localStorage.removeItem("token");
-	  	}
+	  	
 	  }
 	};  
 </script>  
