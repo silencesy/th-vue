@@ -11,7 +11,7 @@
           <div :style="{width:'100%',height:height+'px'}">
             <ScrollView ref="ScrollView" :height="height" color="#eee" :pullup="pullup" :data="goodsListData.data"  @pullingUp="getData">
               <div class="goods-container">
-                <div class="wishGoods" v-for="item in goodsListData.data" :key="item.id">
+                <div class="wishGoods" v-for="(item,index) in goodsListData.data" :key="item.id">
                   <div class="goodsLeft" @click="goGoodsDetails(item.id)">
                     <img :src="item.pic" alt="">
                   </div>
@@ -21,7 +21,7 @@
                       <div @click="goGoodsDetails(item.id)">
                         <span>￥{{item.price}}</span>
                       </div>
-                      <div class="iconfont icon-shoucang1"></div>
+                      <div @click="cancelCollectionGoods(item.id,index)" class="iconfont icon-shoucang1"></div>
                     </div>
                   </div>
                 </div>
@@ -34,12 +34,12 @@
           <div :style="{width:'100%',height:height+'px'}">
             <ScrollView ref="ScrollView2" :open="open" :height="height" color="#eee" :pullup="pullup" :data="shopListData.data"  @pullingUp="getData2">
               <div class="shop-container">
-                <div class="wishShops" v-for="item in shopListData.data" :key="item.contentId">
+                <div class="wishShops" v-for="(item,index) in shopListData.data" :key="item.contentId">
                     <div @click="goShopDetails(item.contentId)">
                       <img :src="item.pic" alt="">
                     </div>
                     <div  @click="goShopDetails(item.contentId)">{{item.name}}</div>
-                    <div class="iconfont icon-shoucang1"></div>
+                    <div @click="cancelCollectionShop(item.contentId,index)" class="iconfont icon-shoucang1"></div>
                 </div>
               </div>
             </ScrollView>
@@ -96,7 +96,6 @@ export default {
     active: function(newVal,oldVal) {
       if (newVal == 'shop') {
         if (!this.open) {
-          console.log(123);
           this.open = true;
           this.getData2();
         }
@@ -141,7 +140,38 @@ export default {
     // 跳转商户详情页
     goShopDetails(id) {
       this.$router.push({path: "/ShopHome", query:{ id: id }})
-    }
+    },
+    // 取消收藏商品
+    cancelCollectionGoods(id,index) {
+      var that = this;
+      that.$http.post(that.urls.collect,{
+        type: 1,
+        contentId: id,
+        isCollect: 0
+      })
+      .then(function (response) {
+          that.goodsListData.data.splice(index, 1);
+          if (that.goodsListData.data.length == 0) {
+            that.getData();
+          }
+      });
+
+    },
+    // 取消收藏商户
+    cancelCollectionShop(id,index) {
+      var that = this;
+      that.$http.post(that.urls.collect,{
+        type: 2,
+        contentId: id,
+        isCollect: 0
+      })
+      .then(function (response) {
+        that.shopListData.data.splice(index, 1);
+        if (that.shopListData.data.length == 0) {
+          that.getData2();
+        }
+      });
+    },
   }
 };  
 </script>  

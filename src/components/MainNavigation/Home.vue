@@ -93,9 +93,11 @@ export default {
     GoodsRow,
     BackToTop
   },
-  mounted() {
-  	this.getHomeData();
+  created() {
+    this.getHomeData();
     this.getMoreData();
+  },
+  mounted() {
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {

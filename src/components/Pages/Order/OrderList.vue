@@ -15,7 +15,7 @@
           <div class="container" :style="{width:'100%',height:height+'px'}">
             <ScrollView ref="allScrollView" color="#eee" :open="allOpen" :pullup="pullup" :height="height" :data="allData"  @pullingUp="allGetData">
               <div class="content">
-                <ShopGoodsItem v-for="item,index in allData" :key="item.orderNumber" iconfontName="icon-dingdanhao">
+                <ShopGoodsItem v-for="(item,index) in allData" :key="item.orderNumber" iconfontName="icon-dingdanhao">
                   <span class="order-number" slot="orderNumber">{{item.orderNumber}}</span>
                   <i v-if="item.status == 0" class="iconfont" slot="titleRight">Unpaid</i>
                   <i v-else-if="item.status == 1" class="iconfont" slot="titleRight">Unshipped</i>
@@ -46,11 +46,12 @@
                     <!-- 已到货 -->
                      <div v-else-if="item.status == 3">
                       <span @click="shippedDetails(item.orderNumber)">Details</span>
+                      <span @click="deleteOrder(item.orderNumber,index,'All')">Delete</span>
                       <!-- <span>Review</span> -->
                     </div>
                     <!-- 已关闭 -->
                      <div v-else-if="item.status == 4">
-                      <span>Delete</span>
+                      <span @click="deleteOrder(item.orderNumber,index,'All')">Delete</span>
                     </div>
                   </div>
                 </ShopGoodsItem>
@@ -140,7 +141,7 @@
           <div class="container" :style="{width:'100%',height:height+'px'}">
             <ScrollView ref="ShippedScrollView" color="#eee" :open="ShippedOpen" :pullup="pullup" :height="height" :data="ShippedData"  @pullingUp="ShippedGetData">
               <div class="content">
-                <ShopGoodsItem v-for="item,index in ShippedData" :key="item.orderNumber" iconfontName="icon-dingdanhao">
+                <ShopGoodsItem v-for="(item,index) in ShippedData" :key="item.orderNumber" iconfontName="icon-dingdanhao">
                   <span class="order-number" slot="orderNumber">{{item.orderNumber}}</span>
                   <i class="iconfont" slot="titleRight">Shipped</i>
                   <div class="img-box" slot="content">
@@ -153,6 +154,7 @@
                     </p>
                     <div>
                       <span @click="shippedDetails(item.orderNumber)">Details</span>
+                      <span  @click="deleteOrder(item.orderNumber,index,'shipped')">Delete</span>
                     </div>
                   </div>
                 </ShopGoodsItem>
@@ -379,8 +381,31 @@
       // 到货详情页按钮
       shippedDetails(orderNumber) {
         this.$router.push({path: '/OrderDetailsDelivered',query: {orderNumber: orderNumber}})
+      },
+      // 删除订单
+      deleteOrder(orderNumber,index,status) {
+        console.log(orderNumber,index,status);
+          var that = this;
+          that.$http.post(that.urls.OrderDelete,{
+            orderNumber: orderNumber
+          })
+          .then(function (response) {
+            if (status == 'All') {
+              that.allData.splice(index,1);
+              if (that.allData.length==0) {
+                that.allGetData();
+              }
+            } else if (status == 'shipped') {
+              that.ShippedData.splice(index,1);
+              if (that.ShippedData.length==0) {
+                that.ShippedGetData();
+              }
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
-
 
     },
     watch: {

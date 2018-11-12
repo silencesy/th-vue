@@ -95,6 +95,10 @@ Axios.interceptors.response.use(
       if (res.data.code == 114) {
         Toast('库存不足');
       }
+      // 手机号登录密码错误
+      if (res.data.code == 117) {
+        Toast('原始密码错误！');
+      }
       // 如果返回token就设置token
       if (res.data.data && res.data.data.token) {
         localStorage.setItem('token',res.data.data.token);

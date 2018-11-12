@@ -26,7 +26,7 @@
 				</div>		
 			</div>
 			<div class="btnList">
-				<router-link to='/' class="btn">Order List</router-link>
+				<router-link :to="{path: 'OrderList',query: {status: 'Unshipped'}}" class="btn">Order List</router-link>
 				<router-link to='/' class="btn">Home</router-link>
 			</div>
 		</div>

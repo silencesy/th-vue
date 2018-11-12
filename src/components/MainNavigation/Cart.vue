@@ -116,7 +116,7 @@ export default {
        goodsSelectCount: 0
     }
   },
-  mounted() {
+  created() {
   	// 页面加载判断用户是否登录
   	this.isLoginFun();
   	// 如果登录加载数据

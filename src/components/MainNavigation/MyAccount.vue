@@ -46,12 +46,20 @@
 			</router-link>
 		</div> -->
 		<div class="accountTop">
-			<div class="touxiang"><img src="static/images/common/169.jpg" alt=""></div>
-			<p>
-				<router-link to='/'>LOG IN /</router-link>
-				<router-link to='/'> SIGN UP</router-link>
-				<!-- <router-link to='/'>Rain</router-link> -->
-			</p>
+			<div v-if="userInfo.data">
+				<div class="touxiang"><img :src="userInfo.pic" alt=""></div>
+				<p>
+					<router-link to='/Login'>{{userInfo.data.login}} /</router-link>
+					<router-link to='/SignUp'>{{userInfo.data.signup}}</router-link>
+					<!-- <router-link to='/'>Rain</router-link> -->
+				</p>
+			</div>
+			<div v-if="userInfo.nickname">
+				<router-link to='/PersonalInfo'><div class="touxiang"><img :src="userInfo.pic" alt=""></div></router-link>
+				<p>
+					<router-link to='/PersonalInfo'>{{userInfo.nickname}}</router-link>
+				</p>
+			</div>
 		</div>
 		<div class="accountCenter">
 			<div class="order">
@@ -72,7 +80,7 @@
 				<router-link :to="{path: '/OrderList', query: {status: 'Progress'}}">
 					<span class="iconfont icon-shouhuodizhi"></span>
 					<span>In Progress</span> 
-					<span class="number">5</span>
+					<!-- <span class="number">5</span> -->
 				</router-link>
 				<router-link :to="{path: '/OrderList', query: {status: 'Shipped'}}">
 					<span class="iconfont icon-daishouhuo"></span>
@@ -114,11 +122,22 @@
 	  name: 'MyAccount',  
 	  data() {  
 	    return {  
-	       
+	       userInfo: {
+	       	
+	       }
 	    };  
 	  },
+	  created() {
+	  	this.getUserInfo();
+	  },
 	  methods: {
-	  	
+	  	getUserInfo() {
+			var that = this;
+			that.$http.post(that.urls.userDetail)
+			.then(function (response) {
+				that.userInfo = response.data.data;
+			});
+		}
 	  }
 	};  
 </script>  
@@ -227,7 +246,9 @@
 	    vertical-align: middle;
 	    color: #999;
 	}
-
+	.iconfont.icon-combinedshapefuben {
+		color: #aaa;
+	}
 
 
 /*	.title {

@@ -58,6 +58,16 @@
 					that.shopData = response.data.data;
 				});
 			},
+			// 是否登录如果没有登录就跳转登录页面
+			isLogin() {
+	  			let that = this;
+	  			// 如果没有登录则跳转登录并且设置回跳地址
+	  			if (!that.getToken()) {
+	  				that.setlocalStorage("goback",window.location.href);
+  					that.$router.push({name: 'Login'});
+	  			}
+	  			return false;
+	  		},
 			 // 收藏商品
             save() {
             	let that = this;
@@ -67,7 +77,7 @@
             		isCollect: that.shopData.isCollect==1?0:1
             	}
 	  			// 如果没有登录则跳转登录并且设置回跳地址
-	  			// that.isLogin();
+	  			that.isLogin();
 	  			that.$http.post(that.urls.collect,params)
 		        .then(function (response) {
 		        	that.shopData.isCollect = that.shopData.isCollect==1?0:1;

@@ -67,13 +67,22 @@ exports.install = function (Vue, options) {
          AlipayOrderQuery: 'Alipay/orderQuery',
          // 订单列表页
          OrderList: 'Order/list',
+         // 删除订单
+         OrderDelete: 'Order/delete',
          // 订单详情页
          OrderDetail: 'Order/detail',
          // 优惠券列表页
          couponList: 'Coupon/list',
          // 优惠券商品列表页
-         couponItemList: 'Coupon/itemList'
-
+         couponItemList: 'Coupon/itemList',
+         // 个人信息
+         userDetail: 'User/detail',
+         // 修改头像
+         changeHead: 'User/changeHead',
+         // 修改名字
+         changeNickName: 'User/changeNickName',
+         // 修改密码
+         changePassword: 'User/changePassword'
 
    }
 };
