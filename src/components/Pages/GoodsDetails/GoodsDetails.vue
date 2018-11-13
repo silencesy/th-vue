@@ -97,6 +97,7 @@
 	</div>
 </template>
 <script>
+	import { Toast } from 'mint-ui';
 	export default {
 		name: 'goods',
 		data() {
@@ -192,14 +193,15 @@
 	  		addCart() {
 	  			let that = this;
 	  			// 如果没有登录则跳转登录并且设置回跳地址
-	  			that.isLogin();
+	  			
 	  			// 必须选完全才能加入购物车或者购买
 	  			if (that.mustChooseAll()) {
+	  				that.isLogin();
 	  				that.$http.post(that.urls.addCart,{
 			          // goodsId: that.$route.params.id,
-			          goodsId: 4,
-			          skuId: that.singleSkuInfo.id,
-			          number: that.number
+						goodsId: 4,
+						skuId: that.singleSkuInfo.id,
+						number: that.number
 			        })
 			        .then(function (response) {
 			        	console.log(response);
@@ -208,10 +210,10 @@
 			        })
 			        .catch(function (error) {
 			          // console.log(error);
-			          that.close();
+			          	that.close();
 			        });
 	  			} else {
-	  				alert("Please select goods");
+	  				Toast("Please select goods");
 	  			}
 	  		},
 	  		// 下单
@@ -219,14 +221,21 @@
 	  		goBuy() {
 	  			let that = this;
 	  			// 如果没有登录则跳转登录并且设置回跳地址
-	  			that.isLogin();
+	  			
 	  			// 必须选完全才能加入购物车或者购买
 	  			if (that.mustChooseAll()) {
-			          that.close();
-			          that.$router.push({name:'OrderConfirmation',query: {skuId: that.singleSkuInfo.id,
-			          number: that.number}})
+  					if (!that.getToken()) {
+		  				that.close();
+		  				that.setlocalStorage("goback",window.location.href);
+	  					that.$router.push({name: 'Login'});
+		  			} else {
+		  				that.close();
+						that.$router.push({name:'OrderConfirmation',query: {skuId: that.singleSkuInfo.id,
+						number: that.number}})
+		  			}
+					
 	  			} else {
-	  				alert("Please select goods");
+	  				Toast("Please select goods");
 	  			}
 	  		},
 	  		// 如果没有登录则跳转登录并且设置回跳地址

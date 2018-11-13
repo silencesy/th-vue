@@ -58,7 +58,7 @@
 				passwordPassword: '',
 				smsNumber: '',
 				code: '',
-				url: this.urls.formal
+				url: ''
 			}
 		},
 		components: {
@@ -70,9 +70,29 @@
 				document.body.scrollTop = 0;
 				document.documentElement.scrollTop = 0;
 		    }
-	  	}
-		,
+	  	},
+	  	mounted() {
+	  		// console.log(escape('http://www.baidu.com?name=zhang@xiao@jie&order=1'))
+	  		this.setLoginGobackUrl();
+	  	},
 		methods: {
+			setLoginGobackUrl() {
+				// if (localStorage.getItem("goback")) {
+				// 	var goback = escape(localStorage.getItem("goback"));
+				// } else {
+				// 	var goback = escape(window.location.origin);
+				// }
+				// goback = goback+ '|' + escape(window.location.origin) + escape('/BindMobile');
+				// console.log(goback);
+				if (localStorage.getItem("goback")) {
+					var goback = localStorage.getItem("goback");
+				} else {
+					var goback = window.location.origin;
+				}
+				goback = goback+ '|' + window.location.origin + '/BindMobile';
+				console.log(goback);
+				this.url = 'http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_userinfo&state=' + goback + '&redirect_uri=http%3A%2F%2Fproj6.thatsmags.com%2FthmartApi%2FUser%2FWx%2Flogin'
+			},
 			passwordLogin() {
 				var that = this;
 				var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;

@@ -92,12 +92,20 @@ Axios.interceptors.response.use(
         Toast('The password is incorrect!');
       }
       // 手机号登录密码错误
+      if (res.data.code == 113) {
+        Toast('微信号已经注册');
+      }
+      // 手机号登录密码错误
       if (res.data.code == 114) {
         Toast('库存不足');
       }
       // 手机号登录密码错误
       if (res.data.code == 117) {
         Toast('原始密码错误！');
+      }
+      // 该手机还已经绑定微信
+      if (res.data.code == 120) {
+        Toast('该手机还已经绑定微信！');
       }
       // 如果返回token就设置token
       if (res.data.data && res.data.data.token) {

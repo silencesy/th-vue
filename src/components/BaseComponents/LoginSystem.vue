@@ -1,12 +1,14 @@
 <template>
 	<div class="LoginSystem">
 		<div class="logo">
-			<img src="static/images/common/Mart.svg" alt="">
+			<router-link to='/'>
+				<img src="static/images/common/Mart.svg" alt="">
+			</router-link>
 		</div>
 		<div>
 			<slot name="info"></slot>
 		</div>
-		<router-link to='/' class="invest">
+		<router-link to='/Invest' class="invest">
 			<img src="static/images/common/zhaoshang.jpg" alt="">
 		</router-link>
 	</div>
