@@ -34,7 +34,7 @@
 	    						<span v-for="(val,key) in goodsval.prop">{{val[0]}}</span>
 	    					</div>
 	    					<div class="reduction" v-show="goodsval.over">
-	    						满{{goodsval.over}}减{{goodsval.reduce}}
+	    						{{goodsval.reduce}} less per {{goodsval.over}} purchase
 	    					</div>
 	    				</router-link>
     					<div class="bottom-info">
@@ -71,7 +71,7 @@
     				<div class="clearfix">
     					<div class="price-title">Total:</div><div class="final-price theme_color">￥ {{total}}</div>
     				</div>
-    				<div class="offer theme_color">优惠 ¥ {{couponPrice}}</div>
+    				<div class="offer theme_color">Coupon ¥ {{couponPrice}}</div>
     			</div>
     		</div>
     		<div class="buy-btn" @click="buy">

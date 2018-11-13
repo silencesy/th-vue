@@ -15,7 +15,7 @@
 			<div class="info">
 				<div class="info">
 					<div>
-						<p>设置收货地址</p>
+						<p>Add Shipping Address</p>
 					</div>
 				</div>
 				<div class="iconfont icon-combinedshapefuben"></div>
@@ -83,7 +83,7 @@
 					<p v-show="orderConfirmData.couponReduce!=0" @click="showCoupons">
 						<span>thMart-Coupons</span>
 						<span v-if=finallyFullReduction.couponId>- ¥ {{finallyFullReduction.reduce}}<i class="iconfont icon-combinedshapefuben"></i></span>
-						<span v-if=!finallyFullReduction.couponId>你有{{orderConfirmData.userCouponList.length}}张满减券可以选择<i class="iconfont icon-combinedshapefuben"></i></span>
+						<span v-if=!finallyFullReduction.couponId>You have{{orderConfirmData.userCouponList.length}}discount coupons<i class="iconfont icon-combinedshapefuben"></i></span>
 					</p>
 				</div>
 			</div>
@@ -254,8 +254,8 @@
 				var that = this;
 				MessageBox({
 				  title: '',
-				  message: '你还未设置收货地址，请设置',
-				  confirmButtonText: "设置地址",
+				  message: 'Add New Shipping Address',
+				  confirmButtonText: "Add Address",
 				  cancelButtonText: 'Cancel',
 				  showCancelButton: true
 				}).then(action=>{

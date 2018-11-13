@@ -44,7 +44,7 @@
 						</div>
 						<div class="sku-info-text">
 							<p class="price theme_color">{{goodsData.minPrice}} - {{goodsData.maxPrice}}</p>
-							<p class="chooseattr">请选择商品</p>
+							<p class="chooseattr">Please select goods</p>
 							<p class="stock">Stock: {{goodsData.sumStock}}</p>
 							<i class="iconfont icon-guanbi" @click="close"></i>
 						</div>
@@ -211,7 +211,7 @@
 			          that.close();
 			        });
 	  			} else {
-	  				alert("请选择商品");
+	  				alert("Please select goods");
 	  			}
 	  		},
 	  		// 下单
@@ -226,7 +226,7 @@
 			          that.$router.push({name:'OrderConfirmation',query: {skuId: that.singleSkuInfo.id,
 			          number: that.number}})
 	  			} else {
-	  				alert("请选择商品");
+	  				alert("Please select goods");
 	  			}
 	  		},
 	  		// 如果没有登录则跳转登录并且设置回跳地址
@@ -261,7 +261,7 @@
 	  		add() {
 	  			// 如果超过库存就不往上加并且提示用户
 	  			if (this.singleSkuInfo && this.number>this.singleSkuInfo.stock-1 ) {
-	  				alert("不能超过库存");
+	  				alert("The quantity of goods selected exceeds the stock");
 	  				return false;
 	  			}
 	  			this.number++;
