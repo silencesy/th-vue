@@ -8,7 +8,7 @@
 					<p>{{item.email}}</p>
 					<p>{{item.province}} {{item.city}} {{item.regionDetail}}</p>
 				</div>		
-		    <div class="addBottom">
+		    	<div class="addBottom">
 					<div class="addDefault">
 						<input class="defaultRadio" type="radio" :id="index" name="defaultaddr" :value="item.id" v-model="picked" @change="setDefault(item.id)">
 		       			<label :for="index">Default</label>
@@ -19,6 +19,7 @@
 					</div>
 				</div>
 			</div>
+			<div style="height: 50px;"></div>
 		</div>
 		<!-- <div class="bottom" v-if="dataList.length>0" :class="{dispalyblock: dataList.length>0}">
 			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
@@ -194,7 +195,7 @@
   .bottom {
   	position: fixed;
   	top: auto;
-  	bottom: 0;
+  	bottom: 10px;
   	left: 0;
   	right: 0;
   	height: 40px;
@@ -214,7 +215,7 @@
     display: inline-block;
   }
   .fix .addressPer:last-child {
-	margin-bottom: 80px;
+	/*margin-bottom: 80px;*/
   }
   .dispalyblock {
   	display: block;

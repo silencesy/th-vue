@@ -3,7 +3,10 @@
 		<div class="container">
 			<div>
 				<div>Profile Picture</div>
-				<div><img :src="userInfo.pic" alt=""><i class="iconfont icon-combinedshapefuben"></i></div>
+				<div class="touxiangRight">
+					<div class="touxiangBox"><img :src="userInfo.pic" alt=""></div>
+					<i class="iconfont icon-combinedshapefuben"></i>
+				</div>
 				<input @change="change" type="file" name="file" accept="image/*" class="imgForm">
 			</div>
 			<div @click="changeUsername">
@@ -220,6 +223,16 @@
 		margin: 10px;
 		border: 1px solid #dfdfdf;
 		border-radius: 8px;
+	}
+	.touxiangRight {
+		line-height: 40px;
+	}
+	.touxiangBox {
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		border-radius: 20px;
+		background: #dfdfdf;
 	}
 	.container > div {
 		display: flex;

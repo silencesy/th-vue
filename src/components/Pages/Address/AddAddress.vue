@@ -32,6 +32,7 @@
 	       			<label for="item">Default</label>
 				</div>
 			</div>
+			<div style="height: 50px;"></div>
 			<div class="bottom" @click="submitAddr">Submit</div>
 		</div>
 	</div>
@@ -158,7 +159,7 @@
 	}
 	.info {
 		background: #fff;
-		margin-bottom: 56px;
+		/*margin-bottom: 56px;*/
 	}
 	.info input {
 		border: none;
