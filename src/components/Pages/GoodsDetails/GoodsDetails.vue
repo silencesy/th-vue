@@ -17,7 +17,7 @@
 		<div class="bottom-banner">
 			<div class="features">
 				<div class="icon-box">
-					<i class="iconfont icon-shanghu1"></i>
+					<i class="iconfont icon-shanghu1" @click="backHome"></i>
 					<div>Home</div>
 				</div>
 				<div class="icon-box">
@@ -610,6 +610,12 @@
                     this.message = s.join('-');
                 }
             },
+
+            //点击Home回首页
+            backHome() {
+            	this.$router.push({path: "/"})
+            },
+
             // 收藏商品
             save() {
             	let that = this;

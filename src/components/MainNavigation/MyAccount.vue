@@ -47,18 +47,22 @@
 		</div> -->
 		<div class="accountTop">
 			<div v-if="userInfo.data">
-				<div class="touxiang"><img :src="userInfo.pic" alt=""></div>
-				<p>
-					<router-link to='/Login'>{{userInfo.data.login}} /</router-link>
-					<router-link to='/SignUp'>{{userInfo.data.signup}}</router-link>
-					<!-- <router-link to='/'>Rain</router-link> -->
-				</p>
+				<div class="touxiangBox">
+					<div class="touxiang"><img :src="userInfo.pic" alt=""></div>
+					<p>
+						<router-link to='/Login'>{{userInfo.data.login}} /</router-link>
+						<router-link to='/SignUp'>{{userInfo.data.signup}}</router-link>
+						<!-- <router-link to='/'>Rain</router-link> -->
+					</p>
+				</div>
 			</div>
 			<div v-if="userInfo.nickname">
-				<router-link to='/PersonalInfo'><div class="touxiang"><img :src="userInfo.pic" alt=""></div></router-link>
-				<p>
-					<router-link to='/PersonalInfo'>{{userInfo.nickname}}</router-link>
-				</p>
+				<div class="touxiangBox">
+					<router-link to='/PersonalInfo'><div class="touxiang"><img :src="userInfo.pic" alt=""></div></router-link>
+					<p>
+						<router-link to='/PersonalInfo'>{{userInfo.nickname}}</router-link>
+					</p>
+				</div>
 			</div>
 		</div>
 		<div class="accountCenter">
@@ -155,19 +159,24 @@
 		background: linear-gradient(#F9421E,#F98F1E);
 		border-radius: 4px;
 	}
-
+	.touxiangBox {
+		padding-top: 15px;
+	}
 	.touxiang {
-		width: 100%;
-		text-align: center;
+		width: 60px;
+		height: 60px;
+		background-color: #fff;
+		border-radius: 30px;
+		margin: 0 auto;
 	}
 	.touxiang img {
 		width: 60px;
 		height: 60px;
 		border-radius: 50%;
-		margin: 10px 0 5px 0;
 	}
 	.accountTop p {
 		text-align: center;
+		padding-top: 5px;
 	}
 	.accountTop p a {
 		color: #fff;

@@ -214,7 +214,7 @@
     display: inline-block;
   }
   .fix .addressPer:last-child {
-		margin-bottom: 60px;
+	margin-bottom: 80px;
   }
   .dispalyblock {
   	display: block;
