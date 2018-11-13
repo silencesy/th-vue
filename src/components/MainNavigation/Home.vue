@@ -19,20 +19,8 @@
     <HomeSection :sectionData="homeData.shop" shop="shop"/>
     <!-- ticketing -->
     <HomeSection :sectionData="homeData.ticketing" bannerId='1' :Categories="Categories"/>
-    <!-- flowers -->
-    <HomeSection :sectionData="homeData.flowers" bannerId='30' :Categories="Categories"/>
-    <!-- thDispatcher -->
-    <HomeSection :sectionData="homeData.thDispatcher" bannerId='34'/>
-    <!-- homeWare -->
-    <HomeSection :sectionData="homeData.homeWare" bannerId='19' :Categories="Categories"/>
-    <!-- babyProduct -->
-    <HomeSection :sectionData="homeData.babyProduct" bannerId='16' :Categories="Categories"/>
-    <!-- toys -->
-    <HomeSection :sectionData="homeData.toys" bannerId='31' :Categories="Categories"/>
-    <!-- coupon -->
-    <HomeSection :sectionData="homeData.coupon" bannerId='2' :Categories="Categories"/>
-    <!-- electronic -->
-    <HomeSection :sectionData="homeData.electronic" bannerId='11' :Categories="Categories"/>
+    <HomeSection v-for="(item,index) in homeData.category" :sectionData="item" :bannerId='item.id' :Categories="Categories" :key="index"/>
+
     <!-- article -->
     <BaseArticle :articleData="homeData.article"></BaseArticle>
     <!-- hotProduct -->
