@@ -26,8 +26,8 @@
 		text-align: center;
 	} 
 	.logo img {
-		width: 95px;
-		height: 95px;
+		width: 83px;
+		height: 90px;
 		margin: 40px 0;
 	}
 	.invest {

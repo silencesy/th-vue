@@ -158,6 +158,9 @@
 		font-size: 14px;
 		padding-left: 7px;
 	}
+	.mint-navbar .mint-tab-item.is-selected:after {
+		width: 146px;
+	}
 	.contentInfo .btn {
 		width: 160px;
     background-color: #f6442b;
