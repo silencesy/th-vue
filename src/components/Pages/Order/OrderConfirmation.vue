@@ -87,6 +87,7 @@
 					</p>
 				</div>
 			</div>
+			<div style="height: 60px;"></div>
 		</div>
 		<!-- 底部总价 -->
 		<div class="fix">
@@ -397,7 +398,7 @@
 		line-height: 36px;
 	}
 	.container {
-		margin-bottom: 55px;
+		/*margin-bottom: 55px;*/
 	}
 	.fee {
 		padding-right: 27px;
