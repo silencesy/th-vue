@@ -152,7 +152,7 @@
 	  	methods: {
 	  		getData() {
 	  			let that = this;
-	  			that.$http.post(that.urls.productDetails,{id:4})
+	  			that.$http.post(that.urls.productDetails,{id:that.$route.query.id})
 		        .then(function (response) {
 		        	console.log(response);
 					that.goodsData = response.data.data;

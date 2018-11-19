@@ -1,5 +1,7 @@
 exports.install = function (Vue, options) {
    Vue.prototype.urls = {
+         // 团购列表页
+         groupBuying: 'Item/groupBuying',
          // 商品详情
    		productDetails: 'Item/detail',
          // 收藏

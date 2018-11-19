@@ -97,8 +97,10 @@ import { mapState } from 'vuex'
   			} else if (this.Categories) {
   				localStorage.setItem("classFlag",true);
   				this.$router.push({ path: 'Categories', query: { id: this.bannerId }})
-  			} else {
+  			} else if (this.bannerId == 17) {
   				this.$router.push({path: 'GoodsList',query: { id: this.bannerId }});
+  			} else {
+  				this.$router.push({path: 'groupBuying'});
   			}
   			
   		}

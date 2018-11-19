@@ -287,6 +287,16 @@ var router = new Router({
       }
     },
     {
+      path: "/groupBuying",
+      name: "groupBuying",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/groupBuying/groupBuying')), 'groupBuying')
+      }
+    },
+    {
       path: "/ShopHome",
       name: "ShopHome",
       meta: {

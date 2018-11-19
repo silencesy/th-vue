@@ -17,6 +17,9 @@
     <HomeSection :sectionData="homeData.deal" bannerId='17'/>
     <!-- shop -->
     <HomeSection :sectionData="homeData.shop" shop="shop"/>
+    <div>123</div>
+    <HomeSection  :sectionData="homeData.groupBuying"/>
+    <div>123</div>
     <!-- ticketing -->
     <HomeSection :sectionData="homeData.ticketing" bannerId='1' :Categories="Categories"/>
     <HomeSection v-for="(item,index) in homeData.category" :sectionData="item" :bannerId='item.id' :Categories="Categories" :key="index"/>
