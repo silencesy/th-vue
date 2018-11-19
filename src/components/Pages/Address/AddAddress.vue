@@ -110,7 +110,7 @@
       				Toast('Please enter a valid email address!');
       				return false;
       			} else if (!that.myAddressProvince || !that.myAddressCity) {
-      				Toast('请选择城市！');
+      				Toast('Please select the address!');
       				return false;
       			} else if (!that.address) {
       				Toast('Please write down your detailed address in Chinese!');

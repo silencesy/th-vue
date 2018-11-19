@@ -1,6 +1,21 @@
 <template>
 	<div class="goods" v-show="goodsData.id">
 		<GoodsSwiper :swiperData="goodsData.figure"/>
+		<div class="groupBuy">
+			<div class="left">
+				<div class="leftPrice">
+					<span class="price">￥20</span>
+					<span class="price"><del>￥16</del></span>
+				</div>
+				<div class="triangle-left"></div>
+			</div>
+			<div class="right">
+				<!-- 倒计时 -->
+				<div class="rightBox">
+					12:11:09:56
+				</div>
+			</div>
+		</div>
 		<div class="title-info">
 			<p class="name">{{goodsData.title}}</p>
 			<p class="price theme_color">￥{{goodsData.price}}</p>
@@ -646,6 +661,54 @@
 	}
 </script>
 <style scoped>
+	.groupBuy {
+		height: 40px;
+		overflow: hidden;
+	}
+	.groupBuy .left, .groupBuy .right {
+		float: left;
+		width: 50%;
+		height: 40px;
+		box-sizing: border-box;
+		overflow: hidden;
+	}	
+	.groupBuy .left {
+		background-color: #f6442b;
+		padding-left: 15px;
+	}
+	.groupBuy .right {
+		background-color: #FFB510;
+		padding-right: 15px;
+	}
+	.groupBuy .left .leftPrice {
+		float: left;
+		width: 85%;
+		height: 40px;
+		line-height: 40px;
+	}
+	.groupBuy .leftPrice span {
+		color: #fff;
+		font-size: 22px;
+		padding-right: 5px;
+	}
+	.groupBuy .leftPrice del {
+		color: #fff;
+		font-size: 18px;
+	}
+	.triangle-left {
+		float: right;
+		width: 0;   
+		height: 0;   
+		border-top: 20px solid transparent;   
+		border-bottom: 20px solid transparent;   
+		border-right: 20px solid #FFB510;
+	}
+	.groupBuy .rightBox {
+		display: inline-block;
+		height: 40px;
+		line-height: 40px;
+		float: right;
+	}
 	.goods {
 		width: 100%;
 		background-color: #E8E8E8;

@@ -521,6 +521,16 @@ var router = new Router({
       component(resolve) {
         require.ensure([], () => resolve(require('@/components/Pages/Pay/alipay')), 'alipay')
       }
+    },
+    {
+      path: "/error",
+      name: "error",
+      meta: {
+        keepAlive: false
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/error/error')), 'error')
+      }
     }
   ]
 })
