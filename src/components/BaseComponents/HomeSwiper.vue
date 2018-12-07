@@ -1,17 +1,17 @@
 <template>
 	<div class="BaseSwiper">
-		<swiper :options="swiperOption" ref="baseSwiper">
+		<swiper :options="swiperOption" v-if="swiperData.length>1" ref="baseSwiper">
 			<swiper-slide v-for="(item,index) in swiperData" :key="index">
 				<div v-if="item.url">
 					<!-- <router-link :to='item.url'> -->
 					<a :href="[item.url]">
-						<img v-lazy="item.pic" preview="1" alt="">
+						<img v-lazy="item.pic" alt="">
 					</a>
 						
 					<!-- </router-link> -->
 				</div>
 				<div v-if="!item.url">
-					<img v-lazy="item" preview="1" alt="">
+					<img v-lazy="item" alt="">
 				</div>
 				
 			</swiper-slide>  
@@ -36,7 +36,10 @@
 					pagination: {
 						el: '.swiper-pagination',
 						clickable: true,
-					}
+					},
+					loop: true,
+					autoplay : true,
+					autoplayDisableOnInteraction : false
 	        	}  
 		    };  
 	  	},

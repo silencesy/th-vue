@@ -7,13 +7,15 @@
 					<p>Ordered :<span>{{OrderDetailsData.orderTime}}</span></p>
 					<p v-if="OrderDetailsData.sendTime != 0">Delivered :<span>{{OrderDetailsData.sendTime}}</span></p>
 				</div>
-				<div>Copy</div>
+				<div v-clipboard:copy="OrderDetailsData.orderNumber" v-clipboard:success="onCopy"
+      v-clipboard:error="onError">Copy</div>
 			</div>
 		</OrderDetails>
 
 	</div>
 </template>
 <script>	
+	import { Toast } from 'mint-ui';
 	export default {
 		name: 'OrderDetailsUnpaid',
 		data() {
@@ -42,7 +44,13 @@
 		        .catch(function (error) {
 		          console.log(error);
 		        });
-			}
+			},
+			onCopy: function (e) {
+		    	Toast('Success!');
+		    },
+		    onError: function (e) {
+		      
+		    }
 		}
 	}
 </script>

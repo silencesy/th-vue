@@ -1,5 +1,5 @@
 <template>
-	<div class="Unpaid">
+	<div class="Unpaid" v-if="detailData">
 		<div class="payBox">
 			<div class="info">
 				<div class="payList">
@@ -8,27 +8,34 @@
 				</div>
 				<div class="payList">
 					<span>Order No. :</span>
-					<span>2017121245326</span>
+					<span>{{detailData.orderNumber}}</span>
 				</div>
 				<div class="payList">
 					<span>Ordered:</span>
-					<span>2018-07-04 12:00:03</span>
+					<span>{{detailData.orderTime}}</span>
 				</div>
 				<div class="payList">
 					<span>Receiver:</span>
-					<span>Amanda &nbsp;136****3567</span>
+					<span>{{detailData.fullName}} &nbsp;{{detailData.phone}}</span>
+				</div>
+				<div class="payList">
+					<span>Email:</span>
+					<span>{{detailData.email}}</span>
 				</div>
 				<div class="payList">
 					<span>Address:</span>
-					<span>中国上海市黄浦区蒙自路169号2号楼305室<br>Room 305-306, 169 Mengzi Lu, Huangpu District, Shanghai</span>
+					<span>{{detailData.province}}{{detailData.city}}{{detailData.regionDetail}}</span>
 				</div>
 				<div class="payList">
 					<span>Final Price：</span>
-					<span>¥ 652</span>
-				</div>		
+					<span>¥ {{detailData.priceTotal}}</span>
+				</div>
+				<div class="btn-group">
+					<span @click="pay">Continue To Pay</span>
+					<span @click="gohome">Home</span>
+				</div>
 			</div>
-			<div class="alipayBtn" id="alipayBtn"><img src="static/images/common/alipay.svg" alt=""></div>
-			<div class="wechatBtn" id="wechatBtn"><img src="static/images/common/wechat.svg" alt=""></div>
+			
 		</div>
 	</div>
 </template>
@@ -37,11 +44,27 @@
 		name: '',
 		data () {
 			return {
-
+				detailData: null
 			}
 		},
 		mounted () {
-			
+			this.getData();
+		},
+		methods: {
+			getData() {
+				var that = this;
+				that.$http.post(that.urls.payOrderDetail,{
+					orderNumber: that.$route.query.orderNumber
+				}).then(function(response) {
+					that.detailData = response.data.data
+				})
+			},
+			pay() {
+				this.$router.push({path: '/Pay',query: {orderNumber: this.$route.query.orderNumber}});
+			},
+			gohome() {
+				this.$router.push('/');
+			}
 		}
 	}
 </script>
@@ -73,22 +96,15 @@
 	.info .payList:last-child span:nth-child(2) {
 		color: #F9421E;
 	}
-	.alipayBtn {
-		width: 75%;
-		height: 36px;
-		line-height: 49px;
-		text-align: center;
-		background: #00A8F2;
-		border-radius: 30px;
-		margin: 20px auto;
+	.btn-group {
+		padding: 30px 0;
+		display: flex;
+		justify-content: space-around;
 	}
-	.wechatBtn {
-		width: 75%;
-		height: 36px;
-		line-height: 48px;
-		text-align: center;
-		background: #00B700;
+	.btn-group span {
+		padding: 6px 30px;
+		background-color: #F9421E;
+		color: #fff;
 		border-radius: 30px;
-		margin: 10px auto;
 	}
 </style>

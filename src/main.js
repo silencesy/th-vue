@@ -17,6 +17,10 @@ Vue.use(urls);
 Vue.use(http);
 Vue.use(utils);
 
+// 剪切板插件
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+
 //fastClick (消除移动端300毫秒延迟)
 import FastClick from 'fastclick'
 if ('addEventListener' in document) {
@@ -24,6 +28,11 @@ if ('addEventListener' in document) {
 		FastClick.attach(document.body);
 	}, false);
 }
+
+// 图片放大功能
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
+Vue.use(preview);
 
 // 监听浏览器后退
 window.addEventListener("popstate", function(e) {
@@ -45,7 +54,7 @@ import 'mint-ui/lib/style.css'
 Vue.use(Mint, {
   lazyload: {
     preLoad: 5000,
-    error: 'http://api.mall.thatsmags.com/Public/ckfinder/images/grey.jpg',
+    error: 'http://proj6.thatsmags.com/Public/ckfinder/images/lazyimg.png',
     loading: '',
     attempt: 1,
     filter: {

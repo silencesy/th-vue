@@ -4,8 +4,10 @@
 		<ul class="goods-container" :style="{backgroundColor:backgroundColor}">
 			<li class="goods-item" v-for="(item,index) in goodsData" :key="index" :style="{width: width}">
 				<router-link :to="{path: '/GoodsDetails', query: {id:item.id}}">
+					<img v-if="item.saleType.type == 'sale'" class="sale-icon" src="static/images/common/sale.png" alt="">
+					<img v-if="item.saleType.type == 'group'" class="sale-icon group" src="static/images/common/group.png" alt="">
 					<div class="img-box">
-						<img :src="item.pic" alt="">
+						<img v-lazy="item.pic" alt="">
 					</div>
 					<div class="good-info">
 						<div class="goods-name line2">
@@ -16,7 +18,7 @@
 								￥{{item.price}}
 							</div>
 							<div>
-								<del>{{item.coupon_price}}</del>
+								<del v-if="item.originalPrice">￥{{item.originalPrice}}</del>
 							</div>
 						</div>
 					</div>
@@ -94,7 +96,6 @@ export default {
 	    vertical-align: middle;
 	    background: 0 0;
 	    box-sizing: border-box;
-	    padding: 5px;
 	    border: 1px solid #dfdfdf;
 	    border-radius: 4px;
 	    margin: 1.3%;
@@ -110,5 +111,22 @@ export default {
 	.goods-price > div {
 		flex: 1;
 		text-align: center;
+	}
+	.goods-item .sale-icon {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 32px;
+		height: 16px;
+	}
+	.goods-item .sale-icon.group {
+		width: 62px;
+	}
+	del {
+		color: #aaa;
+	}
+	.good-info {
+		box-sizing: border-box;
+		padding: 5px;
 	}
 </style>

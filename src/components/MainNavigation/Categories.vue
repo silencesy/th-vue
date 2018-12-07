@@ -28,7 +28,7 @@ export default {
     return {  
       height: 0,
       page: 0,
-      pageSize: 8,
+      pageSize: 16,
       pullup: true,
       loadding: false,
       isshowgoback: false,

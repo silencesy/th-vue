@@ -1,7 +1,7 @@
 <template>
 	<div class="goods" v-show="goodsData.id">
 		<GoodsSwiper :swiperData="goodsData.figure"/>
-		<div class="groupBuy">
+		<!-- <div class="groupBuy" v-if="goodsData.hasGroupPrice == 1">
 			<div class="left">
 				<div class="leftPrice">
 					<span class="price">￥20</span>
@@ -10,20 +10,32 @@
 				<div class="triangle-left"></div>
 			</div>
 			<div class="right">
-				<!-- 倒计时 -->
+				
 				<div class="rightBox">
-					12:11:09:56
+					<count-down v-on:start_callback="countDownS_cb(1)" v-on:end_callback="countDownE_cb(1)" :currentTime="Number(goodsData.group.currentTime)" :startTime="Number(goodsData.group.currentTime)" :endTime="Number(goodsData.group.endTime)" :tipText="''" :tipTextEnd="''" :endText="'Closed'" :dayTxt="' Days '" :hourTxt="':'" :minutesTxt="':'" :secondsTxt="''"></count-down>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="title-info">
 			<p class="name">{{goodsData.title}}</p>
-			<p class="price theme_color">￥{{goodsData.price}}</p>
-			<p class="price" v-show="goodsData.coupon_price"><del>￥{{goodsData.max_price}}</del></p>
+			<p class="price theme_color" v-if="goodsData.minPrice != goodsData.maxPrice">￥{{goodsData.minPrice}} - ￥{{goodsData.maxPrice}}</p>
+			<p class="price theme_color" v-if="goodsData.minPrice == goodsData.maxPrice">￥{{goodsData.minPrice}}</p>
 			<p>* This product ships to Mainland China only.(An extra shipping fee will be charged for HKSAR,MCSAR and other countries/regions)</p>
 		</div>
 		<div class="row-line" @click="showBuy('specifications')">
 			Specifications <i class="icon-combinedshapefuben iconfont"></i>
+		</div>
+		<div class="coupon-info" v-if="!(goodsData.overReduce.length == 0 && goodsData.couponList.length == 0)">
+			<p>Special Offers</p>
+			<p v-if="goodsData.overReduce.length != 0">
+				<span>¥{{goodsData.overReduce.over}}-{{goodsData.overReduce.reduce}}</span>
+				<span>{{goodsData.overReduce.name}}</span>
+			</p>
+			<p @click="showCouponList" v-if="goodsData.couponList.length>0">
+				<span>¥{{goodsData.couponList[0].reduce}}</span>
+				<span>{{goodsData.couponList[0].name}}</span>
+				<i class="icon-combinedshapefuben iconfont"></i>
+			</p>
 		</div>
 		<div class="row-line">
 			Details
@@ -49,33 +61,70 @@
 				<div @click="showBuy('buy')">Buy Now</div>
 			</div>
 		</div>
+		<!-- 商品选择弹出框 -->
 		<div class="layer-container">
 			<div v-show="layerBox" class="layer-bg" @click="close"></div>
 			<div class="buy-goods-info" :style="{bottom: bottom}">
 				<div class="single-sku-info">
 					<div v-if="!singleSkuInfo">
 						<div class="sku-info-img">
-							<img :src="goodsData.pic" alt="">
+							<img :src="goodsData.pic" preview="2" alt="">
 						</div>
 						<div class="sku-info-text">
-							<p class="price theme_color">{{goodsData.minPrice}} - {{goodsData.maxPrice}}</p>
+							<p class="price theme_color">￥{{goodsData.minPrice}} - ￥{{goodsData.maxPrice}}</p>
 							<p class="chooseattr">Please select goods</p>
 							<p class="stock">Stock: {{goodsData.sumStock}}</p>
 							<i class="iconfont icon-guanbi" @click="close"></i>
 						</div>
 					</div>
-					<div v-if="singleSkuInfo">
+					<!-- 普通商品 -->
+					<div v-if="singleSkuInfo && singleSkuInfo.type == 'none'">
 						<div class="sku-info-img">
-							<img :src="singleSkuInfo.pic" alt="">
+							<img :src="singleSkuInfo.pic" preview="2" alt="">
 						</div>
 						<div class="sku-info-text">
-							<p class="price theme_color">{{singleSkuInfo.price}}</p>
+							<p class="price theme_color">￥{{singleSkuInfo.price}}</p>
 							<p class="chooseattr">
 								<span class="choose-arr" v-for="(item,index) in singleSkuInfo.propName">
 									{{item[0]}}
 								</span>
 							</p>
 							<p class="stock">Stock: {{singleSkuInfo.stock}}</p>
+							<i class="iconfont icon-guanbi" @click="close"></i>
+						</div>
+					</div>
+					<!-- 促销商品 -->
+					<div v-if="singleSkuInfo && singleSkuInfo.type == 'sale'">
+						<div class="sku-info-img">
+							<img class="sale-icon" src="static/images/common/sale.png" alt="">
+							<img :src="singleSkuInfo.pic" preview="2" alt="">
+						</div>
+						<div class="sku-info-text">
+							<p class="price theme_color">￥{{singleSkuInfo.price}} <del v-if="singleSkuInfo.originalPrice">￥{{singleSkuInfo.originalPrice}}</del></p>
+							<p class="chooseattr">
+								<span class="choose-arr" v-for="(item,index) in singleSkuInfo.propName">
+									{{item[0]}}
+								</span>
+							</p>
+							<p class="stock">Stock: {{singleSkuInfo.stock}}</p>
+							<i class="iconfont icon-guanbi" @click="close"></i>
+						</div>
+					</div>
+					<!-- 团购商品 -->
+					<div v-if="singleSkuInfo && singleSkuInfo.type == 'group'">
+						<div class="sku-info-img">
+							<img class="group-icon" src="static/images/common/group.png" alt="">
+							<img :src="singleSkuInfo.pic" preview="2" alt="">
+						</div>
+						<div class="sku-info-text">
+							<p class="price theme_color">￥{{singleSkuInfo.price}} <del v-if="singleSkuInfo.originalPrice">￥{{singleSkuInfo.originalPrice}}</del></p>
+							<p class="chooseattr">
+								<span class="choose-arr" v-for="(item,index) in singleSkuInfo.propName">
+									{{item[0]}}
+								</span>
+							</p>
+							<p class="stock">Stock: {{singleSkuInfo.stock}}
+							<count-down v-on:start_callback="countDownS_cb(1)" v-on:end_callback="countDownE_cb(1)" :currentTime="Number(singleSkuInfo.currentTime)" :startTime="Number(singleSkuInfo.currentTime)" :endTime="Number(singleSkuInfo.endTime)" :tipText="''" :tipTextEnd="''" :endText="'Closed'" :dayTxt="' Days '" :hourTxt="':'" :minutesTxt="':'" :secondsTxt="''"></count-down></p>
 							<i class="iconfont icon-guanbi" @click="close"></i>
 						</div>
 					</div>
@@ -109,10 +158,40 @@
 			</div>
 		</div>
 		<BackToTop />
+		<i @click="goCart" class="iconfont icon-gouwuche go-cart"></i>
+		<!-- 领取优惠券列表 -->
+		<mt-popup
+			v-model="popupVisible"
+			position="bottom">
+			
+		  	<div class="coupon-list" v-if="popupVisible">
+		  		<div class="title">
+		  			Coupon ({{goodsData.couponList.length}})
+		  		</div>
+		  		<ScrollView ref="ScrollView" height="450" :loadding="loadding" :open="popupVisible">
+			  		<div class="box">
+			  			<div class="item" v-for="(item,index) in goodsData.couponList" :key="index">
+			  				<p>
+			  					<span>{{item.name}}</span>
+			  					<span v-if="item.isGet == 0" @click="getCoupon(item.couponId,index)">GET</span>
+			  					<span class="collected" v-if="item.isGet == 1">Collected</span>
+			  				</p>
+			  				<p>For Order to <em>RMB{{item.over}}</em> or More</p>
+			  				<p>{{item.startTime}}-{{item.endTime}}</p>
+			  				<span class="reduce-price"><i>￥</i>{{item.reduce}}</span>
+			  			</div>
+			  		</div>
+		  		</ScrollView>
+		  		<div class="bottom">
+		  			<span @click="closeCoupon">Done</span>
+		  		</div>
+		  	</div>
+
+		</mt-popup>
 	</div>
 </template>
 <script>
-	import { Toast } from 'mint-ui';
+	import { MessageBox,Toast,Popup } from 'mint-ui';
 	export default {
 		name: 'goods',
 		data() {
@@ -150,7 +229,8 @@
                 result: {},
                 message: "",
                 highKeys: {},
-                singleSkuInfo: null
+                singleSkuInfo: null,
+                popupVisible: false
 			}
 		},
 		components: {
@@ -158,6 +238,7 @@
 			BackToTop: r => { require.ensure([], () => r(require('@/components/BaseComponents/BackToTop')), 'BackToTop') },
 			ScrollView: r => { require.ensure([], () => r(require('@/components/BaseComponents/ScrollView')), 'ScrollView') },
 			Count: r => { require.ensure([], () => r(require('@/components/BaseComponents/Count')), 'Count') },
+			CountDown: r => { require.ensure([], () => r(require('@/components/BaseComponents/countDown')), 'countDown') },
 		},
 		mounted() {
   		// console.log(this.$route.query.id);
@@ -165,6 +246,42 @@
 	  		// console.log(this.urls.productDetails)
 	  	},
 	  	methods: {
+	  		goCart() {
+	  			this.$router.push('/Cart');
+	  		},
+	  		// 获取优惠券
+	  		getCoupon(couponId,index) {
+	  			let that = this;
+	  			if (!that.getToken()) {
+	  				that.setlocalStorage("goback",window.location.href);
+  					that.$router.push({name: 'Login'});
+	  			} else {
+  					that.$http.post(that.urls.getCoupon,{id:couponId})
+			        .then(function (response) {
+			        	that.goodsData.couponList[index].isGet = 1;
+			        })
+			        .catch(function (error) {
+			          	console.log(error);
+			        });
+	  			}
+	  		
+	  		},
+	  		closeCoupon() {
+	  			this.popupVisible=false;
+	  		},
+	  		// 展示优惠券列表
+	  		showCouponList() {
+	  			this.popupVisible=true;
+	  		},
+	  		countDownS_cb: function (x) {
+                console.log(x)
+            },
+            // 团购活动结束弹出框
+            countDownE_cb: function (x) {
+                MessageBox.alert('This Flash Sale has expired, thank you for your participation.').then(action => {
+				 	window.location.reload();
+				});
+            },
 	  		getData() {
 	  			let that = this;
 	  			that.$http.post(that.urls.productDetails,{id:that.$route.query.id})
@@ -214,7 +331,7 @@
 	  				that.isLogin();
 	  				that.$http.post(that.urls.addCart,{
 			          // goodsId: that.$route.params.id,
-						goodsId: 4,
+						goodsId: that.$route.query.id,
 						skuId: that.singleSkuInfo.id,
 						number: that.number
 			        })
@@ -285,7 +402,7 @@
 	  		add() {
 	  			// 如果超过库存就不往上加并且提示用户
 	  			if (this.singleSkuInfo && this.number>this.singleSkuInfo.stock-1 ) {
-	  				alert("The quantity of goods selected exceeds the stock");
+	  				Toast("The quantity of goods selected exceeds the stock");
 	  				return false;
 	  			}
 	  			this.number++;
@@ -734,6 +851,46 @@
 		background-color: #fff;
 		padding: 0 10px;
 	}
+	.coupon-info {
+		margin-top: 10px;
+		background-color: #fff;
+		padding: 0 10px 10px 10px;
+	}
+	.coupon-info p:nth-child(1) {
+		line-height: 40px;
+	}
+	.coupon-info p:nth-child(2) span:nth-child(1) {
+		background-color: #FF9400;
+		color: #fff;
+		border-radius: 4px;
+		display: inline-block;
+		padding: 4px;
+		font-size: 12px;
+	}
+	.coupon-info p:nth-child(2) span:nth-child(2) {
+		font-size: 12px;
+		color: #666;
+		margin-left: 10px;
+	}
+	.coupon-info p:nth-child(3) {
+		padding-top: 10px;
+	}
+	.coupon-info p:nth-child(3) span:nth-child(1) {
+		background-color: #FF0000;
+		color: #fff;
+		border-radius: 4px;
+		display: inline-block;
+		padding: 4px;
+		font-size: 12px;
+	}
+	.coupon-info p:nth-child(3) span:nth-child(2) {
+		font-size: 12px;
+		color: #666;
+		margin-left: 10px;
+	}
+	.coupon-info p:nth-child(3) .iconfont {
+		margin-top: 2px;
+	}
 	.mint-cell:last-child {
 		background-image: none;
 	}
@@ -741,7 +898,7 @@
 		border-top: 1px solid #dfdfdf;
 		padding: 10px;
 		background-color: #fff;
-		margin-bottom: 50px;
+		padding-bottom: 60px;
 	}
 	.content-info >>> img {
 		display: block;
@@ -843,10 +1000,29 @@
 	.single-sku-info .sku-info-img img {
 		width: 100%;
 		position: absolute;
+		z-index: 3;
 		left: 0;
 		top: -20px;
 		border-radius: 8px;
 		box-shadow: 1px 0px 10px rgba(0,0,0,0.2);
+	}
+	.single-sku-info .sku-info-img img.sale-icon {
+		width: 36px;
+		position: absolute;
+		left: 0;
+		top: -20px;
+		height: auto;
+		z-index: 999;
+		border-radius: 0;
+	}
+	.single-sku-info .sku-info-img img.group-icon {
+		width: 50px;
+		position: absolute;
+		left: 0;
+		top: -20px;
+		height: auto;
+		z-index: 999;
+		border-radius: 0;
 	} 
 	.single-sku-info .sku-info-text {
 		padding-left: 110px;
@@ -858,6 +1034,9 @@
 	}
 	.single-sku-info .sku-info-text p {
 		padding: 2px 0;
+	}
+	.single-sku-info .sku-info-text del {
+		color: #aaa;
 	}
 	.iconfont.icon-guanbi {
 		position: absolute;
@@ -948,5 +1127,105 @@
     }
     .chooseattr,.stock, .chooseattr span {
     	color: #666;
+    }
+    .mint-popup-bottom {
+    	width: 100%;
+    	border-width: 0;
+    	box-sizing: border-box;
+    	border-top-left-radius: 4px;
+    	border-top-right-radius: 4px;
+    }
+    .coupon-list {
+    	box-sizing: border-box;
+    	width: 100%;
+    	padding: 10px;
+    }
+    .coupon-list .title {
+    	border-bottom: 1px solid #dfdfdf;
+    	padding-bottom: 8px;
+    }
+    .coupon-list .item {
+    	background: url('../../../../static/images/common/quan-bg.png');
+    	background-size: 100% 100%;
+    	padding-bottom: 10px;
+    	margin-top: 10px;
+    	padding-left: 30%;
+    	color: #3D4550;
+    	position: relative;
+    }
+    .coupon-list .item .reduce-price {
+		position: absolute;
+		height: 30px;
+		left: 0;
+		top: 0;
+		color: #fff;
+		top: 0;
+		bottom: 0;
+		left: 5%;
+		right: auto;
+		margin: auto;
+		font-size: 24px;
+		font-weight: 900;
+    }
+    .coupon-list .item .reduce-price i {
+    	color: #fff;
+    	font-size: 14px;
+    }
+    .coupon-list .item p:nth-child(1) {
+    	box-sizing: border-box;
+    	padding: 10px;
+    	overflow: hidden;
+    }
+    .coupon-list .item p:nth-child(1) span:nth-child(1) {
+    	float: left;
+    }
+    .coupon-list .item p:nth-child(1) span:nth-child(2) {
+    	background-color: #F9421E;
+    	color: #fff;
+    	display: inline-block;
+    	padding: 3px 10px;
+    	font-size: 14px;
+    	border-radius: 16px;
+    	float: right;
+    }
+    .coupon-list .item p:nth-child(1) span.collected {
+    	background-color: #ccc;
+    }
+    .coupon-list .item p:nth-child(3) {
+    	font-size: 14px;
+    	padding: 5px 10px 0 10px;
+    	color: #888;
+    }
+    .coupon-list .item p:nth-child(2) {
+    	font-size: 14px;
+    	padding: 0 10px;
+    	color: #666;
+    }
+    .coupon-list .item p:nth-child(2) em {
+    	color: #FFB511;
+    	font-size: 16px;
+    }
+    .coupon-list .bottom {
+    	padding: 10px 10px 0 10px;
+    }
+    .coupon-list .bottom span {
+    	display: inline-block;
+    	width: 100%;
+    	background-color: #F9421E;
+    	border-radius: 16px;
+    	height: 30px;
+    	line-height: 30px;
+    	text-align: center;
+    	color: #fff;
+    }
+    .go-cart {
+    	position: fixed;
+		font-size: 25px;
+    	right: 15px;
+    	bottom: 120px;
+    	z-index: 2;
+    	background: rgba(0,0,0,0.45);
+    	color: #fff;
+    	border-radius: 50%;
     }
 </style>

@@ -8,14 +8,19 @@
 				<swiper-slide class="goods-item" v-for="(item,index) in sectionData.data" :key="index">
 					<!-- 商品区块 -->
 					<router-link :to="{path: '/GoodsDetails', query: {id:item.id}}" v-if="!shop">
+						<img v-if="item.saleType.type == 'sale'" class="sale-icon" src="static/images/common/sale.png" alt="">
+						<img v-if="item.saleType.type == 'group'" class="sale-icon group" src="static/images/common/group.png" alt="">
 						<div class="img-box">
 							<img v-lazy="item.pic" alt="">
 						</div>
-						<div class="">
+						<div>
+							<!-- <div v-if="groupBuy">
+								<count-down :currentTime="Number(item.currentTime)" :startTime="Number(item.currentTime)" :endTime="Number(item.endTime)" :tipText="''" :tipTextEnd="''" :endText="'Closed'" :dayTxt="' Days '" :hourTxt="':'" :minutesTxt="':'" :secondsTxt="''"></count-down>
+							</div> -->
 							<div class="line2 goods-name">{{item.title}}</div>
 							<div class="price">
 								<div class="theme_color">￥{{item.price}}</div>
-								<div>{{item.coupon_price}}</div>
+								<div><del v-if="item.originalPrice" class="originalPrice">￥{{item.originalPrice}}</del></div>
 							</div>
 						</div>
 					</router-link>
@@ -24,7 +29,7 @@
 						<div class="img-box">
 							<img v-lazy="item.pic" alt="">
 						</div>
-						<div class="">
+						<div>
 							<div class="line1 goods-name">{{item.title}}</div>
 						</div>
 					</router-link>
@@ -58,6 +63,10 @@ import { mapState } from 'vuex'
 			Categories: {
 				type: Boolean,
 				default: false
+			},
+			groupBuy: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {  
@@ -72,6 +81,9 @@ import { mapState } from 'vuex'
 			      }
 	        }  
 	    };  
+  	},
+  	components: {
+  		CountDown: r => { require.ensure([], () => r(require('@/components/BaseComponents/countDown')), 'countDown') }
   	},
   	store,
 	computed: {
@@ -122,6 +134,7 @@ import { mapState } from 'vuex'
 	}
 	.goods-name {
 		height: 38px;
+		line-height: 38px;
 		padding: 0 15px;
 	}
 	.banner-img-box {
@@ -146,5 +159,18 @@ import { mapState } from 'vuex'
 		flex: 1;
 		text-align: center;
 		padding-bottom: 8px;
+	}
+	.swipe-box .sale-icon {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 32px;
+		height: 16px;
+	}
+	.swipe-box .sale-icon.group {
+		width: 62px;
+	}
+	.originalPrice {
+		color: #aaa;
 	}
 </style>

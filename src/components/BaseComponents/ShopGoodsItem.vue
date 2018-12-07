@@ -15,7 +15,7 @@
 			<div v-for="(item,index) in shopData.data">
 				<div class="goods">
 					<div>
-						<img :src="item.pic" alt="">
+						<img v-lazy="item.pic" alt="">
 					</div>
 					<div class="goodsRight">
 						<p class="line2">{{item.goodsName}}</p>
@@ -28,7 +28,7 @@
 						</p>
 					</div>
 				</div>
-				<div v-if="showLogistics" class="logistics-box">
+				<div v-if="showLogistics" class="logistics-box" @click="logistics(item.company,item.logistics)">
 					<span class="logistics">Tracking your order</span>
 				</div>
 			</div>
@@ -63,6 +63,17 @@
 		data() {
 			return {
 
+			}
+		},
+		methods: {
+			logistics(company,logistics) {
+				this.$router.push({
+					path: '/logistics',
+					query: {
+						logistics: logistics,
+						company: company
+					}
+				})
 			}
 		}
 	}

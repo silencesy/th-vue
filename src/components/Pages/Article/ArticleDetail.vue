@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<div class="goods" v-if="articleData.itemList.length > 0">
-				<router-link v-for="item in articleData.itemList" :key="item.itemId" :to="{path: '/GoodsDetails', query: {id: item.itemId}}">
+				<router-link v-for="item in articleData.itemList" :key="item.id" :to="{path: '/GoodsDetails', query: {id: item.id}}">
 					<div><img :src="item.pic" alt=""></div>
 					<div>
 						<p class="line2">{{item.title}}</p>
@@ -23,12 +23,12 @@
 				</router-link>
 			</div>
 		</div>
-		<!-- <p class="morePick"><span>More Editor's Pick</span></p>
+		<p class="morePick"><span>More Editor's Pick</span></p>
 		<div class="articlePick">
 			<BaseArticle :articleData='articleListData' articleContentBg="#eee">
 				
 			</BaseArticle>
-		</div> -->
+		</div>
 		<BackToTop />
 	</div>
 </template>
@@ -56,6 +56,9 @@
 			this.getData();
 			// this.getDataMore();
 		},
+		watch:{
+			"$route":"getData"    //后面是methods中的一个方法
+		},
 		methods: {
 			getData() {
 				var that = this;
@@ -64,6 +67,7 @@
 				})
 				.then(function (response) {
 					that.articleData = response.data.data;
+					that.articleListData.data = response.data.data.recommend;
 					console.log(response);
 				})
 				.catch(function (error) {
@@ -161,14 +165,12 @@
 	.morePick {
 		margin-left: 10px;
 		margin-bottom: 20px;
+		margin-top: 20px;
 	}
 	.morePick span {
 		padding-bottom: 2px;
 		color: #F9421E;
 		border-bottom: 2px solid #F9421E;
-	}
-	.articlePick {
-		margin: 10px;
 	}
 	.content-html >>> img {
 		width: 100% !important;

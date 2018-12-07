@@ -523,6 +523,17 @@ var router = new Router({
       }
     },
     {
+      path: "/logistics",
+      name: "logistics",
+      meta: {
+        keepAlive: false,
+        MustLogin: true
+      },
+      component(resolve) {
+        require.ensure([], () => resolve(require('@/components/Pages/Logistics/Logistics')), 'alipay')
+      }
+    },
+    {
       path: "/error",
       name: "error",
       meta: {

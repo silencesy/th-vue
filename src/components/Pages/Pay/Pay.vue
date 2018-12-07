@@ -44,19 +44,26 @@
 			}
 		},
 		mounted () {
-			this.listenGoBack();
+			if (window.history && window.history.pushState) {
+				history.pushState(null, null, document.URL);
+				window.addEventListener('popstate', this.goBack, false);
+			}
 			this.getData();
 			// 不是微信浏览器则隐藏微信支付
 			this.isShowWechatPay();
 			// 监听微信支付成功
 			this.listenWechatPay();
 		},
+		destroyed(){
+			window.removeEventListener('popstate', this.goBack, false);
+			// 页面离开清除定时器  （定时器获取支付状态）
+			clearInterval(this.weChatTimer);
+
+		},
 		methods: {
 			// 监听浏览器后退事件
-			listenGoBack() {
-				window.addEventListener("popstate", function(e) {
-					alert(123);
-				}, true);
+			goBack() {
+				this.$router.push({path: '/Unpaid',query: {orderNumber: this.$route.query.orderNumber}})
 			},
 			getData() {
 				var that = this;

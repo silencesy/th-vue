@@ -51,6 +51,7 @@
 </template>    
   
 <script>  
+import { MessageBox } from 'mint-ui';
 export default {  
   name: 'page-tab-container',  
   data() {  
@@ -144,33 +145,49 @@ export default {
     // 取消收藏商品
     cancelCollectionGoods(id,index) {
       var that = this;
-      that.$http.post(that.urls.collect,{
-        type: 1,
-        contentId: id,
-        isCollect: 0
-      })
-      .then(function (response) {
-          that.goodsListData.data.splice(index, 1);
-          if (that.goodsListData.data.length == 0) {
-            that.getData();
-          }
-      });
+
+      MessageBox.confirm('', { 
+        message: 'Are you sure to remove this product?', 
+        title: '', 
+        confirmButtonText: 'Done', 
+        cancelButtonText: 'Cancel' 
+      }).then(action => { 
+        that.$http.post(that.urls.collect,{
+          type: 1,
+          contentId: id,
+          isCollect: 0
+        })
+        .then(function (response) {
+            that.goodsListData.data.splice(index, 1);
+            if (that.goodsListData.data.length == 0) {
+              that.getData();
+            }
+        });
+      }).catch(err => {});
+      
 
     },
     // 取消收藏商户
     cancelCollectionShop(id,index) {
       var that = this;
-      that.$http.post(that.urls.collect,{
-        type: 2,
-        contentId: id,
-        isCollect: 0
-      })
-      .then(function (response) {
-        that.shopListData.data.splice(index, 1);
-        if (that.shopListData.data.length == 0) {
-          that.getData2();
-        }
-      });
+      MessageBox.confirm('', { 
+        message: 'Are you sure to remove this shop?', 
+        title: '', 
+        confirmButtonText: 'Done', 
+        cancelButtonText: 'Cancel' 
+      }).then(action => { 
+        that.$http.post(that.urls.collect,{
+          type: 2,
+          contentId: id,
+          isCollect: 0
+        })
+        .then(function (response) {
+          that.shopListData.data.splice(index, 1);
+          if (that.shopListData.data.length == 0) {
+            that.getData2();
+          }
+        });
+      }).catch(err => {});
     },
   }
 };  

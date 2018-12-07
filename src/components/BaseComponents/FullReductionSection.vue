@@ -13,7 +13,7 @@
 			<div class="content">
 				<div class="goods" v-for="(item2,index) in item.data">
 					<div>
-						<img :src="item2.pic" alt="">
+						<img v-lazy="item2.pic" alt="">
 					</div>
 					<div class="goodsRight">
 						<p class="line2">{{item2.goodsName}}</p>

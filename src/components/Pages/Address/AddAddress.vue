@@ -15,13 +15,10 @@
 						<label for="email"><i>*</i> Email :</label>
 						<input type="text" v-model='email' id="email">
 					</div>
-					<div>
+					<div @click="showChooseAddr">
 						<label for="add"><i>*</i> Address : </label> 
 						<span> {{myAddressProvince}} {{myAddressCity}}</span>
 					</div>
-					<div>
-		        <mt-picker :slots="myAddressSlots" @change="onMyAddressChange"></mt-picker>
-		      </div>
 				</div>
 				<div class="address">
 					<textarea rows="5" v-model='address' placeholder="* Please write down your detailed address in Chinese."> </textarea>
@@ -35,6 +32,12 @@
 			<div style="height: 50px;"></div>
 			<div class="bottom" @click="submitAddr">Submit</div>
 		</div>
+		<mt-popup
+			v-model="popupVisible"
+			position="bottom">
+			<div class="title"><span @click="bindCancel">Cancel</span><span @click="bindConfirm">Confirm</span></div>
+			<mt-picker :slots="myAddressSlots" valueKey="1" @change="onMyAddressChange"></mt-picker>
+		</mt-popup>
 	</div>
 </template>
 <script>
@@ -52,6 +55,7 @@
 				email: '',
 				address: '',
 				defaultBtn: false,
+				popupVisible: false,
 		       	myAddressSlots: [
 					{
 						flex: 1,
@@ -85,7 +89,19 @@
       		});
 		},
 		methods: {
+			bindCancel() {
+				this.popupVisible = false;
+				// this.myAddressProvince = '';
+				// this.myAddressCity = '';
+			},
+			bindConfirm() {
+				this.popupVisible = false;
+			},
+			showChooseAddr() {
+				this.popupVisible = true;
+			},
 			onMyAddressChange(picker, values) {
+				// console.log(picker,values)
 		       if(myaddress[values[0]]){  //这个判断类似于v-if的效果（可以不加，但是vue会报错，很不爽）
 		          picker.setSlotValues(1,Object.keys(myaddress[values[0]])); // Object.keys()会返回一个数组，当前省的数组
 		          // picker.setSlotValues(2,myaddress[values[0]][values[1]]); // 区/县数据就是一个数组
@@ -247,5 +263,24 @@
 	    width: 95%;
 	    text-align: center;
 	    border-radius: 23px;
+	}
+	.mint-popup-bottom {
+		width: 100%;
+	}
+	.mint-popup .title {
+		padding: 10px 0px;
+		border-bottom: 1px solid #dfdfdf;
+		overflow: hidden;
+		display: flex;
+	}
+	.mint-popup .title span:nth-child(1) {
+		flex: 1;
+		color: #999;
+		text-align: center;
+	}
+	.mint-popup .title span:nth-child(2) {
+		flex: 1;
+		color: #F9421E;
+		text-align: center;
 	}
 </style>

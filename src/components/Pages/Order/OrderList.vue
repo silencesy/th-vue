@@ -167,6 +167,7 @@
   </div>
 </template>
 <script>  
+  import { MessageBox } from 'mint-ui';
   export default {
     name: 'OrderList',
     data() {
@@ -385,28 +386,33 @@
       // 删除订单
       deleteOrder(orderNumber,index,status) {
         console.log(orderNumber,index,status);
-          var that = this;
+        var that = this;
+        MessageBox.confirm('', { 
+          message: 'Are you sure to delete the order?', 
+          title: '', 
+          confirmButtonText: 'Done', 
+          cancelButtonText: 'Cancel' 
+        }).then(action => { 
           that.$http.post(that.urls.OrderDelete,{
-            orderNumber: orderNumber
-          })
-          .then(function (response) {
+          orderNumber: orderNumber
+        }).then(function (response) {
             if (status == 'All') {
               that.allData.splice(index,1);
-              if (that.allData.length==0) {
-                that.allGetData();
-              }
-            } else if (status == 'shipped') {
-              that.ShippedData.splice(index,1);
+            if (that.allData.length==0) {
+              that.allGetData();
+            }
+          } else if (status == 'shipped') {
+            that.ShippedData.splice(index,1);
               if (that.ShippedData.length==0) {
                 that.ShippedGetData();
               }
             }
           })
           .catch(function (error) {
-            console.log(error);
+              console.log(error);
           });
+        }).catch(err => {});
       }
-
     },
     watch: {
       active: function(newVal,oldVal) {
@@ -479,6 +485,7 @@
   }
   .img-box {
     overflow: hidden;
+    padding-bottom: 10px;
   }
   .goods-img {
     width: 18%;

@@ -97,7 +97,7 @@ Axios.interceptors.response.use(
       }
       // 手机号登录密码错误
       if (res.data.code == 114) {
-        Toast('库存不足');
+        Toast('The quantity of goods selected exceeds the stock！');
       }
       // 手机号登录密码错误
       if (res.data.code == 117) {

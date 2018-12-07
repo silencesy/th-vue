@@ -49,13 +49,13 @@ export default {
       pullup: true,
       param1: {
         page: 0,
-        pageSize: 8,
+        pageSize: 16,
         sort: 'createTime_desc',
         totalPage: -1
       },
       param2: {
         page: 0,
-        pageSize: 8,
+        pageSize: 16,
         sort: 'click_desc',
         totalPage: -1
       }

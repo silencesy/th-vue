@@ -48,7 +48,7 @@
 		<div class="accountTop">
 			<div v-if="userInfo.data">
 				<div class="touxiangBox">
-					<div class="touxiang"><img :src="userInfo.pic" alt=""></div>
+					<div class="touxiang"><router-link to='/Login'><img :src="userInfo.pic" alt=""></router-link></div>
 					<p>
 						<router-link to='/Login'>{{userInfo.data.login}} /</router-link>
 						<router-link to='/SignUp'>{{userInfo.data.signup}}</router-link>

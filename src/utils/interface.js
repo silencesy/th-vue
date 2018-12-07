@@ -84,7 +84,11 @@ exports.install = function (Vue, options) {
          // 修改名字
          changeNickName: 'User/changeNickName',
          // 修改密码
-         changePassword: 'User/changePassword'
+         changePassword: 'User/changePassword',
+         // 物流
+         logistics: 'Logistics/detail',
+         // 领取优惠券
+         getCoupon: 'Coupon/get'
 
    }
 };

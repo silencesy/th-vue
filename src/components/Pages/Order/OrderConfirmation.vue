@@ -86,7 +86,11 @@
 						<span v-if=!finallyFullReduction.couponId>You have{{orderConfirmData.userCouponList.length}}discount coupons<i class="iconfont icon-combinedshapefuben"></i></span>
 					</p>
 				</div>
+				<div class="remark">
+					<textarea class="remark-text" placeholder="Remark" v-model="remark"></textarea>
+				</div>
 			</div>
+			
 			<div style="height: 60px;"></div>
 		</div>
 		<!-- 底部总价 -->
@@ -115,7 +119,7 @@
 		  			</div>
 		  		</div>
 		  		<div class="coupons-bottom" @click="confirm">
-		  			确定
+		  			Done
 		  		</div>
 		  	</div>
 		</mt-popup>
@@ -130,7 +134,8 @@
 				addrList: [],
 				orderConfirmData: null,
 				popupVisible: false,
-				finalPrice: 0
+				finalPrice: 0,
+				remark: ''
 			}
 		},
 		components: {
@@ -225,8 +230,9 @@
 				that.$http.post(that.urls.placeOrder,{
 					couponId: that.finallyFullReduction.couponId?that.finallyFullReduction.couponId:0,
 					addressId: that.addrList[0].id,
-					skuId: this.$route.query.skuId || '',
-					number: this.$route.query.number || ''
+					skuId: that.$route.query.skuId || '',
+					number: that.$route.query.number || '',
+					buyerRemark: that.remark
 				})
 				.then(function (response) {
 					// http://page.thatsmags.com/WebAccess/get-weixin-code.html?appid=wx06e97f4ed4ac07e3&scope=snsapi_base&state=STATE&redirect_uri=http%3A%2F%2F'+ csOrzs2 +'%2FApi%2FCommon%2Findex%3Forderid='+ orderid
@@ -474,5 +480,16 @@
 		width: 20px;
 		height: 20px;
 		border-radius: 50%;
+	}
+	.remark-text {
+		width: 100%;
+		border: 1px solid #dfdfdf;
+		border-radius: 4px;
+		margin-top: 10px;
+		height: 80px;
+		box-sizing: border-box;
+		padding: 10px;
+		resize:none;
+		outline: none;
 	}
 </style>

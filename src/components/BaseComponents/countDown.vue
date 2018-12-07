@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p v-if="msTime.show">
+  <div class="container">
+    <p v-if="msTime.show" class="time">
       <!-- <span v-if="tipShow">{{tipText}}:</span> -->
       <!-- <span v-if="!tipShow">{{tipTextEnd}}:</span> -->
       <span v-if="msTime.day>0"><span>{{msTime.day}}</span><i>{{dayTxt}}</i></span>
@@ -192,3 +192,21 @@
     }
   }
 </script>
+<style scoped>
+  .container {
+    overflow: hidden;
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+  }
+  .container p {
+    background: #F9421E;
+    border-radius: 4px;
+    padding: 0 5px;
+    float: left;
+  }
+  span,i {
+    color: #fff;
+    font-size: 13px;
+  }
+</style>

@@ -11,15 +11,14 @@
     </div>
     <!-- figure -->
     <div class="nav-swiper">
-      <BaseSwiper :swiperData="homeData.figure" />
+      <HomeSwiper :swiperData="homeData.figure" />
     </div>
     <!-- deal -->
     <HomeSection :sectionData="homeData.deal" bannerId='17'/>
     <!-- shop -->
     <HomeSection :sectionData="homeData.shop" shop="shop"/>
-    <div>123</div>
-    <HomeSection  :sectionData="homeData.groupBuying"/>
-    <div>123</div>
+    <!-- group -->
+    <HomeSection  :sectionData="homeData.groupBuying" :groupBuy="groupBuy"/>
     <!-- ticketing -->
     <HomeSection :sectionData="homeData.ticketing" bannerId='1' :Categories="Categories"/>
     <HomeSection v-for="(item,index) in homeData.category" :sectionData="item" :bannerId='item.id' :Categories="Categories" :key="index"/>
@@ -46,7 +45,7 @@
    
 <script>
 import HomeSection from "../BaseComponents/HomeSection";
-import BaseSwiper from "../BaseComponents/BaseSwiper";
+import HomeSwiper from "../BaseComponents/HomeSwiper";
 import BaseArticle from "../BaseComponents/BaseArticle";
 import GoodsRow from "../BaseComponents/GoodsRow";
 import BackToTop from "../BaseComponents/BackToTop";
@@ -61,7 +60,7 @@ export default {
       // 分页参数
       pagePara: {
         id: 12,
-        pageSize: 6,
+        pageSize: 15,
         page: 0,
         sort: 'order_asc'
       },
@@ -74,12 +73,13 @@ export default {
       // 是否是商户
       shop: true,
       // 是否是分类
-      Categories: true
+      Categories: true,
+      groupBuy: true
     };  
   },
   components: {
     HomeSection,
-    BaseSwiper,
+    HomeSwiper,
     BaseArticle,
     GoodsRow,
     BackToTop

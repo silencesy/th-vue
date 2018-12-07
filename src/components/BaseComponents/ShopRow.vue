@@ -3,7 +3,7 @@
 		<ul class="shop-container">
 			<li class="shop-item" v-for="(item,index) in shopData" @click="goShop(item)">
 				<div class="img-box">
-					<img :src="item.pic" alt="">
+					<img v-lazy="item.pic" alt="">
 				</div>
 				<div class="name line1">
 					{{item.title}}

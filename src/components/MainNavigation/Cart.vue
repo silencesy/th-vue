@@ -100,7 +100,7 @@
   
 <script> 
 import Count from '@/components/BaseComponents/Count'
-import { Toast } from 'mint-ui';
+import { Toast,MessageBox } from 'mint-ui';
 export default {
   name: 'Cart',  
   data() {  
@@ -128,7 +128,7 @@ export default {
   methods: {
   	// 跳转商户详情页
   	goShop(id) {
-  		this.$router.push({ name: 'ShopHome', params: { id: id }})
+  		this.$router.push({ name: 'ShopHome', query: { id: id }})
   	},
   	// 跳转登录
   	login() {
@@ -218,42 +218,49 @@ export default {
 	// 删除购物车
 	deleteCart(id,brandId) {
 		var that = this;
-		that.$http.post(this.urls.Cartdelete,{cartId: id})
-		.then(function (response) {
-			if (response.data.message == "success") {
-				console.log(response);
-				// 赋值总价
-				that.total = response.data.data.total;
-				// 赋值满减
-				that.couponPrice = response.data.data.reduceTotal;
-				for (var i = 0; i < that.dataList.length; i++) {
-					for(var key in that.dataList[i]) {
-						if (key == 'data' || typeof(that.dataList[key]) == "object" && 
-		      Object.prototype.toString.call(that.dataList[key]).toLowerCase() == "[object object]" && !that.dataList[key].length) {
-							for (var j = 0; j < that.dataList[i]['data'].length; j++) {
-								if (that.dataList[i]['data'][j].cartId == id) {
-									// 删除商品
-									that.dataList[i]['data'].splice(j, 1);
-									// 如果每个商户下的所以商品删除完，那么该商户也删除掉
-									if (that.dataList[i]['data'].length == 0) {
-										that.dataList.splice(i, 1);
-										// 跳出循环（因为我们删除了要循环的数据，如果不跳出循环就会报错）
-										break;
+		MessageBox.confirm('', { 
+          message: 'Are you sure to delete?', 
+          title: '', 
+          confirmButtonText: 'Done', 
+          cancelButtonText: 'Cancel' 
+        }).then(action => { 
+          	that.$http.post(this.urls.Cartdelete,{cartId: id})
+			.then(function (response) {
+				if (response.data.message == "success") {
+					console.log(response);
+					// 赋值总价
+					that.total = response.data.data.total;
+					// 赋值满减
+					that.couponPrice = response.data.data.reduceTotal;
+					for (var i = 0; i < that.dataList.length; i++) {
+						for(var key in that.dataList[i]) {
+							if (key == 'data' || typeof(that.dataList[key]) == "object" && 
+			      Object.prototype.toString.call(that.dataList[key]).toLowerCase() == "[object object]" && !that.dataList[key].length) {
+								for (var j = 0; j < that.dataList[i]['data'].length; j++) {
+									if (that.dataList[i]['data'][j].cartId == id) {
+										// 删除商品
+										that.dataList[i]['data'].splice(j, 1);
+										// 如果每个商户下的所以商品删除完，那么该商户也删除掉
+										if (that.dataList[i]['data'].length == 0) {
+											that.dataList.splice(i, 1);
+											// 跳出循环（因为我们删除了要循环的数据，如果不跳出循环就会报错）
+											break;
+										}
 									}
 								}
 							}
+							
 						}
-						
 					}
+					// 判断商户是否选中
+					that.getSingleShopSelectedNumber(brandId);
+					// 如果都删除完了就显示空购物车
+					that.showIsEmpty();
+					// 控制所有选中按钮的状态
+					that.controlAllSelect();
 				}
-				// 判断商户是否选中
-				that.getSingleShopSelectedNumber(brandId);
-				// 如果都删除完了就显示空购物车
-				that.showIsEmpty();
-				// 控制所有选中按钮的状态
-				that.controlAllSelect();
-			}
-		});
+			});
+        }).catch(err => {});
 	},
 	// 选中单件商品
 	selectGoods(goods,brandId) {
@@ -716,6 +723,7 @@ export default {
 	.iconfont.icon-shanchu {
 		color: #aaa;
 		align-self: center;
+		padding: 5px 10px;
 	}
 	.iconfont.icon-xuanzhong {
 		color: #F9421E;

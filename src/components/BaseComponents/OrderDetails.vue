@@ -45,7 +45,7 @@
 				type: Object,
 				default: function() {
 					return {
-						'margin-bottom': '55px'
+						'padding-bottom': '55px'
 					}
 				}
 			},
@@ -65,14 +65,16 @@
 	}
 </script>
 <style scoped>
-
+	.OrderDetails {
+		padding-bottom: 10px;
+	}
 	.notice {
 		margin: 10px;
 		padding: 10px;
 		background: #fff;
 		box-sizing: border-box;
 		border: 1px solid #dfdfdf;
-    border-radius: 4px;
+    	border-radius: 4px;
 	}
 	.notice p {
 		line-height: 25px;

@@ -6,7 +6,7 @@
 		<div class="article-content" :style="{backgroundColor:articleContentBg}">
 			<div class="article-item" v-for="(item,index) in articleDataInfo.data" :key="index" :style="articleItemStyleObj" @click="goDetails(item.id)">
 				<div class="img-box">
-					<img :src="item.pic" alt="">
+					<img v-lazy="item.pic" alt="">
 				</div>
 				<div class="article-info">
 					<p class="line2">{{item.title}}</p>

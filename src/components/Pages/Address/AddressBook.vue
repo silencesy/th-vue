@@ -37,6 +37,7 @@
 		this.splice(index, 1); 
 		} 
 	};
+	import { MessageBox } from 'mint-ui';
 	export default {
 		name: 'AddressBook',
 		data () {
@@ -64,16 +65,24 @@
 			setDelete(id,index) {
 				console.log(id);
 				var that = this;
-				that.$http.post(that.urls.addressDelete,{
-					id: id
-				})
-				.then(function (response) {
-					console.log(response);
-					if (response.data.message == 'success') {
-						that.dataList.splice(index,1);
+				MessageBox.confirm('', { 
+		          message: 'Are you sure to delete this address?', 
+		          title: '', 
+		          confirmButtonText: 'Done', 
+		          cancelButtonText: 'Cancel' 
+		        }).then(action => { 
+		          	that.$http.post(that.urls.addressDelete,{
+						id: id
+					})
+					.then(function (response) {
+						console.log(response);
+						if (response.data.message == 'success') {
+							that.dataList.splice(index,1);
 
-					}
-				});
+						}
+					});
+		        }).catch(err => {});
+				
 			},
 			getList() {
 				var that = this;
