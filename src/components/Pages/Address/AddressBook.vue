@@ -22,11 +22,11 @@
 			<div style="height: 50px;"></div>
 		</div>
 		<!-- <div class="bottom" v-if="dataList.length>0" :class="{dispalyblock: dataList.length>0}">
-			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
+			<router-link to='/AddAddress'>Add New Shipping Address</router-link>
 		</div> -->
 		<div class="bottom" :class="{top0: dataList.length==0}" v-show="showHide">
-			<!-- <router-link to='/AddAddress'>+Add New Shipping Address</router-link> -->
-			<router-link to='/AddAddress'>+Add New Shipping Address</router-link>
+			<!-- <router-link to='/AddAddress'>Add New Shipping Address</router-link> -->
+			<router-link to='/AddAddress'>Add New Shipping Address</router-link>
 		</div>
 	</div>
 </template>

@@ -162,8 +162,8 @@ import { mapState } from 'vuex'
 	}
 	.swipe-box .sale-icon {
 		position: absolute;
-		top: 0;
-		left: 0;
+		top: 6px;
+    	left: 6px;
 		width: 32px;
 		height: 16px;
 	}
