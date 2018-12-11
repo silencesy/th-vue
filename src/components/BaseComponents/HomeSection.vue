@@ -133,7 +133,9 @@ import { mapState } from 'vuex'
 		overflow: hidden;
 	}
 	.goods-name {
-		padding: 4px 15px;
+		height: 38px;
+		line-height: 38px;
+		padding: 0 15px;
 	}
 	.banner-img-box {
 		background-color: #e8e8e8;
