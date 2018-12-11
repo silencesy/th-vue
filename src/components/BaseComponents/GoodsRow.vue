@@ -102,7 +102,7 @@ export default {
 		background-color: #fff;
 	}
 	.goods-name {
-		height: 38px;
+		/*height: 38px;*/
 		margin-bottom: 5px;
 	}
 	.goods-price {
