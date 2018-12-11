@@ -53,6 +53,7 @@
 		margin-bottom: 10px;
 		border: 1px solid #dfdfdf;
 		overflow: hidden !important;
+		background: #fff;
 	}
 	.shop-container .shop-item:nth-child(2n-1) {
 		/*border-right: 7px solid #eee;*/
@@ -67,7 +68,7 @@
 	}
 	.shop-item .name {
 		text-align: center;
-		background-color: #fff;
-		padding-bottom: 10px;
+		padding: 0 6px;
+    	margin-bottom: 10px;
 	}
 </style>

@@ -117,8 +117,10 @@
 	}
 	.article-item .article-info .date {
 		position: absolute;
-		right: 15px;
+		left: 15px;
 		bottom: 0;
+		font-size: 14px;
+		color: #999;
 	}
 	img {
 		width: 100%;
