@@ -1226,6 +1226,6 @@
     	z-index: 2;
     	background: rgba(0,0,0,0.45);
     	color: #fff;
-    	border-radius: 50%;
+    	border-radius: 80px;
     }
 </style>

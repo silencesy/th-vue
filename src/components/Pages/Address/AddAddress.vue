@@ -15,14 +15,14 @@
 						<label for="email"><i>*</i> Email :</label>
 						<input type="text" v-model='email' id="email">
 					</div>
-					<div @click="showChooseAddr">
+					<!-- <div @click="showChooseAddr">
 						<label for="add"><i>*</i> Address : </label> 
 						<span> {{myAddressProvince}} {{myAddressCity}}</span>
-					</div>
+					</div> -->
 				</div>
 				<div class="address">
-					<textarea rows="5" v-model='address' placeholder="* Please write down your detailed address in Chinese."> </textarea>
-					<!-- <textarea rows="5" placeholder="Please write down your detailed address in English(city name is required)"> </textarea> -->
+					<textarea rows="5" v-model='myAddressProvince' placeholder="* Please write down your detailed address in Chinese."> </textarea>
+					<textarea rows="5" v-model='address' placeholder="Please write down your detailed address in English(city name is required)"> </textarea>
 				</div>
 				<div class="addDefault">
 					<input class="defaultCheckbox" v-model="defaultBtn" type="checkbox" id="item">
@@ -125,11 +125,11 @@
       			} else if (!(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(that.email))) {
       				Toast('Please enter a valid email address!');
       				return false;
-      			} else if (!that.myAddressProvince || !that.myAddressCity) {
-      				Toast('Please select the address!');
+      			} else if (!that.myAddressProvince) {
+      				Toast('Please write down your detailed address in Chinese!');
       				return false;
       			} else if (!that.address) {
-      				Toast('Please write down your detailed address in Chinese!');
+      				Toast('Please write down your detailed address in English!');
       				return false;
       			}
 				that.$http.post(that.urls.address,{
