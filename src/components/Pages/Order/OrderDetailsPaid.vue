@@ -44,7 +44,7 @@
 		        });
 			},
 			onCopy: function (e) {
-		    	Toast('Success!');
+		    	Toast('Successful!');
 		    },
 		    onError: function (e) {
 		      

@@ -16,13 +16,15 @@
 			<router-link :to="{path: '/ShopGoodsList', query: {id:shopData.id,flag: 'new'}}">New Arrivals</router-link>
 		</div>
 		<!-- 轮播开始 -->
-		<BaseSwiper :swiperData="shopData.figure">
+		<HomeSwiper :swiperData="shopData.figure">
 
-		</BaseSwiper>
+		</HomeSwiper>
 		<!-- 轮播结束 -->
 		<div class="content">
 			<div v-for="(item,index) in shopData.content">
-				<img :src="item.pic" alt="">
+				<a :href="[item.url]">
+					<img :src="item.pic" alt="">
+				</a>
 			</div>
 		</div>
 		<BackToTop />
@@ -41,7 +43,7 @@
 			}
 		},
 		components: {
-			BaseSwiper: r => { require.ensure([], () => r(require('../../BaseComponents/BaseSwiper')), 'BaseSwiper') },
+			HomeSwiper: r => { require.ensure([], () => r(require('../../BaseComponents/HomeSwiper')), 'HomeSwiper') },
 			BackToTop: r => { require.ensure([], () => r(require('../../BaseComponents/BackToTop')), 'BackToTop') }
 		},
 		mounted () {
@@ -139,7 +141,11 @@
 	.nav a:last-child:after {
     	content: ' ';
 	}
+	.content {
+		padding-bottom: 40px;
+	}
 	.content img {
+		display: block;
 		width: 100%;
 	}
 	.bottom {
