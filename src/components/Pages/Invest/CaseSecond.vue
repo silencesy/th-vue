@@ -1,11 +1,7 @@
 <template>
 	<div class="CaseFirst">
     <div class="anli bottomMargin">
-      <img src="static/images/common/2_01.jpg" alt="">
-      <img src="static/images/common/2_02.jpg" alt="">
-      <img src="static/images/common/2_03.jpg" alt="">
-      <img src="static/images/common/2_04.jpg" alt="">
-      <img src="static/images/common/2_05.jpg" alt="">
+      <img src="static/images/common/2.jpg" alt="">
     </div>
 
     <div class="fixBottom">
