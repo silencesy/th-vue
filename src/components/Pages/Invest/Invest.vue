@@ -4,7 +4,7 @@
 		<div class="container">
 			<!-- <div style="text-align: center;margin-top: 20px;">
 				<video frameboder="0" width="92%" height="195.85" style="object-fit:fill;" muted autoplay="autoplay" controls x5-video-player-type='h5'>
-		            <source src="~/static/video/thmart.mp4" type="video/mp4">
+		            <source src="static/video/thmart.mp4" type="video/mp4">
 		        </video>
 			</div> -->
 			<p class="cn"><router-link to="/InvestEn">English</router-link></p>
