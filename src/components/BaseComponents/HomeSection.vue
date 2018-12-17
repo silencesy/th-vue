@@ -31,7 +31,7 @@
 							<img v-lazy="item.pic" alt="">
 						</div>
 						<div>
-							<div class="line1 goods-name">{{item.title}}</div>
+							<div class="line1 goods-name shop-name">{{item.title}}</div>
 						</div>
 					</router-link>
 				</swiper-slide>
@@ -134,8 +134,11 @@ import { mapState } from 'vuex'
 		overflow: hidden;
 	}
 	.goods-name {
-		padding: 4px 15px;
-		height: 38px;
+		margin: 4px 15px;
+		height: 36px;
+	}
+	.goods-name.shop-name {
+		height: 18px;
 	}
 	.banner-img-box {
 		background-color: #e8e8e8;
