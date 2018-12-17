@@ -2,6 +2,11 @@
 	<div class="Invest">
 		<div class="investImg"><img src="static/images/common/zhaoshang.jpg" alt=""></div>
 		<div class="container">
+			<!-- <div style="text-align: center;margin-top: 20px;">
+				<video frameboder="0" width="92%" height="195.85" style="object-fit:fill;" muted autoplay="autoplay" controls x5-video-player-type='h5'>
+		            <source src="~/static/video/thmart.mp4" type="video/mp4">
+		        </video>
+			</div> -->
 			<p class="cn"><router-link to="/Invest">中文</router-link></p>
 			<p class="ruzhu">Advantages</p>
 			<div class="advantage">
