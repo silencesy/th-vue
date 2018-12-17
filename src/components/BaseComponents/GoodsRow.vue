@@ -114,8 +114,8 @@ export default {
 	}
 	.goods-item .sale-icon {
 		position: absolute;
-		top: 0;
-		left: 0;
+		top: 5px;
+		left: 5px;
 		width: 32px;
 		height: 16px;
 	}

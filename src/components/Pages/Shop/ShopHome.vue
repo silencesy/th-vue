@@ -30,7 +30,7 @@
 		<BackToTop />
 		<div class="bottom">
 			<router-link to="/"><i class="iconfont icon-shanghu1"></i>thMart-Home</router-link>
-			<router-link to="/"><i class="iconfont icon-kefu"></i>Chat</router-link>
+			<a><i class="iconfont icon-kefu"></i>Chat</a>
 		</div>
 	</div>
 </template>

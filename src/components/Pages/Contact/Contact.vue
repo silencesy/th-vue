@@ -1,8 +1,8 @@
 <template>
 	<div class="Contact">
-		<router-link to='thmart@urbanatomy.com'>
+		<a href="mailto:thmart@urbanatomy.com">
 			<img src="static/images/common/contactOne.png" alt="">
-		</router-link>
+		</a>
 		<img src="static/images/common/contactTwo.png" alt="">
 	</div>
 </template>

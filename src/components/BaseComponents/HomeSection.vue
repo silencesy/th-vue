@@ -135,10 +135,12 @@ import { mapState } from 'vuex'
 	}
 	.goods-name {
 		margin: 4px 15px;
-		height: 36px;
+		height: 38px;
+		line-height: 16px;
 	}
 	.goods-name.shop-name {
 		height: 18px;
+		margin-bottom: 5px;
 	}
 	.banner-img-box {
 		background-color: #e8e8e8;
