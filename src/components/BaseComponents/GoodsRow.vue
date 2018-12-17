@@ -103,7 +103,7 @@ export default {
 	}
 	.goods-name {
 		margin-bottom: 5px;
-		height: 40px;
+		height: 38px;
 	}
 	.goods-price {
 		display: flex;

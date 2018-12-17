@@ -135,7 +135,7 @@ import { mapState } from 'vuex'
 	}
 	.goods-name {
 		padding: 4px 15px;
-		height: 40px;
+		height: 38px;
 	}
 	.banner-img-box {
 		background-color: #e8e8e8;
