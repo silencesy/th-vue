@@ -502,4 +502,7 @@
   .content {
     padding-top: 10px;
   }
+  .mint-button {
+    border-radius: 0;
+  }
 </style>

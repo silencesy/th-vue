@@ -1054,6 +1054,8 @@
 	}
 	.classification span {
 		font-size: 14px;
+		display: inline-block;
+		margin-bottom: 10px;
 	}
 	.Option-box {
 		padding: 5px 0;
@@ -1220,7 +1222,8 @@
     }
     .go-cart {
     	position: fixed;
-		font-size: 25px;
+		font-size: 19px;
+		padding: 5px;
     	right: 15px;
     	bottom: 120px;
     	z-index: 2;
