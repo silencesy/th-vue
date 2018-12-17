@@ -20,7 +20,7 @@
     <!-- group -->
     <HomeSection  :sectionData="homeData.groupBuying" :groupBuy="groupBuy"/>
     <!-- ticketing -->
-    <HomeSection :sectionData="homeData.ticketing" bannerId='1' :Categories="Categories"/>
+    <!-- <HomeSection :sectionData="homeData.ticketing" bannerId='1' :Categories="Categories"/> -->
     <HomeSection v-for="(item,index) in homeData.category" :sectionData="item" :bannerId='item.id' :Categories="Categories" :key="index"/>
 
     <!-- article -->

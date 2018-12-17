@@ -2,14 +2,14 @@
   <div class="Categories">
     <SearchTop />
     <div class="container">
-      <div class="left" :style="{width:'100%',height:height+'px'}">
+      <div class="left" :style="{height:height+'px'}">
         <ScrollView :height="height" :loadding="loadding" :isshowgoback="isshowgoback" color="#eee">
           <ul class="category-container">
             <li class="category-item line1" :class="item.id==categoryActive?'active':''" v-for="(item,index) in categoryList" @click="checkCategroy(item.id)">{{item.title}}</li>
           </ul>
         </ScrollView>
       </div>
-      <div class="right" :style="{width:'100%',height:height-40+'px'}">
+      <div class="right" :style="{height:height-40+'px'}">
         <div class="sort-container">
           <Sort ref="Sort" @Sort="Sort"/>
         </div>
@@ -136,10 +136,11 @@ export default {
 <style scoped>
   
   .container {
-    display: flex;
+    overflow: hidden;
   }
   .left {
-    flex: 1;
+    width: 33.33333333%;
+    float: left;
     box-sizing: border-box;
     border-top: 1px solid #dfdfdf;
     /*background-color: red;*/
@@ -165,7 +166,8 @@ export default {
     background-color: #fff;
   }
   .right {
-    flex: 2;
+    width: 66.6666666%;
+    float: left;
     box-sizing: border-box;
     /*background-color: blue;*/
   }
