@@ -1,5 +1,6 @@
 <template>
 	<div class="HomeSection">
+	<!-- test -->
 		<div class="banner-img-box">
 			<img @click="goClassList" :src="sectionData.pic" alt="">
 		</div>
