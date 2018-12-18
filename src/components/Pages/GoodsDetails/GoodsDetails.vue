@@ -41,6 +41,9 @@
 			Details
 		</div>
 		<div class="content-info" v-html="goodsData.detail"></div>
+		<div class="bottomCode">
+			<img src="static/images/common/last.jpg" alt="">
+		</div>
 		<div class="bottom-banner">
 			<div class="features">
 				<div class="icon-box">
@@ -898,7 +901,7 @@
 		border-top: 1px solid #dfdfdf;
 		padding: 10px;
 		background-color: #fff;
-		padding-bottom: 60px;
+		padding-bottom: 15px;
 	}
 	.content-info >>> img {
 		display: block;
@@ -1230,5 +1233,14 @@
     	background: rgba(0,0,0,0.45);
     	color: #fff;
     	border-radius: 80px;
+    }
+    .bottomCode {
+    	padding-bottom: 60px;
+    	background: #fff;
+    }
+    .bottomCode img {
+    	width: 100%;
+    	box-sizing: border-box;
+    	padding: 0 10px;
     }
 </style>
